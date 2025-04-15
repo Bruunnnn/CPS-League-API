@@ -49,6 +49,7 @@
 /* Update button */
 .update-button {
     background: #1ea1f2;
+    width: 134%;
     color: white;
     font-size: 18px;
     padding: 8px 20px;

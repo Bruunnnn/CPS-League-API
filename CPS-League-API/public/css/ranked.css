@@ -2,26 +2,36 @@
 .ranked-section {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 25px;
     margin-top: 10px;
 }
 
 /* Each ranked mode row */
 .ranked-mode {
+    margin-left: 15px;
+    background: #a0a0a0;
+    height: 75px;
+    gap: 125px;
+    width: 285px;
+    font-size: 20px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 5px;
     display: flex;
-    gap: 10px;
     align-items: center;
+    justify-content: center;
 }
 
 /* Labels */
 .ranked-label {
     font-weight: bold;
     font-size: 14px;
-    color: #333;
+    color: white;
 }
 
 /* Rank value */
 .ranked-value {
     font-size: 14px;
-    color: #555;
+    color: white;
+
 }
