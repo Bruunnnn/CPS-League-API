@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="LaravelPint">
+    <laravel_pint_settings>
+      <LaravelPintConfiguration tool_path="$PROJECT_DIR$/CPS-League-API/vendor/bin/pint" />
+    </laravel_pint_settings>
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/CPS-League-API/vendor/composer" />
@@ -114,5 +119,11 @@
       <path value="$PROJECT_DIR$/CPS-League-API/vendor/guzzlehttp/uri-template" />
       <path value="$PROJECT_DIR$/CPS-League-API/vendor/graham-campbell/result-type" />
     </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/CPS-League-API/phpunit.xml" custom_loader_path="$PROJECT_DIR$/CPS-League-API/vendor/autoload.php" use_configuration_file="true" />
+    </phpunit_settings>
   </component>
 </project>
