@@ -9,6 +9,7 @@
         <span class="player-name">KarateStrate</span>
         <button class="update-button">Update</button>
     </div>
+    @include('partials.feature')
 </div>
 
 

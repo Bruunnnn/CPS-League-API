@@ -11,9 +11,6 @@
 </header>
 <div>
     @include('partials.profile')
-    @include('partials.feature')
-</div>
-<div>
     @include('partials.ranked')
 </div>
 </body>
