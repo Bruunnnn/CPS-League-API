@@ -19,7 +19,7 @@ class SummonerController extends Controller {
         }
         $matches = $riotService->getMatchHistory($account['puuid'], 5);
         return response()->json([
-            //'account' => $account,
+            'account' => $account,
             'matches' => $matches
         ]);
     }
