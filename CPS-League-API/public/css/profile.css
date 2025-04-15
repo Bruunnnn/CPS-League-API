@@ -1,0 +1,58 @@
+/* Layout container */
+.player-card {
+    display: flex;
+    align-items: flex-start;
+    background: #e0e0e0;
+    padding: 15px;
+    gap: 15px;
+}
+
+/* Profile icon and level badge */
+.profile-wrapper {
+    position: relative;
+}
+
+/* Fake profile icon box */
+.profile-icon-placeholder {
+    width: 80px;
+    height: 80px;
+    background-color: #c0c0c0;
+    border-radius: 5px;
+}
+
+/* Level badge */
+.level-label {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    background: #a0a0a0;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 8px;
+}
+
+/* Player details section */
+.player-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Player name text */
+.player-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Update button */
+.update-button {
+    background: #1ea1f2;
+    color: white;
+    font-size: 18px;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: default;
+}

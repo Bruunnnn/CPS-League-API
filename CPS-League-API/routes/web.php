@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SummonerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\frontpageController;
 use App\Http\Controllers\nikolaisController;
@@ -11,6 +12,10 @@ Route::get('/', [frontpageController::class, 'index']);
 Route::get('/nikolais', [nikolaisController::class, 'index']);
 Route::get('/jakobs', [jakobsController::class, 'index']);
 Route::get("/peters", [petersController::class,'index']);
+
+Route::get('/summoner/{name}', [SummonerController::class, 'show']);
+
+
 
 /*
 Route::get('/welcome', function () {

@@ -1,0 +1,27 @@
+/* Ranked section container */
+.ranked-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* Each ranked mode row */
+.ranked-mode {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Labels */
+.ranked-label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Rank value */
+.ranked-value {
+    font-size: 14px;
+    color: #555;
+}

@@ -6,27 +6,17 @@
 </head>
 
 <body>
-<header class="header">
-    <div class="site-name">League of Dudes</div>
-    <div class="search-bar">
-        <input type="text" placeholder="Search summoner">
-        <button><span>&#128269;</span></button>
-    </div>
+<header>
+    @include('partials.header')
 </header>
-<span>HI THERE!</span>
-
-    <h1> FUCK THEM BIG BOOTY BROS </h1>
-
-
-
-
-
+<div>
+    @include('partials.profile')
+    @include('partials.feature')
+</div>
+<div>
+    @include('partials.ranked')
+</div>
 </body>
-
-
-
-
-
 </html>
 
 
