@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> SuperMegaOvernice-Softtek-frontpage </title>
+    <title> SuperMegaOvernice-Softtek-Project </title>
     <link rel="stylesheet" href="{{asset('/css/frontpage.css')}}">
 </head>
 
@@ -9,10 +9,13 @@
 <header>
     @include('partials.header')
 </header>
+
 <div>
     @include('partials.profile')
-    @include('partials.ranked')
 </div>
+@include('partials.match-history')
+</div>
+
 </body>
 </html>
 

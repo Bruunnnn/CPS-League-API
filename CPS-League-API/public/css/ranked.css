@@ -4,12 +4,14 @@
     flex-direction: column;
     gap: 25px;
     margin-top: 10px;
+    text-align: center; /* center text and inline elements inside */
+    justify-content: center; /* center horizontally */
+    align-items: center;    /* center vertically */
 }
 
 /* Each ranked mode row */
 .ranked-mode {
-    margin-left: 15px;
-    background: #a0a0a0;
+    background: #aaa;
     height: 75px;
     gap: 125px;
     width: 285px;
@@ -20,6 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
 }
 
 /* Labels */
@@ -27,6 +30,7 @@
     font-weight: bold;
     font-size: 14px;
     color: white;
+
 }
 
 /* Rank value */

@@ -1,0 +1,32 @@
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* start aligns items to the top line */
+    gap: 50px;
+    margin-top: 50px;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.match-history {
+    background: #aaa;
+    height: 625px;
+    width: 975px;
+    display: flex;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+

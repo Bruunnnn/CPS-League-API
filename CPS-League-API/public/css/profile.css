@@ -1,10 +1,12 @@
 /* Layout container */
 .player-card {
     display: flex;
-    align-items: flex-start;
     background: #e0e0e0;
     padding: 15px;
     gap: 15px;
+    text-align: center; /* center text and inline elements inside */
+    justify-content: center; /* center horizontally */
+    align-items: center;    /* center vertically */
 }
 
 /* Profile icon and level badge */
@@ -30,6 +32,7 @@
     font-size: 12px;
     padding: 2px 6px;
     border-radius: 8px;
+
 }
 
 /* Player details section */
@@ -59,4 +62,8 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+}
+.update-button:hover {
+    background-color: #1276a8;
+    transition: background-color 0.3s ease;
 }
