@@ -5,7 +5,14 @@
     <link rel="stylesheet" href="{{asset('/css/frontpage.css')}}">
     <link rel="stylesheet" href="{{asset('/css/jakob.css')}}">
 </head>
+
 <body>
-<span>HI THERE!</span>
+<header>
+    @include('partials.header')
+</header>
+<div>
+    @include('partials.profile')
+    @include('partials.ranked')
+</div>
 </body>
 </html>

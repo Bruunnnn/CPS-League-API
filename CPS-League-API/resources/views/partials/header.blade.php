@@ -1,6 +1,6 @@
 <link rel="stylesheet" href={{asset('/css/header.css')}}>
 <header class="header">
-    <div class="site-name">League of Dudes</div>
+    <a href="/" class="site-name">League of Dudes</a>
     <div class="search-bar">
         <input type="text" placeholder="Search summoner">
         <button><span>&#128269;</span></button>

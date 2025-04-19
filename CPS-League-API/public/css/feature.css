@@ -1,23 +1,20 @@
 /* Feature button container */
 .feature-buttons {
-    display: flex;
-    gap: 25px;
-    margin-left: 100px;
-
+    margin-left: 150px;
 }
-
-/* Individual feature button */
 .feature-button {
-    margin-left: 35px;
-    background: #a0a0a0;
-    height: 75px;
-    width: 200px;
+    display: inline-block;
+    padding: 30px 50px;
+    background-color: #aaa;
     color: white;
-    font-size: 20px;
-    border: none;
+    text-decoration: none;
     border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+    margin-left: 150px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
+
+.feature-button:hover {
+    background-color: #777;
+}
+
