@@ -1,7 +1,8 @@
 .content-wrapper {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* start aligns items to the top line */
+    align-items: flex-start;
+    text-align: center;
     gap: 50px;
     margin-top: 50px;
 }

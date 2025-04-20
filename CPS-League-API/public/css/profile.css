@@ -4,9 +4,9 @@
     background: #e0e0e0;
     padding: 15px;
     gap: 15px;
-    text-align: center; /* center text and inline elements inside */
-    justify-content: center; /* center horizontally */
-    align-items: center;    /* center vertically */
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Profile icon and level badge */
@@ -19,7 +19,7 @@
     width: 80px;
     height: 80px;
     background-color: #c0c0c0;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 /* Level badge */
@@ -57,7 +57,7 @@
     font-size: 18px;
     padding: 8px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;

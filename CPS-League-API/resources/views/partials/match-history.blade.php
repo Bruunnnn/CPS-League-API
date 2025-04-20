@@ -3,6 +3,7 @@
     <div class="content-wrapper">
         <div class="left-column">
             @include('partials.ranked')
+            @include('partials.winloss-rate')
         </div>
 
         <div class="right-column">

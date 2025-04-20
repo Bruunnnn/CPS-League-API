@@ -10,10 +10,11 @@
     @include('partials.header')
 </header>
 
-<div>
+<div class="info-wrapper">
+    <div>
     @include('partials.profile')
-</div>
-@include('partials.match-history')
+    </div>
+    @include('partials.match-history')
 </div>
 
 </body>
