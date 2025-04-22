@@ -10,9 +10,11 @@
 <header>
     @include('partials.header')
 </header>
-<div>
-    @include('partials.profile')
-    @include('partials.ranked')
+
+<div class="info-wrapper">
+    <div>
+        @include('partials.profile')
+    </div>
+    @include('partials.match-history')
 </div>
-</body>
 </html>

@@ -23,7 +23,7 @@ class RiotService {
         // Riot requires this header
         $response = Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
-            //withoutverifying disables the SSL certification, should not be done when if going out to production.
+            //withoutVerifying disables the SSL certification, should not be done if it´s going out to production.
         ])->withoutVerifying()->get($url);
         return $response->json();
     }
@@ -31,7 +31,7 @@ class RiotService {
     public function getMatchHistory($puuid, $count) {
         $matchIds = Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
-            ////withoutverifying disables the SSL certification, should not be done when if going out to production.
+            ////withoutVerifying disables the SSL certification, should not be done if it´s going out to production.
         ])->withoutVerifying()->get("https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{$puuid}/ids", [
             'count' => $count,
         ])->json();
@@ -41,7 +41,7 @@ class RiotService {
         foreach ($matchIds as $matchId) {
             $matchData = Http::withHeaders([
                 'X-Riot-Token' => $this->riotApi,
-                ////withoutverifying disables the SSL certification, should not be done when if going out to production.
+                ////withoutVerifying disables the SSL certification, should not be done if it´s going out to production.
             ])->withoutVerifying()->get("https://europe.api.riotgames.com/lol/match/v5/matches/{$matchId}")->json();
 
             $matches[] = $matchData;
