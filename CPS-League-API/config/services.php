@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'riot' => [
+        'key' => env('RIOT_API_KEY'),
+    ],
+
 ];

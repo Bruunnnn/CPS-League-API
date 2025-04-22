@@ -1,0 +1,40 @@
+/* Ranked section container */
+.ranked-section {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Each ranked mode row */
+.ranked-mode {
+    background: #aaa;
+    height: 75px;
+    gap: 125px;
+    width: 285px;
+    font-size: 20px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+/* Labels */
+.ranked-label {
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+
+}
+
+/* Rank value */
+.ranked-value {
+    font-size: 14px;
+    color: white;
+
+}

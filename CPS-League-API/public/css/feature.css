@@ -1,0 +1,23 @@
+/* Feature button container */
+.feature-buttons {
+    margin-left: 385px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+.feature-button {
+    margin-left: 20px;
+    display: inline-block;
+    padding: 30px 50px;
+    background-color: #aaa;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.feature-button:hover {
+    background-color: #777;
+    transition: background-color 0.3s ease;
+}
+
