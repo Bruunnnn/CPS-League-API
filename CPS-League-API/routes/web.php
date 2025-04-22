@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\searchController;
 use App\Http\Controllers\SummonerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\frontpageController;
@@ -14,6 +15,7 @@ Route::get('/jakobs', [jakobsController::class, 'index']);
 Route::get("/peters", [petersController::class,'index']);
 
 Route::get('/summoner/{name}', [SummonerController::class, 'show']);
+Route::get('/search', [searchController::class, 'index']);
 
 
 
