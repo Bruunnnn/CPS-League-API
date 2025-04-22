@@ -5,16 +5,5 @@
     <link rel="stylesheet" href="{{asset('/css/frontpage.css')}}">
     <link rel="stylesheet" href="{{asset('/css/jakob.css')}}">
 </head>
-
-<body>
-<header>
-    @include('partials.header')
-</header>
-
-<div class="info-wrapper">
-    <div>
-        @include('partials.profile')
-    </div>
-    @include('partials.match-history')
-</div>
+    @include('frontpage')
 </html>
