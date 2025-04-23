@@ -14,7 +14,7 @@ Route::get('/nikolais', [nikolaisController::class, 'index']);
 Route::get('/jakobs', [jakobsController::class, 'index']);
 Route::get("/peters", [petersController::class,'index']);
 
-Route::get('/summoner/{name}', [SummonerController::class, 'show']);
+Route::get('/summoner/{riotId}', [SummonerController::class, 'show']);
 Route::get('/search', [searchController::class, 'index']);
 
 
