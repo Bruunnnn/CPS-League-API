@@ -19,10 +19,13 @@ class SummonerController extends Controller {
         }
         $summoner = $riotService->getSummonerByPuuid($account['puuid']);
 
+        $ranked = $riotService->getRankedBySummonerId($summoner['id']);
+
         $matches = $riotService->getMatchHistory($account['puuid'], 5);
         return response()->json([
             'summoner' => $summoner,
             'account' => $account,
+            'ranked' => $ranked,
             'matches' => $matches
         ]);
     }
