@@ -21,7 +21,7 @@
         </div>
 
         <div class="right-column">
-            <div class="match-history">
+            <div class="match-background">
                 @include('partials.match-history')
             </div>
         </div>

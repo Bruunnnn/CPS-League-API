@@ -5,5 +5,27 @@
     <link rel="stylesheet" href="{{asset('/css/frontpage.css')}}">
     <link rel="stylesheet" href="{{asset('/css/peter.css')}}">
 </head>
-@include('frontpage')
+<body>
+<header>
+    @include('partials.header')
+</header>
+
+<div class="info-wrapper">
+    <div>
+        @include('partials.profile')
+    </div>
+    <div class="content-wrapper">
+        <div class="left-column">
+            @include('partials.ranked')
+            @include('partials.winloss-rate')
+        </div>
+
+        <div class="right-column">
+            <div class="personal">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
 </html>
