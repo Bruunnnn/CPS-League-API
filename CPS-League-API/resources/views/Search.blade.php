@@ -1,6 +1,13 @@
 <link rel="stylesheet" href={{asset('/css/search.css')}}>
-<div class="search-bar-2">
-    <input class="search-bar-2-input" type="text" placeholder="Search Summoner-EUW">
-    <button><span>&#128269;</span></button>
-</div>
-
+<form id="summonerSearchForm">
+    <div class="search-bar-2">
+        <input
+            id="summonerInput"
+            class="search-bar-2-input"
+            type="text"
+            placeholder="Search Summoner-EUW"
+        >
+        <button type="submit"><span>&#128269;</span></button>
+    </div>
+</form>
+<script src="{{ asset('js/search.js') }}"></script>

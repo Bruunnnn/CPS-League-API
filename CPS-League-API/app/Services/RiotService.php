@@ -75,5 +75,16 @@ class RiotService
 
         return $response->json();
     }
+    public function getChampionMastery($puuid)
+    {
+        $url = "https://euw1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-puuid/{$puuid}";
+
+        $response = Http::withHeaders([
+            'X-Riot-Token' => $this->riotApi,
+        ])->withoutVerifying()->get($url);
+
+        return $response->json(); // returns array of mastery data
+    }
+
 
 }
