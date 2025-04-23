@@ -55,18 +55,6 @@ class RiotService
 
     }
 
-    public function getAccountByRiotId($gameName, $tagLine)
-    {
-        $url = "https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{$gameName}/{$tagLine}";
-        $response = Http::withHeaders([
-            'X-Riot-Token' => $this->riotApi,
-        ])->withoutVerifying()->get($url);
-
-        return $response->json();
-
-
-    }
-
     public function getSummonerByPuuid($puuid)
     {
         $url = "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{$puuid}";
