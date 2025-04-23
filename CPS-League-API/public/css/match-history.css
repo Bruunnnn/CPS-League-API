@@ -1,47 +1,63 @@
 .match-card {
     display: flex;
-    background-color: #1e88e5; /* or use .match-loss for red background */
+    width: 100%;
+    background-color: #1e88e5;
     padding: 16px;
     border-radius: 10px;
     color: white;
-    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Right/main content */
+.match-main {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    width: 100%;
 }
 
 .match-info-left {
     display: flex;
     flex-direction: column;
+    gap: 6px;
+    min-width: 100px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.result-timer {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+
+/* Champion icon */
+.champion-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    margin-left: 30px;
+    flex-shrink: 0;
+}
+
+/* KDA section */
+.kda-section {
+    display: flex;
+    flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    margin-right: 16px;
-    font-weight: bold;
-    font-size: 14px;
-    min-width: 80px;
-    gap: 4px;
-}
-
-.match-main {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    align-items: center;
     flex: 1;
+    margin-left: 40px;
+    gap: 6px;
 }
 
-.champion-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
-}
-
-.kda-section {
-    text-align: center;
-    font-size: 13px;
-}
-
+/* Items */
 .items-grid {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 8px;
+    flex: 2; /* items take up more space */
 }
 
 .items-row {
@@ -56,31 +72,28 @@
     background-color: #333;
 }
 
+/* Players */
 .players-columns {
     display: flex;
-    gap: 32px;
-    margin-top: 8px;
+    gap: 16px;
+    flex: 2; /* players also take more space */
 }
 
 .team-column {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
 }
 
 .player {
     display: flex;
     align-items: center;
     gap: 6px;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 4px 8px;
-    border-radius: 5px;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .player img {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border-radius: 4px;
 }
-

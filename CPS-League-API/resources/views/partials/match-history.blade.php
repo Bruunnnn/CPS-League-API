@@ -1,14 +1,16 @@
 <link rel="stylesheet" href={{asset('/css/match-history.css')}}>
 
 <div class="match-card match-win">
-    <div class="match-info-left">
-        <div class="game-type">ARAM</div>
-        <div class="game-age">24 days ago</div>
-        <div class="game-result">WIN</div>
-        <div class="game-duration">14:50</div>
-    </div>
-
     <div class="match-main">
+        <div class="match-info-left">
+            <div class="game-type">ARAM</div>
+            <div class="game-age">24 days ago</div>
+
+            <div class="result-timer">
+                <div class="game-result">WIN</div>
+                <div class="game-duration">14:50</div>
+            </div>
+        </div>
         <img class="champion-icon" src="https://via.placeholder.com/40" alt="Champion Icon">
 
         <div class="kda-section">

@@ -35,9 +35,8 @@ body{
     height: 625px;
     width: 975px;
     display: flex;
+    flex-direction: column;
+    align-items: stretch;
     border-radius: 10px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
 }
 
