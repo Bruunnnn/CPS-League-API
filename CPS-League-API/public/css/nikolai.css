@@ -1,0 +1,10 @@
+.personal {
+    background: #aaa;
+    height: 625px;
+    width: 975px;
+    display: flex;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}

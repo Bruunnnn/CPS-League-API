@@ -14,7 +14,18 @@
     <div>
     @include('partials.profile')
     </div>
-    @include('partials.match-history')
+    <div class="content-wrapper">
+        <div class="left-column">
+            @include('partials.ranked')
+            @include('partials.winloss-rate')
+        </div>
+
+        <div class="right-column">
+            <div class="match-background">
+                @include('partials.match-history')
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

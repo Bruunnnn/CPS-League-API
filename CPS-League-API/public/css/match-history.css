@@ -1,33 +1,86 @@
-.content-wrapper {
+.match-card {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    text-align: center;
-    gap: 50px;
-    margin-top: 50px;
-}
-
-.left-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.right-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-
-.match-history {
-    background: #aaa;
-    height: 625px;
-    width: 975px;
-    display: flex;
+    background-color: #1e88e5; /* or use .match-loss for red background */
+    padding: 16px;
     border-radius: 10px;
-    text-align: center;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.match-info-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: center;
+    margin-right: 16px;
+    font-weight: bold;
+    font-size: 14px;
+    min-width: 80px;
+    gap: 4px;
+}
+
+.match-main {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
     align-items: center;
+    flex: 1;
+}
+
+.champion-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+}
+
+.kda-section {
+    text-align: center;
+    font-size: 13px;
+}
+
+.items-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.items-row {
+    display: flex;
+    gap: 6px;
+}
+
+.item-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background-color: #333;
+}
+
+.players-columns {
+    display: flex;
+    gap: 32px;
+    margin-top: 8px;
+}
+
+.team-column {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.player img {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
 }
 
