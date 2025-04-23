@@ -87,4 +87,28 @@ class RiotService
     }
 
 
+
+
+    // Storing in the database
+    public function storeSummoner(Request $request)
+    {
+        $riot = new RiotService();
+
+        $accountInfo = $riot->getSummonerByName($request->gameName, $request->tagLine);
+        $summonerInfo = $riot->getSummonerByPuuid($accountInfo['puuid']);
+
+        $summoner = Summoner::updateOrCreate(
+            ['puuid' => $summonerInfo['puuid']],
+            [
+                'name' => $summonerInfo['name'],
+                'summoner_id' => $summonerInfo['id'],
+                'account_id' => $summonerInfo['accountId'] ?? null,
+                'profile_icon_id' => $summonerInfo['profileIconId'],
+                'summoner_level' => $summonerInfo['summonerLevel'],
+            ]
+        );
+
+        return response()->json($summoner);
+    }
+
 }
