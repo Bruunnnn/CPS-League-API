@@ -17,8 +17,11 @@ class SummonerController extends Controller {
         if (!isset($account['puuid'])) {
             return response("Summoner not found", 404);
         }
+        $summoner = $riotService->getSummonerByPuuid($account['puuid']);
+
         $matches = $riotService->getMatchHistory($account['puuid'], 5);
         return response()->json([
+            'summoner' => $summoner,
             'account' => $account,
             'matches' => $matches
         ]);
