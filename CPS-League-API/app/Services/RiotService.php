@@ -4,19 +4,22 @@ namespace App\Services;
 use Illuminate\Support\Facades\Http;
 
 
-class RiotService {
+class RiotService
+{
 
     protected $riotApi;
     // Which region we're fetching data from
     protected $region = 'euw1';
 
     // Double "_" cause it is a magic method
-    public function __construct() {
+    public function __construct()
+    {
         $this->riotApi = config('services.riot.key');
         //dd($this->riotApi);
     }
 
-    public function getSummonerByName($gameName, $tagLine) {
+    public function getSummonerByName($gameName, $tagLine)
+    {
         // Riot has provided the following url for fetching summoner name
         $url = "https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{$gameName}/{$tagLine}";
 
@@ -28,7 +31,8 @@ class RiotService {
         return $response->json();
     }
 
-    public function getMatchHistory($puuid, $count) {
+    public function getMatchHistory($puuid, $count)
+    {
         $matchIds = Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
             ////withoutVerifying disables the SSL certification, should not be done if it´s going out to production.
@@ -48,7 +52,28 @@ class RiotService {
         }
 
         return $matches;
+
     }
 
+    public function getSummonerByPuuid($puuid)
+    {
+        $url = "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{$puuid}";
+        $response = Http::withHeaders([
+            'X-Riot-Token' => $this->riotApi,
+        ])->withoutVerifying()->get($url);
+
+        return $response->json();
+
+    }
+    public function getRankedBySummonerId($id)
+    {
+        $url = "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/{$id}";
+
+        $response = Http::withHeaders([
+            'X-Riot-Token' => $this->riotApi,
+        ])->withoutVerifying()->get($url);
+
+        return $response->json();
+    }
 
 }

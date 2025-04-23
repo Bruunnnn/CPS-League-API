@@ -1,16 +1,12 @@
-/* Search bar styling */
-.center {
+.search-bar-2 {
     position: absolute;
     left: 50%;
-    top: 40%;
+    top: 30%;
     transform: translate(-50%, -50%);
-}
-
-.search-bar-2 {
     display: flex;
     text-align: center;
     width: 30%;
-    background: #ece6f1;
+    background: #FFFFFF;
     padding: 10px 10px;
     border-radius: 25px;
 
