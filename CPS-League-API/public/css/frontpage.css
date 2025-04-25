@@ -1,6 +1,6 @@
 body{
-    background: #e0e0e0;
     font-family: Arial, sans-serif;
+    background-image: url("../img/Freljord.webp");
 }
 
 .info-wrapper{

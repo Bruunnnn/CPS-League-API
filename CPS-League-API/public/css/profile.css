@@ -1,7 +1,6 @@
 /* Layout container */
 .player-card {
     display: flex;
-    background: #e0e0e0;
     padding: 15px;
     gap: 15px;
     text-align: center;
@@ -13,9 +12,17 @@
 .profile-wrapper {
     position: relative;
 }
+.player-element {
+    background-color: #aaa;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex; /* Make children (icon + details) align horizontally */
+    gap: 15px;
+}
+
 
 /* Fake profile icon box */
-.profile-icon-placeholder {
+.profile-icon {
     width: 80px;
     height: 80px;
     background-color: #c0c0c0;
