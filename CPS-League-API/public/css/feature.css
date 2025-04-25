@@ -1,6 +1,6 @@
 /* Feature button container */
 .feature-buttons {
-    margin-left: 385px;
+    display: flex;
     text-align: center;
     justify-content: center;
     align-items: center;
