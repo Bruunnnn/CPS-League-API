@@ -36,7 +36,7 @@ class SummonerController extends Controller {
             ]
         );
 
-        $ranked = $riotService->getRankedBySummonerId($summoner['id']);
+        $ranked = $riotService->getRankedBySummonerId($summoner['summoner_id']);
 
         $mastery = $riotService->getChampionMastery($summoner['puuid']);
         //set the number of champions to get the mastery from

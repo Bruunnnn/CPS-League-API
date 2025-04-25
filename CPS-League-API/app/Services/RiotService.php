@@ -65,9 +65,9 @@ class RiotService
         return $response->json();
 
     }
-    public function getRankedBySummonerId($id)
+    public function getRankedBySummonerId($summoner_id)
     {
-        $url = "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/{$id}";
+        $url = "https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/{$summoner_id}";
 
         $response = Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
