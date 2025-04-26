@@ -22,6 +22,22 @@
 
         <div class="right-column">
             <div class="personal">
+                <div class="mastery-card">
+                    <div class="champion-name">Yasuo</div>
+
+                    <div class="mastery-main">
+                        <img class="champion-icon" src="https://via.placeholder.com/64" alt="Champion Icon">
+
+                        <div class="mastery-info">
+                            <div class="champion-level">Level 13</div>
+                            <div class="champion-points">157,411 Points</div>
+                            <div class="points-progress">48,811 since last level</div>
+                            <div class="points-progress">37,811 until next level</div>
+                            <div class="last-played">Last played: 24 days ago</div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
