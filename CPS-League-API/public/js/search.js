@@ -23,13 +23,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Redirect to summoner page
         window.location.href = `/summoner/${formattedId}`;
+
+
+
     });
 });
 
 // Event listener for making the Enter button able to search
-document.getElementById('riotIdInput').addEventListener('keypress', function (e) {
+document.getElementById('summonerInput').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
-        e.preventDefault();
         document.getElementById('searchButton').click();
     }
 });

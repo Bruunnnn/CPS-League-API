@@ -9,7 +9,7 @@
                class="search-bar"
                type="text"
                placeholder="Search Summoner">
-           <button><span>&#128269;</span></button>
+           <button id="searchButton" type="submit"><span>&#128269;</span></button>
         </div>
     </form>
 
