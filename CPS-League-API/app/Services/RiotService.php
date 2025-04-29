@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Models\Mastery;
 use Illuminate\Support\Facades\Http;
 
 
@@ -83,7 +84,7 @@ class RiotService
             'X-Riot-Token' => $this->riotApi,
         ])->withoutVerifying()->get($url);
 
-        return $response->json(); // returns array of mastery data
+        return $response->json();
     }
 
 
@@ -96,6 +97,8 @@ class RiotService
 
         $accountInfo = $riot->getSummonerByName($request->gameName, $request->tagLine);
         $summonerInfo = $riot->getSummonerByPuuid($accountInfo['puuid']);
+        $masteryinfo = $riot->getChampionMastery($accountInfo['puuid']);
+
 
         $summoner = Summoner::updateOrCreate(
             ['puuid' => $summonerInfo['puuid']],
@@ -107,8 +110,19 @@ class RiotService
                 'summoner_level' => $summonerInfo['summonerLevel'],
             ]
         );
+        $mastery = Mastery::updateOrCreate(
+            ['puuid' => $masteryinfo['puuid']],
+            [
+                'championId' => $masteryinfo['championId'],
+                'championLevel' => $masteryinfo['championLevel'],
+                'championPoints' => $masteryinfo['championPoints'],
+                'lastPlayTime' => $masteryinfo['lastPlayTime'],
+                'championPointsSinceLastLevel' => $masteryinfo['championPointsSinceLastLevel'],
+                'championPointsUntilNextLevel' => $masteryinfo['championPointsUntilNextLevel'],
+            ]
+        );
 
-        return response()->json($summoner);
+        return response()->json($summoner,$mastery);
     }
 
 }

@@ -6,7 +6,7 @@ use App\Services\RiotService;
 use App\Models\Summoner;
 use App\Models\Mastery;
 use App\Models\MatchHistory;
-
+use function Webmozart\Assert\Tests\StaticAnalysis\length;
 
 
 class SummonerController extends Controller {
@@ -40,9 +40,28 @@ class SummonerController extends Controller {
 
         $ranked = $riotService->getRankedBySummonerId($summoner['summoner_id']);
 
-        $mastery = $riotService->getChampionMastery($summoner['puuid']);
-        //set the number of champions to get the mastery from
-        $topMastery = array_slice($mastery, 0, 10);
+        $masteryinfo = $riotService->getChampionMastery($account['puuid']);
+
+        $topMastery = array_slice($masteryinfo, 0, 10);
+
+        // mastery DB:
+        $mastery = [];
+        for ($i=0; $i <count($topMastery); $i++) {
+
+            $mastery[] = Mastery::updateOrCreate(
+                ['puuid' => $summonerInfo['puuid'],
+                    'championId' => $topMastery[$i]['championId'],
+                    ],
+
+                [
+                    'championLevel' => $topMastery[$i]['championLevel'],
+                    'championPoints' => $topMastery[$i]['championPoints'],
+                    'lastPlayTime' => $topMastery[$i]['lastPlayTime'],
+                    'championPointsSinceLastLevel' => $topMastery[$i]['championPointsSinceLastLevel'],
+                    'championPointsUntilNextLevel' => $topMastery[$i]['championPointsUntilNextLevel'],
+                ]
+            );
+        }
 
         $matches = $riotService->getMatchHistory($account['puuid'], 1);
         return response()->json([
@@ -50,7 +69,8 @@ class SummonerController extends Controller {
             'summonerInfo' => $summonerInfo,
             'account' => $account,
             'ranked' => $ranked,
-            'mastery' => $topMastery,
+            'mastery' => $mastery,
+            'masteryinfo' => $topMastery,
             'matches' => $matches
         ]);
     }

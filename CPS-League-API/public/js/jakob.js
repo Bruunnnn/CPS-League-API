@@ -47,7 +47,7 @@ function getChampionIconUrlById(id) {
 function createMasteryCardElement() {
 
     champion = {
-        "championId": 901,
+        "championId": 157,
         "championLevel": 13,
         "championPoints": 157411,
         "lastPlayTime": 1741642707000,
