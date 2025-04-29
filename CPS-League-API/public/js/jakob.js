@@ -1,6 +1,7 @@
 createMasteryCardElement()
 createMasteryCardElement()
 
+
 function createMasteryCardElement() {
 
     champion = {
@@ -41,7 +42,11 @@ function createMasteryCardElement() {
     championPoints.textContent = champion.championPoints + " Points"
     sinceLevelUp.textContent = champion.championPointsSinceLastLevel + " since last level"
     toLevelUp.textContent = champion.championPointsUntilNextLevel + " until next level"
-    timeSincePlay.textContent = " Last Played: " + champion.lastPlayTime
+
+
+    const date = new Date(champion.lastPlayTime);
+    const formattedDate = date.toLocaleString();
+    timeSincePlay.textContent = " Last Played: " + formattedDate
 
     masteryMainElement.append(championIcon)
     children = [championLevel, championPoints, sinceLevelUp, toLevelUp, timeSincePlay];
@@ -50,7 +55,7 @@ function createMasteryCardElement() {
     for (i = 0; i++; 0 < children.length) {
         masteryInfo.append(children[i])
     }
-    //masteryCardElement.appendChild([championElement, masteryMainElement]);
+
     masteryCardElement.append(championElement)
     masteryCardElement.append(masteryMainElement)
     masteryMainElement.append(masteryInfo)

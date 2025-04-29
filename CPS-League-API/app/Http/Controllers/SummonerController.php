@@ -42,7 +42,7 @@ class SummonerController extends Controller {
         //set the number of champions to get the mastery from
         $topMastery = array_slice($mastery, 0, 5);
 
-        $matches = $riotService->getMatchHistory($account['puuid'], 5);
+        $matches = $riotService->getMatchHistory($account['puuid'], 1);
         return response()->json([
             'summoner' => $summoner,
             'summonerInfo' => $summonerInfo,

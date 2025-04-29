@@ -4,6 +4,7 @@
     display: flex;
     border-radius: 10px;
     text-align: center;
+    gap: 10px;
     flex-direction: column; /* add this if you want vertical stacking inside */
     align-items: flex-start; /* start from the left */
 }
@@ -18,13 +19,14 @@
     box-sizing: border-box;
     align-items: center; /* change to center for horizontal */
     gap: 16px;
+    margin-bottom: px;
 }
 
 
 /* Champion name */
 .champion-name {
     margin-left: 10px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     flex-shrink: 0;
     min-width: 75px;
@@ -59,12 +61,12 @@
 
 
 .champion-level {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 
 .champion-points {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: bold;
 }
 
