@@ -21,15 +21,15 @@
 
         <div class="items-grid">
             <div class="items-row">
+                <img class="item-icon" src="https://via.placeholder.com/32" alt="Item 0">
                 <img class="item-icon" src="https://via.placeholder.com/32" alt="Item 1">
                 <img class="item-icon" src="https://via.placeholder.com/32" alt="Item 2">
-                <img class="item-icon" src="https://via.placeholder.com/32" alt="Item 3">
-                <img class="item-icon" src="https://via.placeholder.com/32" alt="Item 7">
+                <img class="item-icon" src="https://via.placeholder.com/32" alt="Item 6">
             </div>
             <div class="items-row">
+                <img class="item-icon" src="https://via.placeholder.com/32" alt="Item 3">
                 <img class="item-icon" src="https://via.placeholder.com/32" alt="Item 4">
                 <img class="item-icon" src="https://via.placeholder.com/32" alt="Item 5">
-                <img class="item-icon" src="https://via.placeholder.com/32" alt="Item 6">
             </div>
         </div>
 

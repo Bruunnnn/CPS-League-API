@@ -42,7 +42,7 @@ class SummonerController extends Controller {
 
         $masteryinfo = $riotService->getChampionMastery($account['puuid']);
 
-        $topMastery = array_slice($masteryinfo, 0, 10);
+        $topMastery = array_slice($masteryinfo, 0, 20);
 
         // mastery DB:
         $mastery = [];
@@ -67,10 +67,8 @@ class SummonerController extends Controller {
         return response()->json([
             'summoner' => $summoner,
             'summonerInfo' => $summonerInfo,
-            'account' => $account,
             'ranked' => $ranked,
             'mastery' => $mastery,
-            'masteryinfo' => $topMastery,
             'matches' => $matches
         ]);
     }

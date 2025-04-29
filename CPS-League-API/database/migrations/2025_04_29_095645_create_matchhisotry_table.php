@@ -12,8 +12,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('matchhisotry', function (Blueprint $table) {
-            $table->id()->unique();
-            $table->string('puuid')->unique();
+            $table->id();
+            $table->string('puuid');
             $table->integer('mapId');
             $table->integer('endGameTimestamp');
             $table->boolean('win');
