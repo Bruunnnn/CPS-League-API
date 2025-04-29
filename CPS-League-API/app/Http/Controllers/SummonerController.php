@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\RiotService;
 use App\Models\Summoner;
+use App\Models\Mastery;
+use App\Models\MatchHistory;
 
 
 
@@ -23,7 +24,7 @@ class SummonerController extends Controller {
 
         $summonerInfo = $riotService->getSummonerByPuuid($account['puuid']);
 
-        // DB:
+        // summoner DB:
         $summoner = Summoner::updateOrCreate(
             ['puuid' => $summonerInfo['puuid']],  // Match the summoner using puuid
             [
@@ -36,11 +37,12 @@ class SummonerController extends Controller {
             ]
         );
 
+
         $ranked = $riotService->getRankedBySummonerId($summoner['summoner_id']);
 
         $mastery = $riotService->getChampionMastery($summoner['puuid']);
         //set the number of champions to get the mastery from
-        $topMastery = array_slice($mastery, 0, 5);
+        $topMastery = array_slice($mastery, 0, 10);
 
         $matches = $riotService->getMatchHistory($account['puuid'], 1);
         return response()->json([
