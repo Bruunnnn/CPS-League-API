@@ -26,22 +26,23 @@
 
         <div class="right-column">
             <div class="personal">
+                @foreach ($masteryCards as $card)
                 <div class="mastery-card">
-                    <div class="champion-name">Yasuo</div>
+                    <div class="champion-name">{{ $card['championName'] }}</div>
 
                     <div class="mastery-main">
-                        <img class="champion-icon" src="https://via.placeholder.com/64" alt="Champion Icon">
+                        <img class="champion-icon" src="{{ $card['championImage'] }}" alt="Champion Icon">
 
                         <div class="mastery-info">
-                            <div class="champion-level">Level 13</div>
-                            <div class="champion-points">157,411 Points</div>
-                            <div class="points-progress">48,811 since last level</div>
-                            <div class="points-progress">37,811 until next level</div>
-                            <div class="last-played">Last played: 24 days ago</div>
+                            <div class="champion-level">Level {{ $card['championLevel'] }}</div>
+                            <div class="champion-points">{{ number_format($card['championPoints']) }} Points</div>
+                            <div class="points-progress">{{ number_format($card['championPointsSinceLastLevel']) }} since last level</div>
+                            <div class="points-progress">{{ number_format($card['championPointsUntilNextLevel']) }} until next level</div>
+                            <div class="last-played">Last played: {{ \Carbon\Carbon::createFromTimestampMs($card['lastPlayTime'])->diffForHumans() }}</div>
                         </div>
                     </div>
                 </div>
-
+                @endforeach
             </div>
         </div>
     </div>
