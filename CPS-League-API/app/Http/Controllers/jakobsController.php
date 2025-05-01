@@ -10,7 +10,10 @@ class jakobsController extends Controller
     public function index()
     {
         $puuid = '6mhRxZFxNMCIA3aACd1lopxXFcN_OWebSyvHKsnHNsIlu_rAT9hn17XjCTzQoo01J9-MUGQ9iuDWDw'; // example
-        $masteries = Mastery::where('puuid', $puuid)->get();
+        $masteries = Mastery::where('puuid', $puuid)
+            ->orderByDesc('championPoints')
+            ->get();
+
 
         // Fetch champion list from ddragon
         $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/14.8.1/data/en_US/champion.json');
