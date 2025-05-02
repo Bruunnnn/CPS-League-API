@@ -9,71 +9,71 @@
     align-items: flex-start; /* start from the left */
 }
 
-.mastery-card {
-    display: flex;
-    width: 100%;
-    background-color: #1C1A2E;
-    padding: 16px;
-    border-radius: 10px;
+.mastery-header {
+    display: grid;
+    grid-template-columns: 150px 80px 80px 120px 120px 120px 150px;
+    align-items: center;
+    text-align: center;
+    background-color: #1e1e33;
     color: white;
-    box-sizing: border-box;
-    align-items: center; /* change to center for horizontal */
-    gap: 16px;
+    padding: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 
-
-/* Champion name */
-.champion-name {
-    margin-left: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    flex-shrink: 0;
-    min-width: 100px;
-    display: flex;
+.mastery-card {
+    display: grid;
+    grid-template-columns: 150px 80px 80px 120px 120px 120px 150px;
     align-items: center;
-}
-
-/* Group icon and text info side-by-side */
-.mastery-main {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-/* Icon */
-.champion-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 8px;
-    background-color: #333;
-    flex-shrink: 0;
-}
-
-/* Mastery info */
-.mastery-info {
-    display: flex;
-    flex-direction: row; /* <== change from column to row */
-    gap: 16px; /* more space between info blocks */
-    text-align: left;
-    align-items: center; /* vertically center them */
-}
-
-
-.champion-level {
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.champion-points {
+    text-align: center;
+    background-color: #1e1e33;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
     font-size: 18px;
+}
+
+.mastery-card .mastery-main {
+    display: contents; /* Flatten nested layout to inherit grid columns */
+}
+.mastery-card .mastery-info {
+    display: contents; /* 👈 ADD THIS LINE */
+}
+
+.mastery-card .champion-name {
+    grid-column: 1;
+    align-self: center;
     font-weight: bold;
 }
 
-.last-played {
-    font-size: 14px;
-    opacity: 0.8;
+.mastery-card .mastery-main img.champion-icon {
+    grid-column: 2;
+    width: 60px;
+    height: 60px;
+    justify-self: center;
 }
 
-.points-progress {
-    font-size: 14px;
+.mastery-card .mastery-info .champion-level {
+    grid-column: 3;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.mastery-card .mastery-info .champion-points {
+    grid-column: 4;
+    font-weight: bold;
+}
+
+.mastery-card .mastery-info .points-progress:first-of-type {
+    grid-column: 5;
+}
+
+.mastery-card .mastery-info .points-progress:last-of-type {
+    grid-column: 6;
+}
+
+.mastery-card .mastery-info .last-played {
+    grid-column: 7;
 }
