@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ranked;
 use App\Services\RiotService;
 use App\Models\Summoner;
 use App\Models\Mastery;
@@ -38,7 +39,7 @@ class SummonerController extends Controller {
         );
 
 
-        $ranked = $riotService->getRankedBySummonerId($summoner['summoner_id']);
+        $rankedsummoner = $riotService->getRankedBySummonerId($summoner['summoner_id']);
 
         $masteryinfo = $riotService->getChampionMastery($account['puuid']);
 
@@ -63,10 +64,27 @@ class SummonerController extends Controller {
             );
         }
 
+        $rankedEntries = [];
+
+        for ($i = 0; $i < count($rankedsummoner); $i++) {
+            $ranked[] = Ranked::updateOrCreate(
+                [
+                    'puuid' => $summonerInfo['puuid'],
+                    'queueType' => $rankedsummoner[$i]['queueType'], // use queueType as unique per queue
+                ],
+                [
+                    'tier' => $rankedsummoner[$i]['tier'],
+                    'rank' => $rankedsummoner[$i]['rank'],
+                    'win' => $rankedsummoner[$i]['wins'],
+                    'losses' => $rankedsummoner[$i]['losses'],
+                ]
+            );
+        }
+
+
         $matches = $riotService->getMatchHistory($account['puuid'], 1);
         return response()->json([
             'summoner' => $summoner,
-            'summonerInfo' => $summonerInfo,
             'ranked' => $ranked,
             'mastery' => $mastery,
             'matches' => $matches

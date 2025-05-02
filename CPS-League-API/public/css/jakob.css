@@ -1,12 +1,11 @@
 .personal {
-    height: 625px;
     width: 975px;
     display: flex;
     border-radius: 10px;
     text-align: center;
     gap: 10px;
-    flex-direction: column; /* add this if you want vertical stacking inside */
-    align-items: flex-start; /* start from the left */
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .mastery-header {
@@ -38,10 +37,10 @@
 }
 
 .mastery-card .mastery-main {
-    display: contents; /* Flatten nested layout to inherit grid columns */
+    display: contents;
 }
 .mastery-card .mastery-info {
-    display: contents; /* 👈 ADD THIS LINE */
+    display: contents;
 }
 
 .mastery-card .champion-name {
