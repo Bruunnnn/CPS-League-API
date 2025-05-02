@@ -7,7 +7,6 @@ use App\Services\RiotService;
 use App\Models\Summoner;
 use App\Models\Mastery;
 use App\Models\MatchHistory;
-use function Webmozart\Assert\Tests\StaticAnalysis\length;
 
 
 class SummonerController extends Controller {
@@ -25,7 +24,7 @@ class SummonerController extends Controller {
 
         $summonerInfo = $riotService->getSummonerByPuuid($account['puuid']);
 
-        // summoner DB:
+        // summoner Json:
         $summoner = Summoner::updateOrCreate(
             ['puuid' => $summonerInfo['puuid']],  // Match the summoner using puuid
             [
@@ -38,14 +37,12 @@ class SummonerController extends Controller {
             ]
         );
 
-
         $rankedsummoner = $riotService->getRankedBySummonerId($summoner['summoner_id']);
 
         $masteryinfo = $riotService->getChampionMastery($account['puuid']);
+        $topMastery = array_slice($masteryinfo, 0, 30);
 
-        $topMastery = array_slice($masteryinfo, 0, 20);
-
-        // mastery DB:
+        // mastery Json:
         $mastery = [];
         for ($i=0; $i <count($topMastery); $i++) {
 
@@ -63,7 +60,42 @@ class SummonerController extends Controller {
                 ]
             );
         }
+        $matches = $riotService->getMatchHistory($account['puuid'], 30); // or count you want
 
+        foreach ($matches as $match) {
+            foreach ($match['info']['participants'] as $participant) {
+                $matchHistory[] = MatchHistory::updateOrCreate(
+                    [
+                        'puuid' => $participant['puuid'],
+                        'gameId' => $match['info']['gameId'],
+                    ],
+                    [
+                        'mapId' => $match['info']['mapId'],
+                        'endGameTimestamp' => $match['info']['gameEndTimestamp'],
+                        'win' => $participant['win'],
+                        'riotIdGameName' => $participant['riotIdGameName'],
+                        'gameDuration' => $match['info']['gameDuration'],
+                        'championId' => $participant['championId'],
+                        'kills' => $participant['kills'] ?? 0,
+                        'deaths' => $participant['deaths'] ?? 0,
+                        'assists' => $participant['assists'] ?? 0,
+                        'totalMinionsKilled' => $participant['totalMinionsKilled'] ?? 0,
+                        'totalEnemyJungleMinionsKilled' => $participant['totalEnemyJungleMinionsKilled'] ?? 0,
+                        'item0' => $participant['item0'] ?? 0,
+                        'item1' => $participant['item1'] ?? 0,
+                        'item2' => $participant['item2'] ?? 0,
+                        'item3' => $participant['item3'] ?? 0,
+                        'item4' => $participant['item4'] ?? 0,
+                        'item5' => $participant['item5'] ?? 0,
+                        'item6' => $participant['item6'] ?? 0,
+                        'summoner1Id' => $participant['summoner1Id'] ?? 0,
+                        'summoner2Id' => $participant['summoner2Id'] ?? 0,
+                    ]
+                );
+            }
+        }
+
+        //Ranked Json
         $ranked = [];
 
         for ($i = 0; $i < count($rankedsummoner); $i++) {
@@ -82,12 +114,12 @@ class SummonerController extends Controller {
         }
 
 
-        $matches = $riotService->getMatchHistory($account['puuid'], 1);
         return response()->json([
             'summoner' => $summoner,
             'ranked' => $ranked,
             'mastery' => $mastery,
-            'matches' => $matches
+            'matches' => $matchHistory,
         ]);
+
     }
 }

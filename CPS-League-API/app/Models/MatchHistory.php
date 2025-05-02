@@ -6,18 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class MatchHistory extends Model
 {
+    protected $table = 'matchHistory';
     protected $fillable = [
+        'gameId',
         'puuid',
         'mapId',
         'endGameTimestamp',
         'win',
-        'gameDuraction',
+        'riotIdGameName',
+        'gameDuration',
         'championId',
         'kills',
         'deaths',
         'assists',
         'totalMinionsKilled',
-        'enemyJungleMonsterkills',
+        'totalEnemyJungleMinionsKilled',
         'item0',
         'item1',
         'item2',

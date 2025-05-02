@@ -29,7 +29,7 @@ class jakobsController extends Controller
 
         // Map mastery data with champion info
         $masteryCards = $masteries->map(function ($mastery) use ($championMap) {
-            $champion = $championMap[$mastery->championId] ?? ['name' => 'Unknown', 'image' => 'https://via.placeholder.com/64'];
+            $champion = $championMap[$mastery->championId];
             return [
                 'championName' => $champion['name'],
                 'championImage' => $champion['image'],
