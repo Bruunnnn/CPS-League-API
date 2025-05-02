@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('ranked', function (Blueprint $table) {
             $table->id();
             $table->string('puuid');
-            $table->string('queueType');
-            $table->string('tier');
-            $table->string('rank');
-            $table->integer('win');
-            $table->integer('losses');
+            $table->string('queueType')->nullable();
+            $table->string('tier')->nullable();
+            $table->string('rank')->nullable();
+            $table->integer('win')->nullable();
+            $table->integer('losses')->nullable();
             $table->timestamps();
         });
     }

@@ -64,7 +64,7 @@ class SummonerController extends Controller {
             );
         }
 
-        $rankedEntries = [];
+        $ranked = [];
 
         for ($i = 0; $i < count($rankedsummoner); $i++) {
             $ranked[] = Ranked::updateOrCreate(
@@ -73,10 +73,10 @@ class SummonerController extends Controller {
                     'queueType' => $rankedsummoner[$i]['queueType'], // use queueType as unique per queue
                 ],
                 [
-                    'tier' => $rankedsummoner[$i]['tier'],
-                    'rank' => $rankedsummoner[$i]['rank'],
-                    'win' => $rankedsummoner[$i]['wins'],
-                    'losses' => $rankedsummoner[$i]['losses'],
+                    'tier' => $rankedsummoner[$i]['tier']?? 'UNRANKED',
+                    'rank' => $rankedsummoner[$i]['rank']?? '-',
+                    'win' => $rankedsummoner[$i]['wins']?? 0,
+                    'losses' => $rankedsummoner[$i]['losses']?? 0,
                 ]
             );
         }
