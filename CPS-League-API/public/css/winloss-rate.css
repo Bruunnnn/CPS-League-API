@@ -29,3 +29,92 @@
     font-size: 14px;
     color: white;
 }
+.pie-chart {
+    --win-color: #1ea1f2 ;
+    --loss-color: #E84057;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: conic-gradient(var(--win-color) 0 var(--win), var(--loss-color) var(--win) 100%);
+    position: relative;
+    margin: 20px auto;
+}
+
+.pie-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    background: #1C1A2E;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+}
+
+.winloss-numbers {
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+}
+/* Hide radio buttons */
+#soloToggle, #flexToggle {
+    display: none;
+}
+
+/* Default: show Solo data */
+.pie-chart.flex,
+.winloss-numbers.flex {
+    display: none;
+}
+
+/* When Flex is checked, show Flex data and hide Solo */
+#flexToggle:checked ~ .winloss-content .pie-chart.solo,
+#flexToggle:checked ~ .winloss-content .winloss-numbers.solo {
+    display: none;
+}
+
+#flexToggle:checked ~ .winloss-content .pie-chart.flex,
+#flexToggle:checked ~ .winloss-content .winloss-numbers.flex {
+    display: block;
+}
+
+/* Show Solo or Flex text inside the pie chart */
+.pie-center .ranked-type {
+    position: absolute;
+    bottom: 10px;
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+}
+
+/* Button styling */
+.toggle-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.toggle-btn {
+    background: #1ea1f2;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+}
+
+.toggle-btn:hover {
+    background: #1276a8;
+}
+
+
+

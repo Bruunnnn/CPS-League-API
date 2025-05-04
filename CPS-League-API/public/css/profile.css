@@ -23,7 +23,7 @@
 }
 
 
-/* Fake profile icon box */
+/* profile icon box */
 .profile-icon {
     width: 80px;
     height: 80px    ;
@@ -71,13 +71,12 @@
 /* Update button */
 .update-button {
     background: #1ea1f2;
-    width: 134%;
+    width: 175px;
     color: white;
     font-size: 18px;
     padding: 8px 20px;
     border: none;
     border-radius: 10px;
-    display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;

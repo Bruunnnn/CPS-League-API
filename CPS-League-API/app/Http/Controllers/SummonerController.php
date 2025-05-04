@@ -61,7 +61,7 @@ class SummonerController extends Controller
 
         // Fetch mastery data from Riot API and store/update
         $masteryInfo = $riotService->getChampionMastery($puuid);
-        $topMastery = array_slice($masteryInfo, 0, 30);
+        $topMastery = array_slice($masteryInfo, 0, 20);
         foreach ($topMastery as $entry) {
             Mastery::updateOrCreate(
                 [
@@ -79,7 +79,7 @@ class SummonerController extends Controller
         }
 
         // Fetch match history and store/update
-        $matches = $riotService->getMatchHistory($puuid, 30);
+        $matches = $riotService->getMatchHistory($puuid, 20);
         foreach ($matches as $match) {
             foreach ($match['info']['participants'] as $participant) {
                 MatchHistory::updateOrCreate(
@@ -123,6 +123,30 @@ class SummonerController extends Controller
                 $rankedMap['flex'] = "{$ranked->tier} {$ranked->rank}";
             }
         }
+        $rankedData = Ranked::where('puuid', $puuid)->get();
+
+        $soloWins = 0;
+        $soloLosses = 0;
+        $flexWins = 0;
+        $flexLosses = 0;
+
+        foreach ($rankedData as $ranked) {
+            if ($ranked->queueType === 'RANKED_SOLO_5x5') {
+                $soloWins += $ranked->win ?? 0;
+                $soloLosses += $ranked->losses ?? 0;
+            } elseif ($ranked->queueType === 'RANKED_FLEX_SR') {
+                $flexWins += $ranked->win ?? 0;
+                $flexLosses += $ranked->losses ?? 0;
+            }
+        }
+
+        $totalSoloGames = $soloWins + $soloLosses;
+        $totalFlexGames = $flexWins + $flexLosses;
+
+        $soloWinratePercent = $totalSoloGames > 0 ? ($soloWins / $totalSoloGames) * 100 : 0;
+        $flexWinratePercent = $totalFlexGames > 0 ? ($flexWins / $totalFlexGames) * 100 : 0;
+
+
 
         // Fetch saved match history
         $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(10)->get();
@@ -131,6 +155,17 @@ class SummonerController extends Controller
             'summoner' => $summoner,
             'rankedMap' => $rankedMap,
             'matchHistory' => $matchHistory,
+            'rankedData' => $rankedData,
+            'soloWins' => $soloWins,
+            'soloLosses' => $soloLosses,
+            'totalSoloGames' => $totalSoloGames,
+            'soloWinratePercent' => $soloWinratePercent,
+            'flexWins' => $flexWins,
+            'flexLosses' => $flexLosses,
+            'totalFlexGames' => $totalFlexGames,
+            'flexWinratePercent' => $flexWinratePercent,
         ]);
+
+
     }
 }
