@@ -89,7 +89,7 @@
 /* Show Solo or Flex text inside the pie chart */
 .pie-center .ranked-type {
     position: absolute;
-    bottom: 10px;
+    margin-top: 50px;
     font-size: 12px;
     color: white;
     font-weight: bold;
