@@ -26,8 +26,8 @@
 /* Fake profile icon box */
 .profile-icon {
     width: 80px;
-    height: 80px;
-    background-color: #c0c0c0;
+    height: 80px    ;
+    object-fit: cover;
     border-radius: 10px;
 }
 
@@ -36,7 +36,7 @@
     position: absolute;
     top: -8px;
     left: -8px;
-    background: #a0a0a0;
+    background: #1ea1f2;
     color: white;
     font-size: 12px;
     padding: 2px 6px;
@@ -46,10 +46,14 @@
 
 /* Player details section */
 .player-details {
-    display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 10px;
+}
+.name-tag-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;  /* space between name and tag */
 }
 
 /* Player name text */
@@ -57,6 +61,11 @@
     font-size: 24px;
     font-weight: bold;
     color: white;
+}
+.player-tag-line {
+    font-size: 16px;
+    font-weight: lighter;
+    color: dimgrey;
 }
 
 /* Update button */

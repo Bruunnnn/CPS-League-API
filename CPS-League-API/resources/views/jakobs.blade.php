@@ -7,7 +7,6 @@
     <link rel=preconnect href="https://ddragon.leagueoflegends.com/cdn/14.8.1/data/en_US/champion.json">
     <link rel="stylesheet" href="{{asset('/css/frontpage.css')}}">
     <link rel="stylesheet" href="{{asset('/css/jakob.css')}}">
-    <script defer src="{{ asset('js/jakob.js') }}"></script>
 </head>
 <body>
 <header>

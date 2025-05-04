@@ -7,64 +7,82 @@ use App\Services\RiotService;
 use App\Models\Summoner;
 use App\Models\Mastery;
 use App\Models\MatchHistory;
+use Illuminate\Http\Request;
 
-
-class SummonerController extends Controller {
-    public function show($riotId, RiotService $riotService) {
+class SummonerController extends Controller
+{
+    public function show($riotId, RiotService $riotService)
+    {
+        // Split riotId into gameName and tagLine
         $parts = explode('-', $riotId);
-        if (count($parts) != 2) {
+        if (count($parts) !== 2) {
             return response("Invalid riot ID format", 400);
         }
-        [$gameName,$tagLine] = $parts;
+        [$gameName, $tagLine] = $parts;
 
+        // Fetch account info from Riot API
         $account = $riotService->getSummonerByName($gameName, $tagLine);
         if (!isset($account['puuid'])) {
             return response("Summoner not found", 404);
         }
 
-        $summonerInfo = $riotService->getSummonerByPuuid($account['puuid']);
+        $puuid = $account['puuid'];
+        $summonerInfo = $riotService->getSummonerByPuuid($puuid);
 
-        // summoner Json:
+        // Store or update summoner in DB
         $summoner = Summoner::updateOrCreate(
-            ['puuid' => $summonerInfo['puuid']],  // Match the summoner using puuid
+            ['puuid' => $puuid],
             [
-                'game_name' => $account['gameName'],         // In-game name (gameName)
-                'tag_line' => $account['tagLine'],      // Summoner tagLine
-                'summoner_id' => $summonerInfo['id'],   // Summoner's ID
-                'account_id' => $summonerInfo['accountId'],  // Account ID
-                'profile_icon_id' => $summonerInfo['profileIconId'], // Profile Icon ID
-                'summoner_level' => $summonerInfo['summonerLevel'],  // Summoner's level
+                'game_name' => $account['gameName'],
+                'tag_line' => $account['tagLine'],
+                'summoner_id' => $summonerInfo['id'],
+                'account_id' => $summonerInfo['accountId'],
+                'profile_icon_id' => $summonerInfo['profileIconId'],
+                'summoner_level' => $summonerInfo['summonerLevel'],
             ]
         );
 
-        $rankedsummoner = $riotService->getRankedBySummonerId($summoner['summoner_id']);
-
-        $masteryinfo = $riotService->getChampionMastery($account['puuid']);
-        $topMastery = array_slice($masteryinfo, 0, 30);
-
-        // mastery Json:
-        $mastery = [];
-        for ($i=0; $i <count($topMastery); $i++) {
-
-            $mastery[] = Mastery::updateOrCreate(
-                ['puuid' => $summonerInfo['puuid'],
-                    'championId' => $topMastery[$i]['championId'],
-                    ],
-
+        // Fetch ranked data from Riot API and store/update
+        $rankedSummoner = $riotService->getRankedBySummonerId($summoner->summoner_id);
+        foreach ($rankedSummoner as $rankedEntry) {
+            Ranked::updateOrCreate(
                 [
-                    'championLevel' => $topMastery[$i]['championLevel'],
-                    'championPoints' => $topMastery[$i]['championPoints'],
-                    'lastPlayTime' => $topMastery[$i]['lastPlayTime'],
-                    'championPointsSinceLastLevel' => $topMastery[$i]['championPointsSinceLastLevel'],
-                    'championPointsUntilNextLevel' => $topMastery[$i]['championPointsUntilNextLevel'],
+                    'puuid' => $puuid,
+                    'queueType' => $rankedEntry['queueType'],
+                ],
+                [
+                    'tier' => $rankedEntry['tier'] ?? 'UNRANKED',
+                    'rank' => $rankedEntry['rank'] ?? '-',
+                    'win' => $rankedEntry['wins'] ?? 0,
+                    'losses' => $rankedEntry['losses'] ?? 0,
                 ]
             );
         }
-        $matches = $riotService->getMatchHistory($account['puuid'], 30); // or count you want
 
+        // Fetch mastery data from Riot API and store/update
+        $masteryInfo = $riotService->getChampionMastery($puuid);
+        $topMastery = array_slice($masteryInfo, 0, 30);
+        foreach ($topMastery as $entry) {
+            Mastery::updateOrCreate(
+                [
+                    'puuid' => $puuid,
+                    'championId' => $entry['championId'],
+                ],
+                [
+                    'championLevel' => $entry['championLevel'],
+                    'championPoints' => $entry['championPoints'],
+                    'lastPlayTime' => $entry['lastPlayTime'],
+                    'championPointsSinceLastLevel' => $entry['championPointsSinceLastLevel'],
+                    'championPointsUntilNextLevel' => $entry['championPointsUntilNextLevel'],
+                ]
+            );
+        }
+
+        // Fetch match history and store/update
+        $matches = $riotService->getMatchHistory($puuid, 30);
         foreach ($matches as $match) {
             foreach ($match['info']['participants'] as $participant) {
-                $matchHistory[] = MatchHistory::updateOrCreate(
+                MatchHistory::updateOrCreate(
                     [
                         'puuid' => $participant['puuid'],
                         'gameId' => $match['info']['gameId'],
@@ -95,31 +113,24 @@ class SummonerController extends Controller {
             }
         }
 
-        //Ranked Json
-        $ranked = [];
-
-        for ($i = 0; $i < count($rankedsummoner); $i++) {
-            $ranked[] = Ranked::updateOrCreate(
-                [
-                    'puuid' => $summonerInfo['puuid'],
-                    'queueType' => $rankedsummoner[$i]['queueType'], // use queueType as unique per queue
-                ],
-                [
-                    'tier' => $rankedsummoner[$i]['tier']?? 'UNRANKED',
-                    'rank' => $rankedsummoner[$i]['rank']?? '-',
-                    'win' => $rankedsummoner[$i]['wins']?? 0,
-                    'losses' => $rankedsummoner[$i]['losses']?? 0,
-                ]
-            );
+        // Fetch saved ranked data from DB
+        $rankedData = Ranked::where('puuid', $puuid)->get();
+        $rankedMap = [];
+        foreach ($rankedData as $ranked) {
+            if ($ranked->queueType === 'RANKED_SOLO_5x5') {
+                $rankedMap['solo'] = "{$ranked->tier} {$ranked->rank}";
+            } elseif ($ranked->queueType === 'RANKED_FLEX_SR') {
+                $rankedMap['flex'] = "{$ranked->tier} {$ranked->rank}";
+            }
         }
 
+        // Fetch saved match history
+        $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(10)->get();
 
-        return response()->json([
+        return view('frontpage', [
             'summoner' => $summoner,
-            'ranked' => $ranked,
-            'mastery' => $mastery,
-            'matches' => $matchHistory,
+            'rankedMap' => $rankedMap,
+            'matchHistory' => $matchHistory,
         ]);
-
     }
 }

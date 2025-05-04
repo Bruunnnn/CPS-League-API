@@ -3,19 +3,17 @@
 use App\Http\Controllers\searchController;
 use App\Http\Controllers\SummonerController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\frontpageController;
+use App\Http\Controllers\FrontpageController;
 use App\Http\Controllers\nikolaisController;
 use App\Http\Controllers\jakobsController;
 use App\Http\Controllers\petersController;
 
-Route::get('/', [frontpageController::class, 'index']);
-
+Route::get('/summoner', [FrontpageController::class, 'index']);
 Route::get('/nikolais', [nikolaisController::class, 'index']);
 Route::get('/jakobs', [jakobsController::class, 'index']);
 Route::get("/peters", [petersController::class,'index']);
-
+Route::get('/', [searchController::class, 'index']);
 Route::get('/summoner/{riotId}', [SummonerController::class, 'show']);
-Route::get('/search', [searchController::class, 'index']);
 
 
 
