@@ -23,9 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Redirect to summoner page
         window.location.href = `/summoner/${formattedId}`;
-
-
-
     });
 });
 

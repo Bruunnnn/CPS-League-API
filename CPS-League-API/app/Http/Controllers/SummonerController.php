@@ -79,7 +79,7 @@ class SummonerController extends Controller
         }
 
         // Fetch match history and store/update
-        $matches = $riotService->getMatchHistory($puuid, 20);
+        $matches = $riotService->getMatchHistory($puuid, 15);
         foreach ($matches as $match) {
             foreach ($match['info']['participants'] as $participant) {
                 MatchHistory::updateOrCreate(

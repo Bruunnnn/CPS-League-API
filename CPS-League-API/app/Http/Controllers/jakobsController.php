@@ -41,7 +41,7 @@ class jakobsController extends Controller
             ];
         });
 
-        return view('jakobs', [
+        return view('frontpage', [
             'masteryCards' => $masteryCards
         ]);
     }
