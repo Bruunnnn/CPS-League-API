@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Http;
 class SummonerController extends Controller
 {
     public function summonerJson($riotId, RiotService $riotService) {
+        // Returns relevant functions for fetching puuid and summoner
+        // Returns Json summoner
         $parts = explode('-', $riotId);
         if (count($parts) !== 2) {
             return response("Invalid riot ID format", 400);
@@ -46,6 +48,7 @@ class SummonerController extends Controller
 
     public function rankedJson($summoner, RiotService $riotService)
     {
+        // Returns Json ranked
         $puuid = $summoner->puuid;
         $rankedSummoner = $riotService->getRankedBySummonerId($summoner->summoner_id);
         foreach ($rankedSummoner as $rankedEntry) {
@@ -67,6 +70,7 @@ class SummonerController extends Controller
 
     public function masteryJson($summoner, RiotService $riotService)
     {
+        // Returns Json mastery
         $puuid = $summoner->puuid;
         $masteryInfo = $riotService->getChampionMastery($puuid);
         $topMastery = array_slice($masteryInfo, 0, 20);
@@ -90,6 +94,7 @@ class SummonerController extends Controller
 
     public function matchHistoryJson($summoner, RiotService $riotService)
     {
+        // Returns Json matchhistory
         $puuid = $summoner->puuid;
         $matches = $riotService->getMatchHistory($puuid, 15);
         foreach ($matches as $match) {
@@ -129,20 +134,25 @@ class SummonerController extends Controller
 
     public function returnJson($riotId, RiotService $riotService)
     {
+        // Returns all json methods for /api/summoner/riotId
         $summoner = $this->summonerJson($riotId,$riotService);
         $rankedSummoner = $this->rankedJson($summoner,$riotService);
         $topMastery = $this->masteryJson($summoner,$riotService);
         $matchHistory = $this->matchHistoryJson($summoner,$riotService);
+        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/14.8.1/data/en_US/champion.json');
+
         return response()->json([
             'summoner' => $summoner,
             'rankedSummoner'=>$rankedSummoner,
             'topMastery'=>$topMastery,
-            'matchHistory'=>$matchHistory
+            'matchHistory'=>$matchHistory,
+            'championData'=>$response
         ]);
     }
 
     public function fetchDdragon()
     {
+        // Returns ddragon response
         $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/14.8.1/data/en_US/champion.json');
         $championData = $response->json()['data'];
         return $championData;
@@ -152,7 +162,7 @@ class SummonerController extends Controller
     {
        $summoner = $this->summonerJson($riotId,$riotService);
 
-        $puuid = $summoner["puuid"];
+        $puuid = $summoner->puuid;
         //dd($puuid);
         // Fetch ranked data from Riot API and store/update
         $this->rankedJson($summoner,$riotService);
@@ -166,7 +176,7 @@ class SummonerController extends Controller
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
 
-        $wins = $rankedData['wins'] ?? 0;
+        $wins = $rankedData['wins'] ?? 0;                 // Never used??? maybe used anyways, so care!
 
 
 
@@ -211,23 +221,36 @@ class SummonerController extends Controller
             }
 
             $latest = RankedHistory::where('puuid', $puuid)
-                ->where ('queue_type', $data['queue'])
+                ->where('queue_type', $data['queue'])
                 ->latest()
                 ->first();
 
-            $isNewData = !$latest ||
-                $latest->wins !== $data['wins'] ||
-                $latest->losses !== $data['losses'] ||
-                $latest->win_rate !== $data['win_rate'];
+//            $isNewData = !$latest ||
+//                $latest->wins !== $data['wins'] ||
+//                $latest->losses !== $data['losses'] ||
+//                $latest->win_rate !== $data['win_rate'];
+//
+//            if ($isNewData) {
+//                RankedHistory::create([
+//                    'puuid' => $puuid,
+//                    'queue_type' => $data['queue'],
+//                    'rank' => "{$ranked->tier} {$ranked->rank}",
+//                    'wins' => $data['wins'],
+//                    'losses' =>$data ['losses'],
+//                    'win_rate' =>$data['win_rate'],
+//                ]);
+//            }
+            $latestTotal = $latest ? ($latest->wins + $latest->losses) : 0;
+            $currentTotal = $data['wins'] + $data['losses'];
 
-            if ($isNewData) {
+            if ($currentTotal > $latestTotal) {
                 RankedHistory::create([
                     'puuid' => $puuid,
                     'queue_type' => $data['queue'],
                     'rank' => "{$ranked->tier} {$ranked->rank}",
                     'wins' => $data['wins'],
-                    'losses' =>$data ['losses'],
-                    'win_rate' =>$data['win_rate'],
+                    'losses' => $data['losses'],
+                    'win_rate' => $data['win_rate'],
                 ]);
             }
         }
