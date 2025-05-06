@@ -215,39 +215,37 @@ class SummonerController extends Controller
         foreach ([
             'solo' => ['wins' => $soloWins, 'losses' => $soloLosses, 'win_rate' => $soloWinratePercent, 'queue' => 'RANKED_SOLO_5x5'],
             'flex' => ['wins' => $flexWins, 'losses' => $flexLosses, 'win_rate' => $flexWinratePercent, 'queue' => 'RANKED_FLEX_SR'],
-            ] as $type => $data) {
+            ] as $data) {
             if ($data['wins'] + $data['losses'] === 0) {
                 continue;
             }
 
+            // Fetch what rank type it is, and then place that into the "rank" in the ranked_history model:
+            $queueRanks = [];
+
+            foreach (['RANKED_SOLO_5x5', 'RANKED_FLEX_SR'] as $queueType) {
+                $ranked = $rankedData->firstWhere('queueType', $queueType);
+                if ($ranked) {
+                    $queueRanks[$queueType] = "{$ranked->tier} {$ranked->rank}";
+                } else {
+                    $queueRanks[$queueType] = null;
+                }
+            }
             $latest = RankedHistory::where('puuid', $puuid)
                 ->where('queue_type', $data['queue'])
                 ->latest()
                 ->first();
 
-//            $isNewData = !$latest ||
-//                $latest->wins !== $data['wins'] ||
-//                $latest->losses !== $data['losses'] ||
-//                $latest->win_rate !== $data['win_rate'];
-//
-//            if ($isNewData) {
-//                RankedHistory::create([
-//                    'puuid' => $puuid,
-//                    'queue_type' => $data['queue'],
-//                    'rank' => "{$ranked->tier} {$ranked->rank}",
-//                    'wins' => $data['wins'],
-//                    'losses' =>$data ['losses'],
-//                    'win_rate' =>$data['win_rate'],
-//                ]);
-//            }
+            // Checks if current total is somehow larger than the latest total
             $latestTotal = $latest ? ($latest->wins + $latest->losses) : 0;
             $currentTotal = $data['wins'] + $data['losses'];
 
+            // If that is the case, create the new model:
             if ($currentTotal > $latestTotal) {
                 RankedHistory::create([
                     'puuid' => $puuid,
                     'queue_type' => $data['queue'],
-                    'rank' => "{$ranked->tier} {$ranked->rank}",
+                    'rank' => $queueRanks[$data['queue']],
                     'wins' => $data['wins'],
                     'losses' => $data['losses'],
                     'win_rate' => $data['win_rate'],
