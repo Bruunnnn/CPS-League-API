@@ -7,6 +7,7 @@ use App\Services\RiotService;
 use App\Models\Summoner;
 use App\Models\Mastery;
 use App\Models\MatchHistory;
+use App\Models\RankedHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -164,6 +165,11 @@ class SummonerController extends Controller
 
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
+
+        $wins = $rankedData['wins'] ?? 0;
+
+
+
         $rankedMap = [];
         foreach ($rankedData as $ranked) {
             if ($ranked->queueType === 'RANKED_SOLO_5x5') {
@@ -192,6 +198,39 @@ class SummonerController extends Controller
 
         $soloWinratePercent = $totalSoloGames > 0 ? ($soloWins / $totalSoloGames) * 100 : 0;
         $flexWinratePercent = $totalFlexGames > 0 ? ($flexWins / $totalFlexGames) * 100 : 0;
+
+
+        // Combines both the queues into a single loop
+
+        foreach ([
+            'solo' => ['wins' => $soloWins, 'losses' => $soloLosses, 'win_rate' => $soloWinratePercent, 'queue' => 'RANKED_SOLO_5x5'],
+            'flex' => ['wins' => $flexWins, 'losses' => $flexLosses, 'win_rate' => $flexWinratePercent, 'queue' => 'RANKED_FLEX_SR'],
+            ] as $type => $data) {
+            if ($data['wins'] + $data['losses'] === 0) {
+                continue;
+            }
+
+            $latest = RankedHistory::where('puuid', $puuid)
+                ->where ('queue_type', $data['queue'])
+                ->latest()
+                ->first();
+
+            $isNewData = !$latest ||
+                $latest->wins !== $data['wins'] ||
+                $latest->losses !== $data['losses'] ||
+                $latest->win_rate !== $data['win_rate'];
+
+            if ($isNewData) {
+                RankedHistory::create([
+                    'puuid' => $puuid,
+                    'queue_type' => $data['queue'],
+                    'rank' => "{$ranked->tier} {$ranked->rank}",
+                    'wins' => $data['wins'],
+                    'losses' =>$data ['losses'],
+                    'win_rate' =>$data['win_rate'],
+                ]);
+            }
+        }
 
 
 
