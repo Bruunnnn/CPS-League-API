@@ -42,13 +42,10 @@ class SummonerController extends Controller
         );
         return $summoner;
     }
-    public function show($riotId, RiotService $riotService)
-    {
-       $summoner = $this->summonerJson($riotId,$riotService);
 
-        $puuid = $summoner["puuid"];
-        //dd($puuid);
-        // Fetch ranked data from Riot API and store/update
+    public function rankedJson($summoner, RiotService $riotService)
+    {
+        $puuid = $summoner->puuid;
         $rankedSummoner = $riotService->getRankedBySummonerId($summoner->summoner_id);
         foreach ($rankedSummoner as $rankedEntry) {
             Ranked::updateOrCreate(
@@ -64,8 +61,12 @@ class SummonerController extends Controller
                 ]
             );
         }
+        return $rankedSummoner;
+    }
 
-        // Fetch mastery data from Riot API and store/update
+    public function masteryJson($summoner, RiotService $riotService)
+    {
+        $puuid = $summoner->puuid;
         $masteryInfo = $riotService->getChampionMastery($puuid);
         $topMastery = array_slice($masteryInfo, 0, 20);
         foreach ($topMastery as $entry) {
@@ -83,8 +84,12 @@ class SummonerController extends Controller
                 ]
             );
         }
+        return $topMastery;
+    }
 
-        // Fetch match history and store/update
+    public function matchHistoryJson($summoner, RiotService $riotService)
+    {
+        $puuid = $summoner->puuid;
         $matches = $riotService->getMatchHistory($puuid, 15);
         foreach ($matches as $match) {
             foreach ($match['info']['participants'] as $participant) {
@@ -118,6 +123,44 @@ class SummonerController extends Controller
                 );
             }
         }
+        return $matches;
+    }
+
+    public function returnJson($riotId, RiotService $riotService)
+    {
+        $summoner = $this->summonerJson($riotId,$riotService);
+        $rankedSummoner = $this->rankedJson($summoner,$riotService);
+        $topMastery = $this->masteryJson($summoner,$riotService);
+        $matchHistory = $this->matchHistoryJson($summoner,$riotService);
+        return response()->json([
+            'summoner' => $summoner,
+            'rankedSummoner'=>$rankedSummoner,
+            'topMastery'=>$topMastery,
+            'matchHistory'=>$matchHistory
+        ]);
+    }
+
+    public function fetchDdragon()
+    {
+        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/14.8.1/data/en_US/champion.json');
+        $championData = $response->json()['data'];
+        return $championData;
+    }
+
+    public function show($riotId, RiotService $riotService)
+    {
+       $summoner = $this->summonerJson($riotId,$riotService);
+
+        $puuid = $summoner["puuid"];
+        //dd($puuid);
+        // Fetch ranked data from Riot API and store/update
+        $this->rankedJson($summoner,$riotService);
+
+        // Fetch mastery data from Riot API and store/update
+        $this->masteryJson($summoner,$riotService);
+
+        // Fetch match history and store/update
+        $this->matchHistoryJson($summoner,$riotService);
 
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
@@ -129,8 +172,6 @@ class SummonerController extends Controller
                 $rankedMap['flex'] = "{$ranked->tier} {$ranked->rank}";
             }
         }
-        $rankedData = Ranked::where('puuid', $puuid)->get();
-
         $soloWins = 0;
         $soloLosses = 0;
         $flexWins = 0;
@@ -163,8 +204,7 @@ class SummonerController extends Controller
 
 
         // Fetch champion list from ddragon
-        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/14.8.1/data/en_US/champion.json');
-        $championData = $response->json()['data'];
+        $championData = $this->fetchDdragon();
 
         $championMap = [];
         foreach ($championData as $champion) {
