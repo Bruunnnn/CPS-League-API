@@ -9,12 +9,11 @@ use App\Models\Mastery;
 use App\Models\MatchHistory;
 use App\Models\RankedHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class SummonerController extends Controller
 {
-    public function show($riotId, RiotService $riotService)
-    {
-        // Split riotId into gameName and tagLine
+    public function summonerJson($riotId, RiotService $riotService) {
         $parts = explode('-', $riotId);
         if (count($parts) !== 2) {
             return response("Invalid riot ID format", 400);
@@ -42,7 +41,14 @@ class SummonerController extends Controller
                 'summoner_level' => $summonerInfo['summonerLevel'],
             ]
         );
+        return $summoner;
+    }
+    public function show($riotId, RiotService $riotService)
+    {
+       $summoner = $this->summonerJson($riotId,$riotService);
 
+        $puuid = $summoner["puuid"];
+        //dd($puuid);
         // Fetch ranked data from Riot API and store/update
         $rankedSummoner = $riotService->getRankedBySummonerId($summoner->summoner_id);
         foreach ($rankedSummoner as $rankedEntry) {
@@ -190,6 +196,37 @@ class SummonerController extends Controller
         // Fetch saved match history
         $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(10)->get();
 
+        $masteries = Mastery::where('puuid', $puuid)
+            ->orderByDesc('championPoints')
+            ->get();
+
+
+        // Fetch champion list from ddragon
+        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/14.8.1/data/en_US/champion.json');
+        $championData = $response->json()['data'];
+
+        $championMap = [];
+        foreach ($championData as $champion) {
+            $championMap[(int)$champion['key']] = [
+                'name' => $champion['id'],
+                'image' => "https://ddragon.leagueoflegends.com/cdn/14.8.1/img/champion/{$champion['id']}.png"
+            ];
+        }
+
+        // Map mastery data with champion info
+        $masteryCards = $masteries->map(function ($mastery) use ($championMap) {
+            $champion = $championMap[$mastery->championId];
+            return [
+                'championName' => $champion['name'],
+                'championImage' => $champion['image'],
+                'championLevel' => $mastery->championLevel,
+                'championPoints' => $mastery->championPoints,
+                'championPointsSinceLastLevel' => $mastery->championPointsSinceLastLevel,
+                'championPointsUntilNextLevel' => $mastery->championPointsUntilNextLevel,
+                'lastPlayTime' => $mastery->lastPlayTime,
+            ];
+        });
+
         return view('frontpage', [
             'summoner' => $summoner,
             'rankedMap' => $rankedMap,
@@ -203,6 +240,7 @@ class SummonerController extends Controller
             'flexLosses' => $flexLosses,
             'totalFlexGames' => $totalFlexGames,
             'flexWinratePercent' => $flexWinratePercent,
+            'masteryCards' => $masteryCards
         ]);
 
 

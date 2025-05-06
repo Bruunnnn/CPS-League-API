@@ -5,6 +5,16 @@
       <LaravelPintConfiguration tool_path="$PROJECT_DIR$/CPS-League-API/vendor/bin/pint" />
     </laravel_pint_settings>
   </component>
+  <component name="MessDetector">
+    <phpmd_settings>
+      <MessDetectorConfiguration asDefaultInterpreter="true" />
+    </phpmd_settings>
+  </component>
+  <component name="PhpCodeSniffer">
+    <phpcs_settings>
+      <PhpCSConfiguration asDefaultInterpreter="true" />
+    </phpcs_settings>
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/CPS-League-API/vendor/composer" />

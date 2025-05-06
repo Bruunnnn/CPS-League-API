@@ -8,12 +8,13 @@ use App\Http\Controllers\nikolaisController;
 use App\Http\Controllers\jakobsController;
 use App\Http\Controllers\petersController;
 
-Route::get('/summoner', [FrontpageController::class, 'index']);
-Route::get('/nikolais', [nikolaisController::class, 'index']);
-Route::get('/jakobs', [jakobsController::class, 'index']);
-Route::get("/peters", [petersController::class,'index']);
-Route::get('/', [searchController::class, 'index']);
-Route::get('/summoner/{riotId}', [SummonerController::class, 'show']);
+Route::get('/summoner', [FrontpageController::class, 'index'])->name("summoner");
+Route::get('/nikolais', [nikolaisController::class, 'index'])->name("nikolais");
+Route::get('/jakobs', [jakobsController::class, 'index'])->name("jakobs");
+Route::get("/peters", [petersController::class,'index'])->name("peters");
+Route::get('/', [searchController::class, 'index'])->name("search");
+Route::get('/api/summoner/{riotId}', [SummonerController::class , 'summonerJson'])->name("summonerJson");
+Route::get('/summoner/{riotId}', [SummonerController::class, 'show'])->name("show");
 
 
 

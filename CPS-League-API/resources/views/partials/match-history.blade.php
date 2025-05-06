@@ -42,6 +42,7 @@
                 <div class="player"><img src="https://via.placeholder.com/24" alt="Champ"><span>Player 4</span></div>
                 <div class="player"><img src="https://via.placeholder.com/24" alt="Champ"><span>Player 5</span></div>
             </div>
+
             <div class="team-column">
                 <div class="player"><img src="https://via.placeholder.com/24" alt="Champ"><span>Player 6</span></div>
                 <div class="player"><img src="https://via.placeholder.com/24" alt="Champ"><span>Player 7</span></div>
