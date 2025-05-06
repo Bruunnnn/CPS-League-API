@@ -13,11 +13,7 @@
             </div>
             <button class="update-button">Update</button>
         </div>
-
-
     </div>
-
-    @include('partials.feature')
 </div>
 
 

@@ -1,11 +1,8 @@
 /* Layout container */
 .player-card {
     display: flex;
-    padding: 15px;
-    gap: 140px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+    margin-right: 30px;
+    margin-top: 20px;
 }
 
 /* Profile icon and level badge */
@@ -15,7 +12,7 @@
 }
 .player-element {
     background-color: #1C1A2E;
-    width: 500px;
+    width: 410px;
     padding: 10px;
     border-radius: 10px;
     display: flex; /* Make children (icon + details) align horizontally */
