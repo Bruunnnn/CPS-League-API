@@ -73,7 +73,7 @@ class SummonerController extends Controller
         // Returns Json mastery
         $puuid = $summoner->puuid;
         $masteryInfo = $riotService->getChampionMastery($puuid);
-        $topMastery = array_slice($masteryInfo, 0, 20);
+        $topMastery = array_slice($masteryInfo, 0, 30);
         foreach ($topMastery as $entry) {
             Mastery::updateOrCreate(
                 [

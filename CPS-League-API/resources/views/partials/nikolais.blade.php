@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="right-column">
-    <div id="nikolais" class="personal">
+    <div id="nikolais" class="nikolai">
     </div>
 </div>
 

@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <title> SuperMegaOvernice-Softtek-Project </title>
     <script src="../js/search" ></script>
+    <script src="{{ asset('js/toggleFeatureButtons.js') }}"></script>
     <link rel="stylesheet" href="{{asset('/css/frontpage.css')}}">
 </head>
 
@@ -15,10 +16,10 @@
     <div class="Profile-wrapper">
         @include('partials.profile')
         <div class="feature-buttons">
-            <a class="feature-button">Match-History</a>
-            <a class="feature-button">Nikolai Feature</a>
-            <a class="feature-button">Jakob Feature</a>
-            <a class="feature-button">Peter Feature</a>
+            <a class="feature-button" data-target="match-history-feature">Match-History</a>
+            <a class="feature-button" data-target="nikolais-feature">Nikolai Feature</a>
+            <a class="feature-button" data-target="jakobs-feature">Jakob Feature</a>
+            <a class="feature-button" data-target="peters-feature">Peter Feature</a>
         </div>
     </div>
     <div class="content-wrapper">
@@ -28,14 +29,21 @@
         </div>
 
         <div class="right-column">
-            @include('partials.match-history')
-            @include('partials.peters')
-            @include('partials.nikolais')
-            @include('partials.jakobs')
+            <div id="match-history-feature" class="feature-section">
+                @include('partials.match-history')
+            </div>
+            <div id="peters-feature" class="feature-section">
+                @include('partials.peters')
+            </div>
+            <div id="nikolais-feature" class="feature-section">
+                @include('partials.nikolais')
+            </div>
+            <div id="jakobs-feature" class="feature-section">
+                @include('partials.jakobs')
+            </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>
 

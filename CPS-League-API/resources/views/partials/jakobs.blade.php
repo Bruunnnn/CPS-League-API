@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="right-column">
-    <div id="jakobs" class="personal">
+    <div id="jakobs" class="jakob">
         <div class="mastery-header">
             <div class="header-name">Name</div>
             <div class="header-icon">Icon</div>
