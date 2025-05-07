@@ -11,3 +11,5 @@
 ### If migrations have not been run, it won't be able to fetch data from the database models - Therefore, it would also be a good idea to run:
 * php artisan migrate:fresh
 ### If any changes have been made, or if the database models have more than 500 lines - This looks like the maximum amount of lines.
+
+## We know "withoutVerifying" is not the correct way to call our HTTP method responses, but we had trouble making all of our systems run the code, so we went with it.
