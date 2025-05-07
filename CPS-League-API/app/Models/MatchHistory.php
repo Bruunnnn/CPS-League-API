@@ -11,6 +11,7 @@ class MatchHistory extends Model
         'gameId',
         'puuid',
         'mapId',
+        'queueId',
         'endGameTimestamp',
         'win',
         'riotIdGameName',
@@ -30,5 +31,14 @@ class MatchHistory extends Model
         'item6',
         'summoner1Id',
         'summoner2Id',
+        'profile_icon_id',
     ];
+    public function getQueueTypeAttribute()
+    {
+        return match ($this->queueId) {
+            420 => 'RANKED_SOLO_5x5',
+            440 => 'RANKED_FLEX_SR',
+            default => 'Unranked',
+        };
+    }
 }

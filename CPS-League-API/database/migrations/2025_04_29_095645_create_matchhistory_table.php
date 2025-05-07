@@ -16,6 +16,7 @@ return new class extends Migration
             $table->biginteger('gameId');
             $table->string('puuid');
             $table->integer('mapId');
+            $table->integer('queueId')->nullable();
             $table->biginteger('endGameTimestamp');
             $table->boolean('win');
             $table->biginteger('gameDuration');
@@ -35,6 +36,7 @@ return new class extends Migration
             $table->integer('item6')->nullable();
             $table->integer('summoner1Id');
             $table->integer('summoner2Id');
+            $table->integer('profile_icon_id')->nullable();
             $table->timestamps();
         });
     }
@@ -44,6 +46,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('matchhisotry');
+        Schema::dropIfExists('matchHistory');
     }
 };

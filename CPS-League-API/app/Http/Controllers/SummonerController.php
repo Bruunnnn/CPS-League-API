@@ -91,12 +91,34 @@ class SummonerController extends Controller
         return $topMastery;
     }
 
-    public function matchHistoryJson(string $puuid, RiotService $riotService)
+    public function matchHistoryJson(String $puuid, RiotService $riotService)
     {
         // Returns Json matchhistory
         $matches = $riotService->getMatchHistory($puuid, 15);
         foreach ($matches as $match) {
             foreach ($match['info']['participants'] as $participant) {
+                $participantPuuid = $participant['puuid'];
+                // Try to get the summoner from DB first (cached)
+                $summoner = Summoner::where('puuid', $participantPuuid)->first();
+                // If not found in DB, fetch from Riot API and store it
+                if (!$summoner) {
+                    $summonerInfo = $riotService->getSummonerByPuuid($participantPuuid);
+                    if (!isset($summonerInfo['id'])) {
+                        continue; // skip if data is invalid
+                    }
+
+                    $summoner = Summoner::updateOrCreate(
+                        ['puuid' => $participantPuuid],
+                        [
+                            'game_name' => $participant['riotIdGameName'] ?? 'Unknown',
+                            'tag_line' => $participant['riotIdTagline'] ?? '',
+                            'summoner_id' => $summonerInfo['id'],
+                            'account_id' => $summonerInfo['accountId'],
+                            'profile_icon_id' => $summonerInfo['profileIconId'],
+                            'summoner_level' => $summonerInfo['summonerLevel'],
+                        ]
+                    );
+                }
                 MatchHistory::updateOrCreate(
                     [
                         'puuid' => $participant['puuid'],
@@ -104,6 +126,7 @@ class SummonerController extends Controller
                     ],
                     [
                         'mapId' => $match['info']['mapId'],
+                        'queueId' => $match['info']['queueId'] ?? 0,
                         'endGameTimestamp' => $match['info']['gameEndTimestamp'],
                         'win' => $participant['win'],
                         'riotIdGameName' => $participant['riotIdGameName'],
@@ -123,6 +146,7 @@ class SummonerController extends Controller
                         'item6' => $participant['item6'] ?? 0,
                         'summoner1Id' => $participant['summoner1Id'] ?? 0,
                         'summoner2Id' => $participant['summoner2Id'] ?? 0,
+                        'profile_icon_id' =>$summoner->profile_icon_id,
                     ]
                 );
             }
@@ -258,6 +282,7 @@ class SummonerController extends Controller
             ->orderByDesc('endGameTimestamp')
             ->take(10)
             ->get();
+
 
         $masteries = Mastery::where('puuid', $puuid)
             ->orderByDesc('championPoints')
