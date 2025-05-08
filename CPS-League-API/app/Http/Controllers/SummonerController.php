@@ -13,6 +13,25 @@ use Illuminate\Support\Facades\Http;
 
 class SummonerController extends Controller
 {
+    private function getQueueMappings()
+    {
+        $response = Http::withoutVerifying()->get('https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/queues.json');
+
+        if ($response->successful()) {
+            $queues = $response->json();
+
+            // Map queueId to description
+            $queueMap = [];
+            foreach ($queues as $queue) {
+                $queueMap[$queue['id']] = $queue['shortName'] ?? 'Unknown';
+            }
+
+            return $queueMap;
+        }
+
+        return [];
+    }
+
     public function summonerJson($riotId, RiotService $riotService) {
         // Returns relevant functions for fetching puuid and summoner
         // Returns Json summoner
@@ -27,6 +46,7 @@ class SummonerController extends Controller
         if (!isset($account['puuid'])) {
             return response("Summoner not found, or API-key not set", 404);
         }
+
 
         $puuid = $account['puuid'];
         $summonerInfo = $riotService->getSummonerByPuuid($puuid);
@@ -274,14 +294,18 @@ class SummonerController extends Controller
                 ]);
             }
         }
-
-
+        $queueMap = $this->getQueueMappings();
 
         // Fetch stored match history & mastery
         $matchHistory = MatchHistory::where('puuid', $puuid)
             ->orderByDesc('endGameTimestamp')
             ->take(10)
-            ->get();
+            ->get()
+        ->map(function ($match) use ($queueMap) {
+        $match->queue_type = $queueMap[$match->queueId] ?? 'Unknown';
+        return $match;
+    });
+
 
 
         $masteries = Mastery::where('puuid', $puuid)
@@ -326,7 +350,9 @@ class SummonerController extends Controller
             'flexLosses' => $flexLosses,
             'totalFlexGames' => $totalFlexGames,
             'flexWinratePercent' => $flexWinratePercent,
-            'masteryCards' => $masteryCards
+            'queueMap' => $queueMap,
+            'masteryCards' => $masteryCards,
+            'championMap' => $championMap
         ]);
 
 
