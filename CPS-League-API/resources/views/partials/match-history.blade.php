@@ -28,14 +28,14 @@
                 <div class="items-row">
                     @foreach ([$match->item0, $match->item1, $match->item2, $match->item6] as $item)
                     @if ($item)
-                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/14.9.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
+                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.9.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
                     @endif
                     @endforeach
                 </div>
                 <div class="items-row">
                     @foreach ([$match->item3, $match->item4, $match->item5] as $item)
                     @if ($item)
-                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/14.9.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
+                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.9.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
                     @endif
                     @endforeach
                 </div>
@@ -46,12 +46,12 @@
                 {{-- Placeholder for actual team members; you’ll need to fetch and render them --}}
                 <div class="team-column">
                     @for ($i = 1; $i <= 5; $i++)
-                    <div class="player"><img src='https://ddragon.leagueoflegends.com/cdn/14.9.1/img/profileicon/{{ $summoner->profile_icon_id }}.png' alt="Champ"><span>Player {{ $i }}</span></div>
+                    <div class="player"><img src='https://ddragon.leagueoflegends.com/cdn/15.9.1/img/profileicon/{{ $summoner->profile_icon_id }}.png' alt="Champ"><span>Player {{ $i }}</span></div>
                     @endfor
                 </div>
                 <div class="team-column">
                     @for ($i = 6; $i <= 10; $i++)
-                    <div class="player"><img src='https://ddragon.leagueoflegends.com/cdn/14.9.1/img/profileicon/{{ $summoner->profile_icon_id }}.png' alt="Champ"><span>Player {{ $i }}</span></div>
+                    <div class="player"><img src='https://ddragon.leagueoflegends.com/cdn/15.9.1/img/profileicon/{{ $summoner->profile_icon_id }}.png' alt="Champ"><span>Player {{ $i }}</span></div>
                     @endfor
                 </div>
             </div>

@@ -186,7 +186,7 @@ class SummonerController extends Controller
         $rankedSummoner = $this->rankedJson($puuid,$riotService);
         $topMastery = $this->masteryJson($puuid,$riotService);
         $matchHistory = $this->matchHistoryJson($puuid,$riotService);
-        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/14.8.1/data/en_US/champion.json');
+        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.9.1/data/en_US/champion.json');
 
         return response()->json([
             'summoner' => $summoner,
@@ -200,7 +200,7 @@ class SummonerController extends Controller
     public function fetchDdragon()
     {
         // Returns ddragon response
-        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/14.8.1/data/en_US/champion.json');
+        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.9.1/data/en_US/champion.json');
         $championData = $response->json()['data'];
         return $championData;
     }
@@ -319,7 +319,7 @@ class SummonerController extends Controller
         foreach ($championData as $champion) {
             $championMap[(int)$champion['key']] = [
                 'name' => $champion['id'],
-                'image' => "https://ddragon.leagueoflegends.com/cdn/14.8.1/img/champion/{$champion['id']}.png"
+                'image' => "https://ddragon.leagueoflegends.com/cdn/15.9.1/img/champion/{$champion['id']}.png"
             ];
         }
 
