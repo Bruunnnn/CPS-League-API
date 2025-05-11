@@ -14,7 +14,6 @@
     grid-template-columns: 155px 100px 0.8fr 1.2fr 2fr;
     align-items: center;
     width: 100%;
-    gap: 20px;
 }
 
 .match-info-left {
@@ -70,18 +69,21 @@
 /* Players */
 .players-columns {
     display: flex;
-    gap: 16px;
+    gap: 32px;
+    justify-content: center;
 }
 
 .team-column-left{
     display: flex;
     flex-direction: column;
     gap: 4px;
+    width: 140px;
 }
 .team-column-right{
     display: flex;
     flex-direction: column;
     gap: 4px;
+    width: 140px;
 }
 
 .player {
@@ -109,9 +111,8 @@
 }
 
 .player img {
-    width: 22px;
-    height: 22px;
-    border-radius: 4px;
+    width: 23px;
+    height: 23px;
     flex-shrink: 0;
 }
 
