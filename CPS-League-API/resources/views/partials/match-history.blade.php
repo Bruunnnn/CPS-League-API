@@ -1,7 +1,12 @@
-<link rel="stylesheet" href={{asset('/css/match-history.css')}}>
+<div id="match-history-feature" class="feature-section">
+    <link rel="stylesheet" href="{{ asset('/css/match-history.css') }}">
 
-<div id="match-history-feature" class="feature-section"> <link rel="stylesheet" href="{{ asset('/css/match-history.css') }}">
-    @foreach($matchHistory as $match)
+    @foreach($matches as $game)
+    @php
+    $match = $game['match'];
+    $players = $game['players'];
+    @endphp
+
     <div class="match-card {{ $match->win ? 'match-win' : 'match-loss' }}">
         <div class="match-main">
             <div class="match-info-left">
@@ -41,18 +46,22 @@
                 </div>
             </div>
 
-
             <div class="players-columns">
-                {{-- Placeholder for actual team members; you’ll need to fetch and render them --}}
                 <div class="team-column">
-                    @for ($i = 1; $i <= 5; $i++)
-                    <div class="player"><img src='https://ddragon.leagueoflegends.com/cdn/15.9.1/img/profileicon/{{ $summoner->profile_icon_id }}.png' alt="Champ"><span>Player {{ $i }}</span></div>
-                    @endfor
+                    @foreach($players->slice(0, 5) as $player)
+                    <div class="player">
+                        <img src="{{ $championMap[$player->championId]['image'] ?? 'fallback.png' }}" alt="Champ">
+                        <span>{{ $player->riotIdGameName }}</span>
+                    </div>
+                    @endforeach
                 </div>
                 <div class="team-column">
-                    @for ($i = 6; $i <= 10; $i++)
-                    <div class="player"><img src='https://ddragon.leagueoflegends.com/cdn/15.9.1/img/profileicon/{{ $summoner->profile_icon_id }}.png' alt="Champ"><span>Player {{ $i }}</span></div>
-                    @endfor
+                    @foreach($players->slice(5, 5) as $player)
+                    <div class="player">
+                        <img src="{{ $championMap[$player->championId]['image'] ?? 'fallback.png' }}" alt="Champ">
+                        <span>{{ $player->riotIdGameName }}</span>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
