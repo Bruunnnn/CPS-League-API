@@ -47,19 +47,19 @@
             </div>
 
             <div class="players-columns">
-                <div class="team-column">
+                <div class="team-column-left">
                     @foreach($players->slice(0, 5) as $player)
-                    <div class="player">
+                    <div class="player left">
                         <img src="{{ $championMap[$player->championId]['image'] ?? 'fallback.png' }}" alt="Champ">
                         <span>{{ $player->riotIdGameName }}</span>
                     </div>
                     @endforeach
                 </div>
-                <div class="team-column">
+                <div class="team-column-right">
                     @foreach($players->slice(5, 5) as $player)
-                    <div class="player">
-                        <img src="{{ $championMap[$player->championId]['image'] ?? 'fallback.png' }}" alt="Champ">
+                    <div class="player right">
                         <span>{{ $player->riotIdGameName }}</span>
+                        <img src="{{ $championMap[$player->championId]['image'] ?? 'fallback.png' }}" alt="Champ">
                     </div>
                     @endforeach
                 </div>

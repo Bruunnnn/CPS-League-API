@@ -11,7 +11,7 @@
 /* Right/main content */
 .match-main {
     display: grid;
-    grid-template-columns: 155px 100px 1fr 1.5fr 1.5fr;
+    grid-template-columns: 155px 100px 0.8fr 1.2fr 2fr;
     align-items: center;
     width: 100%;
     gap: 20px;
@@ -73,7 +73,12 @@
     gap: 16px;
 }
 
-.team-column {
+.team-column-left{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.team-column-right{
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -83,11 +88,30 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    font-size: 14px;
+    font-size: 16px;
+}
+
+.player.left {
+    flex-direction: row;
+}
+
+.player.right {
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.player span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    display: inline-block;
 }
 
 .player img {
     width: 20px;
     height: 20px;
     border-radius: 4px;
+    flex-shrink: 0;
 }
+
