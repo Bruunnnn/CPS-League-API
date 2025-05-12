@@ -4,5 +4,6 @@
     <a href="/nikolais" class="feature-button">Nikolai Feature</a>
     <a href="/jakobs" class="feature-button">Jakob Feature</a>
     <a href="/peters" class="feature-button">Peter Feature</a>
+    <a href="graph.blade.php" class="graph-button">Graph Feature</a>
 
 </div>
