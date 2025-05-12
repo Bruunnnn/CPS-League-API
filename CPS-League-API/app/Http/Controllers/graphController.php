@@ -10,5 +10,9 @@ class graphController extends Controller
         return view('graph');
     }
 
+    public function LineChart()
+    {
+        return "hi There";
+    }
 
 }
