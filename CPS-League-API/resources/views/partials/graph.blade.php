@@ -8,6 +8,13 @@
 <body>
 
 <h2>Match History: Win/Loss for the 5 latest games</h2>
+
+<pre>
+    Labels: {!! json_encode($matchLabels ?? []) !!}
+    Data: {!!   json_encode($matchWinValues ?? [])!!}
+
+</pre>
+
 <canvas id="matchHistoryGraph" width="600" height="300"></canvas>
 
 <script>

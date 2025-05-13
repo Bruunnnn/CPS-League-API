@@ -243,7 +243,7 @@ class SummonerController extends Controller
         $matchLabels = $latestMatches->map(fn($match) => date('Y-m-d',$match->endGameTimeStamp / 1000));
 
         // matchWinValues shows your skills for your latest 5 matches - or your skill-issue
-        $matchWinValues = $latestMatches->pluck('win');
+        $matchWinValues = $latestMatches->map(fn($match) => $match->win ? 1 : 0);
 
         //$graphValues = $latestRanked->map(function ($entry) {
         //    $totalGames = $entry->win + $entry->losses;
