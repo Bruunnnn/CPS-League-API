@@ -21,13 +21,15 @@
 
     // Logic for Match history win/loss graph
 
+    window.onload = function () {
+
     const matchHistoryContext = document.getElementById('matchHistoryGraph').getContext('2d');
     const matchGraph = new Chart(matchHistoryContext, {
         type: 'line',
         data: {
             labels: {!!json_encode($matchLabels ?? [])!!},
             datasets: [{
-                label: 'Win (1 / Loss (0))',
+                label: 'Win (1) / Loss (0)',
                 data: {!!json_encode($matchWinValues ?? [])!!},
                 borderColor: 'green',
                     borderWidth: 2,
@@ -51,6 +53,7 @@
             }
         }
     });
+    };
 
 
 </script>
