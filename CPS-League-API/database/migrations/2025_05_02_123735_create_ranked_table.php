@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('rank')->nullable();
             $table->integer('win')->nullable();
             $table->integer('losses')->nullable();
+            $table->float('win_rate')->nullable();
             $table->timestamps();
         });
     }

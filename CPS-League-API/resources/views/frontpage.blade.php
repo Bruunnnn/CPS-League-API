@@ -37,8 +37,11 @@
                 @include('partials.peters')
             </div>
 
-            <div id="graph" class="feature-section"
-                 @include('partials.graph')
+            <div id="graph" class="feature-section">
+                 @include('partials.graph', [
+                'matchLabels' => $matchLabels,
+                'matchWinValues' => $matchWinValues
+                ])
             </div>
 
             <div id="nikolais-feature" class="feature-section">

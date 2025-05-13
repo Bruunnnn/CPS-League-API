@@ -19,44 +19,6 @@
     <input type="radio" id="flexToggle" name="rankedToggle">
 
 
-
-        <!--<canvas id="winLossChart" width="600" height="300"></canvas> -->
-<!--
-        <script>
-            const ctx = document.getElementById('winLossChart').getContext('2d');
-
-            const winLossChart = new Chart(ctx, {
-                type: 'line', // You can change to 'line' if preferred
-                data: {
-                    labels: ['Solo', 'Flex'],
-                    datasets: [
-                        {
-                            label: 'Wins',
-                            data: [{{ $soloWins }}, {{ $flexWins }}],
-            backgroundColor: 'rgba(75, 192, 192, 0.6)'
-            },
-            {
-                label: 'Losses',
-                    data: [{{ $soloLosses }}, {{ $flexLosses }}],
-                backgroundColor: 'rgba(255, 99, 132, 0.6)'
-            }
-            ]
-            },
-            options: {
-                responsive: true,
-                    scales: {
-                    y: {
-                        beginAtZero: true,
-                            ticks: {
-                            precision: 0
-                        }
-                    }
-                }
-            }
-            });
-        </script>
--->
-
     <div class="winloss-content">
         <!-- Pie chart for solo -->
         <div class="pie-chart solo" style="--win: {{ round($soloWinratePercent, 1) }}%;">

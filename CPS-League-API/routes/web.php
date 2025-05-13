@@ -13,7 +13,7 @@ Route::get('/summoner', [FrontpageController::class, 'index'])->name("summoner")
 Route::get('/nikolais', [nikolaisController::class, 'index'])->name("nikolais");
 Route::get('/jakobs', [jakobsController::class, 'index'])->name("jakobs");
 Route::get("/peters", [petersController::class,'index'])->name("peters");
-Route::get('/graph', [graphController::class,'LineChart'])->name("graph");
+Route::get('/graph', [graphController::class,'index'])->name("graph");
 Route::get('/', [searchController::class, 'index'])->name("search");
 Route::get('/api/summoner/{riotId}', [SummonerController::class , 'returnJson'])->name("returnJson");
 Route::get('/summoner/{riotId}', [SummonerController::class, 'show'])->name("show");

@@ -226,6 +226,32 @@ class SummonerController extends Controller
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
 
+        // From the player entered, get the latest 5 entries sorted form oldest to newest
+        $latestMatches = MatchHistory::where('puuid', $puuid)
+            ->orderByDesc('endGameTimestamp')
+            ->take(5)
+            ->get()
+            ->sortBy('endGameTimestamp');
+
+
+
+        // Pluck the date from the latestRanked entries
+        // Pluck the values from the entries and add the total-games played with wins and losses
+        // return the total games where entries that the player have won, is calculated in percentages
+
+        // The matchLabels shows the timestamp for the given match
+        $matchLabels = $latestMatches->map(fn($match) => date('Y-m-d',$match->endGameTimeStamp / 1000));
+
+        // matchWinValues shows your skills for your latest 5 matches - or your skill-issue
+        $matchWinValues = $latestMatches->pluck('win');
+
+        //$graphValues = $latestRanked->map(function ($entry) {
+        //    $totalGames = $entry->win + $entry->losses;
+        //    return $totalGames > 0 ? round(($entry->win / $totalGames) * 100, 2) : 0;
+        //});
+
+
+
         $wins = $rankedData['wins'] ?? 0;                 // Never used??? maybe used anyways, so care!
 
 
@@ -236,6 +262,8 @@ class SummonerController extends Controller
         foreach ($rankedData as $ranked) {
             if ($ranked->queueType === 'RANKED_SOLO_5x5') {
                 $rankedMap['solo'] = "{$ranked->tier} {$ranked->rank}";
+                // soloWins adds the ranked data tables win column
+                // Same applies for the soloLosses
                 $soloWins += $ranked->win ?? 0;
                 $soloLosses += $ranked->losses ?? 0;
             } elseif ($ranked->queueType === 'RANKED_FLEX_SR') {
@@ -361,7 +389,10 @@ class SummonerController extends Controller
             'championMap' => $championMap,
 //            'groupedMatches'=>$groupedMatches,
 //            'allPlayers' => $allPlayers,
-            'matches' => $groupedMatches
+            'matches' => $groupedMatches,
+            'matchLabels' => $matchLabels,
+            'matchWinValues' => $matchWinValues,
+
         ]);
 
 

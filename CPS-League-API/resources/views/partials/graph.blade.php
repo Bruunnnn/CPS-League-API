@@ -1,37 +1,51 @@
 <html>
+
 <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Year', 'Sales', 'Expenses'],
-                ['2004',  1000,      400],
-                ['2005',  1170,      460],
-                ['2006',  660,       1120],
-                ['2007',  1030,      540]
-            ]);
-
-            var options = {
-                title: 'Win-loss Ratio',
-                curveType: 'function',
-                legend: { position: 'bottom' }
-            };
-
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-            chart.draw(data, options);
-        }
-    </script>
+    <title>Graphs</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
 
-<div id="curve_chart" style="width: 900px; height: 500px"></div>
+<h2>Match History: Win/Loss for the 5 latest games</h2>
+<canvas id="matchHistoryGraph" width="600" height="300"></canvas>
 
-<div class="graph"> </div>
+<script>
 
+    // Logic for Match history win/loss graph
+
+    const matchHistoryContext = document.getElementById('matchHistoryGraph').getContext('2d');
+    const matchGraph = new Chart(matchHistoryContext, {
+        type: 'line',
+        data: {
+            labels: {!!json_encode($matchLabels ?? [])!!},
+            datasets: [{
+                label: 'Win (1 / Loss (0))',
+                data: {!!json_encode($matchWinValues ?? [])!!},
+                borderColor: 'green',
+                    borderWidth: 2,
+                fill: false,
+                tension: 0.3
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 0,
+                        max: 1,
+                        ticks:{
+                        stepSize: 1
+                    },
+                        title: {
+                        display: true,
+                            text: 'Result'
+                    }
+                }
+            }
+        }
+    });
+
+
+</script>
 </body>
-
 </html>
