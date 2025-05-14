@@ -4,7 +4,7 @@
     <div class="player-element">
         <div class="profile-wrapper">
             <div class="level-label">{{'Lv.' . $summoner->summoner_level }}</div>
-            <img class="profile-icon" src='https://ddragon.leagueoflegends.com/cdn/15.9.1/img/profileicon/{{ $summoner->profile_icon_id }}.png' >
+            <img class="profile-icon" src='https://ddragon.leagueoflegends.com/cdn/15.10.1/img/profileicon/{{ $summoner->profile_icon_id }}.png' >
         </div>
         <div class="player-details">
             <div class="name-tag-wrapper">
