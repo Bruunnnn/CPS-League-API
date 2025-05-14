@@ -4,7 +4,6 @@ namespace App\Services;
 use App\Models\Mastery;
 use Illuminate\Support\Facades\Http;
 
-
 class RiotService
 {
 
@@ -27,7 +26,6 @@ class RiotService
         // Riot requires this header
         $response = Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
-            //withoutVerifying disables the SSL certification, should not be done if it´s going out to production.
         ])->withoutVerifying()->get($url);
         return $response->json();
     }
@@ -36,7 +34,6 @@ class RiotService
     {
         $matchIds = Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
-            //withoutVerifying disables the SSL certification, should not be done if it´s going out to production.
         ])->withoutVerifying()->get("https://europe.api.riotgames.com/lol/match/v5/matches/by-puuid/{$puuid}/ids", [
             'count' => $count,
         ])->json();
@@ -46,7 +43,6 @@ class RiotService
         foreach ($matchIds as $matchId) {
             $matchData = Http::withHeaders([
                 'X-Riot-Token' => $this->riotApi,
-                ////withoutVerifying disables the SSL certification, should not be done if it´s going out to production.
             ])->withoutVerifying()->get("https://europe.api.riotgames.com/lol/match/v5/matches/{$matchId}")->json();
 
             $matches[] = $matchData;
@@ -61,7 +57,6 @@ class RiotService
         $url = "https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{$puuid}";
         $response = Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
-            //withoutVerifying disables the SSL certification, should not be done if it´s going out to production.
         ])->withoutVerifying()->get($url);
 
         return $response->json();
@@ -73,7 +68,6 @@ class RiotService
 
         $response = Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
-            //withoutVerifying disables the SSL certification, should not be done if it´s going out to production.
         ])->withoutVerifying()->get($url);
 
         return $response->json();
@@ -84,13 +78,10 @@ class RiotService
 
         $response = Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
-            //withoutVerifying disables the SSL certification, should not be done if it´s going out to production.
         ])->withoutVerifying()->get($url);
 
         return $response->json();
     }
-
-
 
 
     // Storing in the database
@@ -127,5 +118,4 @@ class RiotService
 
         return response()->json($summoner,$mastery);
     }
-
 }

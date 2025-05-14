@@ -6,7 +6,6 @@
     <title> SuperMegaOvernice-Softtek-frontpage </title>
     <link rel="stylesheet" href="{{asset('/css/jakob.css')}}">
     <link rel="stylesheet" href="{{asset('/css/frontpage.css')}}">
-    <script src="{{ asset('js/frontpage.js') }}"></script>
 </head>
 <body>
 <div class="right-column">
@@ -41,8 +40,5 @@
         @endforeach
     </div>
 </div>
-</div>
-</div>
-
 </body>
 </html>

@@ -36,7 +36,6 @@ return new class extends Migration
             $table->integer('item6')->nullable();
             $table->integer('summoner1Id');
             $table->integer('summoner2Id');
-            $table->integer('profile_icon_id')->nullable();
             $table->timestamps();
         });
     }

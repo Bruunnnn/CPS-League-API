@@ -117,28 +117,6 @@ class SummonerController extends Controller
         $matches = $riotService->getMatchHistory($puuid, 20);
         foreach ($matches as $match) {
             foreach ($match['info']['participants'] as $participant) {
-                $participantPuuid = $participant['puuid'];
-//                // Try to get the summoner from DB first (cached)
-//                $summoner = Summoner::where('puuid', $participantPuuid)->first();
-//                // If not found in DB, fetch from Riot API and store it
-//                if (!$summoner) {
-//                    $summonerInfo = $riotService->getSummonerByPuuid($participantPuuid);
-//                    if (!isset($summonerInfo['id'])) {
-//                        continue; // skip if data is invalid
-//                    }
-//
-//                    $summoner = Summoner::updateOrCreate(
-//                        ['puuid' => $participantPuuid],
-//                        [
-//                            'game_name' => $participant['riotIdGameName'] ?? 'Unknown',
-//                            'tag_line' => $participant['riotIdTagline'] ?? '',
-//                            'summoner_id' => $summonerInfo['id'],
-//                            'account_id' => $summonerInfo['accountId'],
-//                            'profile_icon_id' => $summonerInfo['profileIconId'],
-//                            'summoner_level' => $summonerInfo['summonerLevel'],
-//                        ]
-//                    );
-//                }
                 MatchHistory::updateOrCreate(
                     [
                         'puuid' => $participant['puuid'],
@@ -166,7 +144,6 @@ class SummonerController extends Controller
                         'item6' => $participant['item6'] ?? 0,
                         'summoner1Id' => $participant['summoner1Id'] ?? 0,
                         'summoner2Id' => $participant['summoner2Id'] ?? 0,
-//                        'profile_icon_id' =>$summoner->profile_icon_id,
                     ]
                 );
             }
@@ -225,8 +202,6 @@ class SummonerController extends Controller
 
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
-
-        $wins = $rankedData['wins'] ?? 0;                 // Never used??? maybe used anyways, so care!
 
 
         // Create ranked maps and stats
@@ -306,14 +281,6 @@ class SummonerController extends Controller
             ];
         });
 
-        // Groups matches with the gameId
-//        $groupedMatches = $matchHistory->groupBy('gameId');
-//        $gameIds = $matchHistory->pluck('gameId');
-//        $allPlayers = MatchHistory::whereIn('gameId', $gameIds)->get()->groupBy('gameId');
-
-
-
-
         $masteries = Mastery::where('puuid', $puuid)
             ->orderByDesc('championPoints')
             ->get();
@@ -359,8 +326,6 @@ class SummonerController extends Controller
             'queueMap' => $queueMap,
             'masteryCards' => $masteryCards,
             'championMap' => $championMap,
-//            'groupedMatches'=>$groupedMatches,
-//            'allPlayers' => $allPlayers,
             'matches' => $groupedMatches
         ]);
 
