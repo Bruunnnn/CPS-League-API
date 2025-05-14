@@ -116,6 +116,9 @@ class SummonerController extends Controller
         // Returns Json matchhistory
         $matches = $riotService->getMatchHistory($puuid, 20);
         foreach ($matches as $match) {
+            if (!isset($match['info']['participants'])) {
+                continue;
+            }
             foreach ($match['info']['participants'] as $participant) {
                 MatchHistory::updateOrCreate(
                     [
@@ -123,7 +126,7 @@ class SummonerController extends Controller
                         'gameId' => $match['info']['gameId'],
                     ],
                     [
-                        'mapId' => $match['info']['mapId'],
+                        'mapId' => $match['info']['mapId']== 0,
                         'queueId' => $match['info']['queueId'] ?? 0,
                         'endGameTimestamp' => $match['info']['gameEndTimestamp'],
                         'win' => $participant['win'],
