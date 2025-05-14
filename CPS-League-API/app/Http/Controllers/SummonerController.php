@@ -114,7 +114,7 @@ class SummonerController extends Controller
     public function matchHistoryJson(String $puuid, RiotService $riotService)
     {
         // Returns Json matchhistory
-        $matches = $riotService->getMatchHistory($puuid, 15);
+        $matches = $riotService->getMatchHistory($puuid, 20);
         foreach ($matches as $match) {
             foreach ($match['info']['participants'] as $participant) {
                 $participantPuuid = $participant['puuid'];
@@ -297,7 +297,7 @@ class SummonerController extends Controller
         $queueMap = $this->getQueueMappings();
 
         // Fetch stored match history & mastery
-        $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(10)->get();
+        $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(20)->get();
         $groupedMatches = $matchHistory->map(function ($match){
             $players = MatchHistory::where('gameId',$match->gameId)->get();
             return [
