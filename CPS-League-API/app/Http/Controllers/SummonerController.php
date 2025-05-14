@@ -6,9 +6,9 @@ use App\Models\Ranked;
 use App\Services\RiotService;
 use App\Models\Summoner;
 use App\Models\Mastery;
+use App\Models\ChampionRotation;
 use App\Models\MatchHistory;
 use App\Models\RankedHistory;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class SummonerController extends Controller
@@ -189,6 +189,7 @@ class SummonerController extends Controller
             // Throws error response if we get a "response" returned, then proceeds
             return $summoner;
         }
+
         $puuid = $summoner->puuid;
         //dd($puuid);
         // Fetch ranked data from Riot API and store/update
