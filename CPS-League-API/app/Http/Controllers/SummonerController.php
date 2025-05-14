@@ -88,7 +88,7 @@ class SummonerController extends Controller
         return $rankedSummoner;
     }
 
-    public function masteryJson(string $puuid, RiotService $riotService)
+    public function jakobFeatureMastery(string $puuid, RiotService $riotService)
     {
         // Returns Json mastery
         $masteryInfo = $riotService->getChampionMastery($puuid);
@@ -161,7 +161,7 @@ class SummonerController extends Controller
         }
         $puuid = $summoner->puuid;
         $rankedSummoner = $this->rankedJson($puuid,$riotService);
-        $topMastery = $this->masteryJson($puuid,$riotService);
+        $topMastery = $this->jakobFeatureMastery($puuid,$riotService);
         $matchHistory = $this->matchHistoryJson($puuid,$riotService);
         $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.9.1/data/en_US/champion.json');
 
@@ -195,7 +195,7 @@ class SummonerController extends Controller
         $this->rankedJson($puuid,$riotService);
 
         // Fetch mastery data from Riot API and store/update
-        $this->masteryJson($puuid,$riotService);
+        $this->jakobFeatureMastery($puuid,$riotService);
 
         // Fetch match history and store/update
         $this->matchHistoryJson($puuid,$riotService);
