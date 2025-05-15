@@ -9,6 +9,7 @@ use App\Models\Mastery;
 use App\Models\MatchHistory;
 use App\Models\RankedHistory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class SummonerController extends Controller
@@ -226,32 +227,6 @@ class SummonerController extends Controller
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
 
-        // From the player entered, get the latest 5 entries sorted form oldest to newest
-        $latestMatches = MatchHistory::where('puuid', $puuid)
-            ->orderByDesc('endGameTimestamp')
-            ->take(5)
-            ->get()
-            ->sortBy('endGameTimestamp');
-
-
-
-        // Pluck the date from the latestRanked entries
-        // Pluck the values from the entries and add the total-games played with wins and losses
-        // return the total games where entries that the player have won, is calculated in percentages
-
-        // The matchLabels shows the timestamp for the given match
-        $matchLabels = $latestMatches->map(fn($match) => date('Y-m-d',$match->endGameTimeStamp / 1000));
-
-        // matchWinValues shows your skills for your latest 5 matches - or your skill-issue
-        $matchWinValues = $latestMatches->map(fn($match) => $match->win ? 1 : 0);
-
-        //$graphValues = $latestRanked->map(function ($entry) {
-        //    $totalGames = $entry->win + $entry->losses;
-        //    return $totalGames > 0 ? round(($entry->win / $totalGames) * 100, 2) : 0;
-        //});
-
-
-
         $wins = $rankedData['wins'] ?? 0;                 // Never used??? maybe used anyways, so care!
 
 
@@ -293,6 +268,8 @@ class SummonerController extends Controller
             // Fetch what rank type it is, and then place that into the "rank" in the ranked_history model:
             $queueRanks = [];
 
+            // This is where the rankedHistory gets loaded
+
             foreach (['RANKED_SOLO_5x5', 'RANKED_FLEX_SR'] as $queueType) {
                 $ranked = $rankedData->firstWhere('queueType', $queueType);
                 if ($ranked) {
@@ -301,6 +278,8 @@ class SummonerController extends Controller
                     $queueRanks[$queueType] = null;
                 }
             }
+
+
             $latest = RankedHistory::where('puuid', $puuid)
                 ->where('queue_type', $data['queue'])
                 ->latest()
@@ -322,6 +301,19 @@ class SummonerController extends Controller
                 ]);
             }
         }
+
+        $rankedHistory = RankedHistory::where('puuid', $puuid)
+            ->orderByDesc('created_at')
+            ->take(10)
+            ->get();
+
+        $groupedRankedHistory = $rankedHistory->groupBy('queue_type')->map(function ($entries, $queueType){
+            return[
+                'queue_type' => $queueType,
+                'win_rates' => $entries->pluck('win_rate'),
+            ];
+        })->values();
+
         $queueMap = $this->getQueueMappings();
 
         // Fetch stored match history & mastery
@@ -390,11 +382,7 @@ class SummonerController extends Controller
 //            'groupedMatches'=>$groupedMatches,
 //            'allPlayers' => $allPlayers,
             'matches' => $groupedMatches,
-            'matchLabels' => $matchLabels,
-            'matchWinValues' => $matchWinValues,
-
+            'groupedRankedHistory' => $groupedRankedHistory
         ]);
-
-
     }
 }

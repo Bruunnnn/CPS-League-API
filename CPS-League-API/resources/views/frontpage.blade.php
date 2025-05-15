@@ -38,10 +38,7 @@
             </div>
 
             <div id="graph" class="feature-section">
-                 @include('partials.graph', [
-                'matchLabels' => $matchLabels,
-                'matchWinValues' => $matchWinValues
-                ])
+                 @include('partials.graph')
             </div>
 
             <div id="nikolais-feature" class="feature-section">
