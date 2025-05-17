@@ -7,18 +7,25 @@
 </head>
 <body>
     <div class="right-column">
+        <div class = "recently-played-header">
+            <div class="header-icon"></div>
+            <div class="header-name">Name:</div>
+            <div class="header-games">Games played with:</div>
+            <div class="header-win/loss">Win/Loss:</div>
+            <div class="header-winrate">Win rate:</div>
+        </div>
         <div id="nikolais" class="nikolai">
-            <ul class="recently-played-list">
-                @foreach($recentlyPlayedWith as $name => $stats)
-                <li class="recent-player">
-                    <img class="player-icon" src="{{asset('/img/playerIcon.webp')}}">
-                    {{ $name }}<br>
-                    Games: {{ $stats['count'] }}<br>
-                    W-L: {{ $stats['wins'] }}-{{ $stats['losses'] }}<br>
-                    Winrate: {{ round(($stats['wins'] / $stats['count']) * 100) }}%
-                </li>
-                @endforeach
-            </ul>
+            @foreach($recentlyPlayedWith as $key => $stats)
+            <div class = "recently-played-list">
+                <img class="player-icon" src="https://ddragon.leagueoflegends.com/cdn/15.10.1/img/profileicon/{{ $stats['profileIcon'] }}.png" alt="Icon">
+                <div class="player-name">{{ $stats['name'] }}
+                    <div class="player-tagline">#{{ $stats['tagline'] }}</div>
+                </div>
+                <div class="player-games">{{ $stats['count'] }}</div>
+                <div class="player-win/loss">{{ $stats['wins'] }}-{{ $stats['losses'] }}</div>
+                <div class="player-winrate">{{ round(($stats['wins'] / $stats['count']) * 100) }}%</div>
+            </div>
+            @endforeach
         </div>
     </div>
 </body>

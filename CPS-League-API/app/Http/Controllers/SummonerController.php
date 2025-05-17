@@ -14,7 +14,7 @@ use App\Services\RankedService;
 
 class SummonerController extends Controller
 {
-    
+
     public function fetchDdragon()
     {
         // Returns ddragon response
@@ -205,17 +205,29 @@ class SummonerController extends Controller
                 // If the player is not the currently searched summoner (Your name), list them
                 if ($player->puuid !==$puuid){
                     $name = $player->riotIdGameName;
-
-                    $data = $recentlyPlayedWith->get($name, [
+                    $tagline = $player->riotIdTagline;
+                    $key = $player->riotIdGameName . '#' .  $player->riotIdTagline;
+                    $icon = $player->profileIcon;
+                    $data = $recentlyPlayedWith->get($key, [
+                        'name' => $name,
+                        'tagline' => $tagline,
                         'count' => 0,
                         'wins' => 0,
                         'losses' => 0,
+                        'icon'=>$icon,
                     ]);
 
                     $data['count']++;
                     $data[$gameWon ? 'wins' : 'losses']++;
 
-                    $recentlyPlayedWith[$name] = $data;
+                    if (!isset($data['profileIcon'])) {
+                        $data['profileIcon'] = $icon;
+                    }
+                    if(!isset($data['tagline'])) {
+                        $data['tagline'] = $tagline;
+                    }
+
+                    $recentlyPlayedWith[$key] = $data;
                 }
             }
         }

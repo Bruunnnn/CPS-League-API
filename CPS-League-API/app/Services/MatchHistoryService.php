@@ -60,6 +60,7 @@ class MatchHistoryService
                         'endGameTimestamp' => $match['info']['gameEndTimestamp'],
                         'win' => $participant['win'],
                         'riotIdGameName' => $participant['riotIdGameName'],
+                        'riotIdTagline'=> $participant['riotIdTagline'],
                         'gameDuration' => $match['info']['gameDuration'],
                         'championId' => $participant['championId'],
                         'kills' => $participant['kills'] ?? 0,
@@ -76,6 +77,7 @@ class MatchHistoryService
                         'item6' => $participant['item6'] ?? 0,
                         'summoner1Id' => $participant['summoner1Id'] ?? 0,
                         'summoner2Id' => $participant['summoner2Id'] ?? 0,
+                        'profileIcon'=> $participant['profileIcon'] ?? 0,
                     ]
                 );
             }

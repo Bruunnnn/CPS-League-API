@@ -15,6 +15,7 @@ class MatchHistory extends Model
         'endGameTimestamp',
         'win',
         'riotIdGameName',
+        'riotIdTagline',
         'gameDuration',
         'championId',
         'kills',
@@ -31,5 +32,6 @@ class MatchHistory extends Model
         'item6',
         'summoner1Id',
         'summoner2Id',
+        'profileIcon'
     ];
 }

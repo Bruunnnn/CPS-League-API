@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('win');
             $table->biginteger('gameDuration');
             $table->string('riotIdGameName');
+            $table->string('riotIdTagline');
             $table->integer('championId');
             $table->integer('kills')->nullable();
             $table->integer('deaths')->nullable();
@@ -36,6 +37,7 @@ return new class extends Migration
             $table->integer('item6')->nullable();
             $table->integer('summoner1Id');
             $table->integer('summoner2Id');
+            $table->integer('profileIcon')->nullable();
             $table->timestamps();
         });
     }
