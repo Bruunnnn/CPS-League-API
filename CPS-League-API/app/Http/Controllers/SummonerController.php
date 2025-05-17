@@ -188,6 +188,7 @@ class SummonerController extends Controller
 
     // Trying to display both the queue_types and the win_rates
     public function graph() {
+
         $puuid = auth()->user()->summoner->puuid;
 
         $rankedHistory = RankedHistory::where('puuid', $puuid)
@@ -200,7 +201,10 @@ class SummonerController extends Controller
             ->map(function ($entries, $queueType) {
                 return [
                     'queue_type' => $queueType,
-                    'win_rates' => $entries->sortByDesc('created_at')->pluck('win_rate')->reverse()->values(),
+                    'win_rates' => $entries->
+                    sortByDesc('created_at')
+                        ->pluck('win_rate')
+                        ->values(),
                 ];
             })->values();
 
