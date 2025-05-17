@@ -113,7 +113,7 @@ class SummonerController extends Controller
 
     public function matchHistoryJson(String $puuid, RiotService $riotService)
     {
-        // Returns Json matchhistory
+        // Returns Json matchHistory
         $matches = $riotService->getMatchHistory($puuid, 20);
         foreach ($matches as $match) {
             foreach ($match['info']['participants'] as $participant) {
@@ -278,12 +278,14 @@ class SummonerController extends Controller
             return [
                 'match' => $match,
                 'players' => $players,
+                'win'=>$match->win,
             ];
         });
 
         $masteries = Mastery::where('puuid', $puuid)
             ->orderByDesc('championPoints')
             ->get();
+
 
 
         // Fetch champion list from DDragon
@@ -310,6 +312,46 @@ class SummonerController extends Controller
             ];
         });
 
+
+
+        // Add recently played with table:
+        $recentlyPlayedWith = collect();
+        // iterate through grouped matches to find players:
+        foreach ($groupedMatches as $game) {
+            $players = $game['players'];
+            $gameWon = $game['win'] == true;
+            foreach ($players as $player) {
+                // If the player is not the currently searched summoner (Your name), list them
+                if ($player->puuid !==$puuid){
+                    $name = $player->riotIdGameName;
+
+                    $data = $recentlyPlayedWith->get($name, [
+                        'count' => 0,
+                        'wins' => 0,
+                        'losses' => 0,
+                    ]);
+
+                    $data['count']++;
+                    $data[$gameWon ? 'wins' : 'losses']++;
+
+                    $recentlyPlayedWith[$name] = $data;
+                }
+            }
+        }
+        // Count players appearances
+        $recentlyPlayedWith = collect($recentlyPlayedWith)
+            // If a player is found more than once
+            ->filter(fn($player)=>$player['count']>1)
+            ->sortByDesc(fn($player)=>$player['count'])
+            // How many players the list gets:
+            ->take(10);
+
+
+
+
+
+
+
         return view('frontpage', [
             'summoner' => $summoner,
             'rankedMap' => $rankedMap,
@@ -326,9 +368,8 @@ class SummonerController extends Controller
             'queueMap' => $queueMap,
             'masteryCards' => $masteryCards,
             'championMap' => $championMap,
-            'matches' => $groupedMatches
+            'matches' => $groupedMatches,
+            'recentlyPlayedWith'=> $recentlyPlayedWith
         ]);
-
-
     }
 }
