@@ -47,7 +47,6 @@ class SummonerController extends Controller
             })->values();
 
         return view('partials.graph', compact('groupedRankedHistory'));
-
     }
 
 
