@@ -11,7 +11,7 @@
 <div class="right-column">
     <div id="jakobs" class="jakob">
         <div class="mastery-header">
-            <div class="header-name">Name</div>
+            <div class="header-name-mastery">Name</div>
             <div class="header-icon">Icon</div>
             <div class="header-level">Level</div>
             <div class="header-points">Points</div>
