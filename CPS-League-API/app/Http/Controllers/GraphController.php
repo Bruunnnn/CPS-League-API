@@ -267,7 +267,7 @@ class GraphController extends Controller
 
 
             $rankedHistory = RankedHistory::where('puuid', $puuid)
-                ->orderByDesc('created_at')
+                ->orderByAssc('created_at')
                 ->take(10)
                 ->get();
 
