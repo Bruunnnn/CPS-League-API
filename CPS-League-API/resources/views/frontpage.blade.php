@@ -20,6 +20,7 @@
             <a class="feature-button" data-target="nikolais-feature">Nikolai Feature</a>
             <a class="feature-button" data-target="jakobs-feature">Jakob Feature</a>
             <a class="feature-button" data-target="peters-feature">Peter Feature</a>
+            <a class="feature-button" data-target="graph"> Graph </a>
         </div>
     </div>
     <div class="content-wrapper">
@@ -37,6 +38,9 @@
             </div>
             <div id="nikolais-feature" class="feature-section">
                 @include('partials.nikolais')
+            </div>
+            <div id="graph" class="feature-section">
+                @include('partials.graph')
             </div>
             <div id="jakobs-feature" class="feature-section">
                 @include('partials.jakobs')
