@@ -3,180 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ranked;
-use App\Services\RiotService;
-use App\Models\Summoner;
+use App\Services\MasteryService;
+use App\Services\MatchHistoryService;
 use App\Models\Mastery;
-use App\Models\ChampionRotation;
 use App\Models\MatchHistory;
 use App\Models\RankedHistory;
+use App\Services\SummonerService;
 use Illuminate\Support\Facades\Http;
+use App\Services\RankedService;
 
 class SummonerController extends Controller
 {
-    private function getQueueMappings()
-    {
-        $response = Http::withoutVerifying()->get('https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/queues.json');
-
-        if ($response->successful()) {
-            $queues = $response->json();
-
-            // Map queueId to description
-            $queueMap = [];
-            foreach ($queues as $queue) {
-                $queueMap[$queue['id']] = $queue['shortName'] ?? 'Unknown';
-            }
-
-            return $queueMap;
-        }
-
-        return [];
-    }
-
-    public function summonerJson($riotId, RiotService $riotService) {
-        // Returns relevant functions for fetching puuid and summoner
-        // Returns Json summoner
-        $parts = explode('-', $riotId);
-        if (count($parts) !== 2) {
-            return response("Invalid riot ID format", 400);
-        }
-        [$gameName, $tagLine] = $parts;
-
-        // Fetch account info from Riot API
-        $account = $riotService->getSummonerByName($gameName, $tagLine);
-        if (!isset($account['puuid'])) {
-            return response("Summoner not found, or API-key not set", 404);
-        }
-
-
-        $puuid = $account['puuid'];
-        $summonerInfo = $riotService->getSummonerByPuuid($puuid);
-
-        // Store or update summoner in DB
-        $summoner = Summoner::updateOrCreate(
-            ['puuid' => $puuid],
-            [
-                'game_name' => $account['gameName'],
-                'tag_line' => $account['tagLine'],
-                'summoner_id' => $summonerInfo['id'],
-                'account_id' => $summonerInfo['accountId'],
-                'profile_icon_id' => $summonerInfo['profileIconId'],
-                'summoner_level' => $summonerInfo['summonerLevel'],
-            ]
-        );
-        return $summoner;
-    }
-
-    public function rankedJson(string $puuid, RiotService $riotService)
-    {
-        // Returns Json ranked
-        $summoner = Summoner::where('puuid', $puuid)->firstOrFail();
-        $rankedSummoner = $riotService->getRankedBySummonerId($summoner->summoner_id);
-        foreach ($rankedSummoner as $rankedEntry) {
-            Ranked::updateOrCreate(
-                [
-                    'puuid' => $puuid,
-                    'queueType' => $rankedEntry['queueType'],
-                ],
-                [
-                    'tier' => $rankedEntry['tier'] ?? 'UNRANKED',
-                    'rank' => $rankedEntry['rank'] ?? '-',
-                    'win' => $rankedEntry['wins'] ?? 0,
-                    'losses' => $rankedEntry['losses'] ?? 0,
-                ]
-            );
-        }
-        return $rankedSummoner;
-    }
-
-    public function jakobFeatureMastery(string $puuid, RiotService $riotService)
-    {
-        // Returns Json mastery
-        $masteryInfo = $riotService->getChampionMastery($puuid);
-        $topMastery = array_slice($masteryInfo, 0, 30);
-        foreach ($topMastery as $entry) {
-            Mastery::updateOrCreate(
-                [
-                    'puuid' => $puuid,
-                    'championId' => $entry['championId'],
-                ],
-                [
-                    'championLevel' => $entry['championLevel'],
-                    'championPoints' => $entry['championPoints'],
-                    'lastPlayTime' => $entry['lastPlayTime'],
-                    'championPointsSinceLastLevel' => $entry['championPointsSinceLastLevel'],
-                    'championPointsUntilNextLevel' => $entry['championPointsUntilNextLevel'],
-                ]
-            );
-        }
-        return $topMastery;
-    }
-
-    public function matchHistoryJson(String $puuid, RiotService $riotService)
-    {
-        // Returns Json matchHistory
-        $matches = $riotService->getMatchHistory($puuid, 20);
-        foreach ($matches as $match) {
-            if (!isset($match['info']['participants'])) {
-                continue;
-            }
-            foreach ($match['info']['participants'] as $participant) {
-                MatchHistory::updateOrCreate(
-                    [
-                        'puuid' => $participant['puuid'],
-                        'gameId' => $match['info']['gameId'],
-                    ],
-                    [
-                        'mapId' => $match['info']['mapId']== 0,
-                        'queueId' => $match['info']['queueId'] ?? 0,
-                        'endGameTimestamp' => $match['info']['gameEndTimestamp'],
-                        'win' => $participant['win'],
-                        'riotIdGameName' => $participant['riotIdGameName'],
-                        'gameDuration' => $match['info']['gameDuration'],
-                        'championId' => $participant['championId'],
-                        'kills' => $participant['kills'] ?? 0,
-                        'deaths' => $participant['deaths'] ?? 0,
-                        'assists' => $participant['assists'] ?? 0,
-                        'totalMinionsKilled' => $participant['totalMinionsKilled'] ?? 0,
-                        'totalEnemyJungleMinionsKilled' => $participant['totalEnemyJungleMinionsKilled'] ?? 0,
-                        'item0' => $participant['item0'] ?? 0,
-                        'item1' => $participant['item1'] ?? 0,
-                        'item2' => $participant['item2'] ?? 0,
-                        'item3' => $participant['item3'] ?? 0,
-                        'item4' => $participant['item4'] ?? 0,
-                        'item5' => $participant['item5'] ?? 0,
-                        'item6' => $participant['item6'] ?? 0,
-                        'summoner1Id' => $participant['summoner1Id'] ?? 0,
-                        'summoner2Id' => $participant['summoner2Id'] ?? 0,
-                    ]
-                );
-            }
-        }
-        return $matches;
-    }
-
-    public function returnJson($riotId, RiotService $riotService)
-    {
-        // Returns all json methods for /api/summoner/riotId
-        $summoner = $this->summonerJson($riotId,$riotService);
-        if ($summoner instanceof \Illuminate\Http\Response) {
-            // Handle error response early (or rethrow/return it)
-            return $summoner;
-        }
-        $puuid = $summoner->puuid;
-        $rankedSummoner = $this->rankedJson($puuid,$riotService);
-        $topMastery = $this->jakobFeatureMastery($puuid,$riotService);
-        $matchHistory = $this->matchHistoryJson($puuid,$riotService);
-        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.10.1/data/en_US/champion.json');
-
-        return response()->json([
-            'summoner' => $summoner,
-            'rankedSummoner'=>$rankedSummoner,
-            'topMastery'=>$topMastery,
-            'matchHistory'=>$matchHistory,
-            'championData'=>$response
-        ]);
-    }
-
+    
     public function fetchDdragon()
     {
         // Returns ddragon response
@@ -213,28 +51,30 @@ class SummonerController extends Controller
     }
 
 
-    public function show($riotId, RiotService $riotService)
+    public function show($riotId)
     {
-       $summoner = $this->summonerJson($riotId,$riotService);
+        $SummonerService = new SummonerService();
+        $RankedService = new RankedService();
+        $MasteryService = new MasteryService();
+        $MatchHistoryService = new MatchHistoryService();
+        $summoner = $SummonerService->storeSummoner($riotId);
+
         if ($summoner instanceof \Illuminate\Http\Response) {
             // Throws error response if we get a "response" returned, then proceeds
             return $summoner;
         }
-
         $puuid = $summoner->puuid;
-        //dd($puuid);
         // Fetch ranked data from Riot API and store/update
-        $this->rankedJson($puuid,$riotService);
-
+        $rankedSummoner = $RankedService->getRankedBySummonerId($summoner->summoner_id);
+        $storedRanked = $RankedService->storeRankedData($puuid,$rankedSummoner);
         // Fetch mastery data from Riot API and store/update
-        $this->jakobFeatureMastery($puuid,$riotService);
+        $masterySummoner = $MasteryService->storeTopChampionMastery($puuid);
 
         // Fetch match history and store/update
-        $this->matchHistoryJson($puuid,$riotService);
+        $matchHistorySummoner = $MatchHistoryService->storeMatchHistory($puuid);
 
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
-
 
         // Create ranked maps and stats
         $rankedMap = [];
@@ -257,7 +97,6 @@ class SummonerController extends Controller
 
         $soloWinratePercent = $totalSoloGames > 0 ? ($soloWins / $totalSoloGames) * 100 : 0;
         $flexWinratePercent = $totalFlexGames > 0 ? ($flexWins / $totalFlexGames) * 100 : 0;
-
 
         // Store new ranked history snapshot if there's new data
 
@@ -316,7 +155,7 @@ class SummonerController extends Controller
                 ]);
             }
         }
-        $queueMap = $this->getQueueMappings();
+        $queueMap = $SummonerService->getQueueMappings();
 
         // Fetch stored match history & mastery
         $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(20)->get();
@@ -332,8 +171,6 @@ class SummonerController extends Controller
         $masteries = Mastery::where('puuid', $puuid)
             ->orderByDesc('championPoints')
             ->get();
-
-
 
         // Fetch champion list from DDragon
         $championData = $this->fetchDdragon();
@@ -358,8 +195,6 @@ class SummonerController extends Controller
                 'lastPlayTime' => $mastery->lastPlayTime,
             ];
         });
-
-
 
         // Add recently played with table:
         $recentlyPlayedWith = collect();

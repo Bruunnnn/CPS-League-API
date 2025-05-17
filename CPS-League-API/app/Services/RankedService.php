@@ -1,0 +1,61 @@
+<?php
+namespace App\Services;
+
+use App\Models\Summoner;
+use App\Models\Ranked;
+use Illuminate\Support\Facades\Http;
+
+class RankedService
+{
+    protected string $riotApi;
+    protected string $region = 'euw1';
+
+    // Response recipe
+    public function returnResponse($url) {
+        return Http::withHeaders([
+            'X-Riot-Token' => $this->riotApi,
+        ])->withoutVerifying()->get($url);
+    }
+
+    public function __construct(){
+        $this->riotApi = config('services.riot.key');
+    }
+    public function getRankedBySummonerId(string $summonerId): ?array
+    {
+        $url = "https://{$this->region}.api.riotgames.com/lol/league/v4/entries/by-summoner/{$summonerId}";
+
+        $response = $this->returnResponse($url);
+
+        return $response->successful() ? $response->json() : null;
+    }
+    public function storeRankedData(string $puuid): array
+    {
+        $summoner = Summoner::where('puuid', $puuid)->first();
+
+        if (!$summoner) {
+            throw new \Exception("Summoner not found");
+        }
+        $rankedData = $this->getRankedBySummonerId($summoner->summoner_id);
+
+        if (!$rankedData) {
+            throw new \Exception("Ranked data not found");
+        }
+
+        foreach ($rankedData as $entry) {
+            Ranked::updateOrCreate(
+                [
+                    'puuid' => $puuid,
+                    'queueType' => $entry['queueType'],
+                ],
+                [
+                    'tier' => $entry['tier'] ?? 'UNRANKED',
+                    'rank' => $entry['rank'] ?? '-',
+                    'win' => $entry['wins'] ?? 0,
+                    'losses' => $entry['losses'] ?? 0,
+                ]
+            );
+        }
+
+        return $rankedData;
+    }
+}
