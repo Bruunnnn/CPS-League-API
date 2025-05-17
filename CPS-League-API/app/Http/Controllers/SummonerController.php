@@ -6,9 +6,9 @@ use App\Models\Ranked;
 use App\Services\RiotService;
 use App\Models\Summoner;
 use App\Models\Mastery;
+use App\Models\ChampionRotation;
 use App\Models\MatchHistory;
 use App\Models\RankedHistory;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class SummonerController extends Controller
@@ -88,7 +88,7 @@ class SummonerController extends Controller
         return $rankedSummoner;
     }
 
-    public function masteryJson(string $puuid, RiotService $riotService)
+    public function jakobFeatureMastery(string $puuid, RiotService $riotService)
     {
         // Returns Json mastery
         $masteryInfo = $riotService->getChampionMastery($puuid);
@@ -116,6 +116,9 @@ class SummonerController extends Controller
         // Returns Json matchHistory
         $matches = $riotService->getMatchHistory($puuid, 20);
         foreach ($matches as $match) {
+            if (!isset($match['info']['participants'])) {
+                continue;
+            }
             foreach ($match['info']['participants'] as $participant) {
                 MatchHistory::updateOrCreate(
                     [
@@ -123,7 +126,7 @@ class SummonerController extends Controller
                         'gameId' => $match['info']['gameId'],
                     ],
                     [
-                        'mapId' => $match['info']['mapId'],
+                        'mapId' => $match['info']['mapId']== 0,
                         'queueId' => $match['info']['queueId'] ?? 0,
                         'endGameTimestamp' => $match['info']['gameEndTimestamp'],
                         'win' => $participant['win'],
@@ -161,9 +164,9 @@ class SummonerController extends Controller
         }
         $puuid = $summoner->puuid;
         $rankedSummoner = $this->rankedJson($puuid,$riotService);
-        $topMastery = $this->masteryJson($puuid,$riotService);
+        $topMastery = $this->jakobFeatureMastery($puuid,$riotService);
         $matchHistory = $this->matchHistoryJson($puuid,$riotService);
-        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.9.1/data/en_US/champion.json');
+        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.10.1/data/en_US/champion.json');
 
         return response()->json([
             'summoner' => $summoner,
@@ -177,7 +180,7 @@ class SummonerController extends Controller
     public function fetchDdragon()
     {
         // Returns ddragon response
-        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.9.1/data/en_US/champion.json');
+        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.10.1/data/en_US/champion.json');
         $championData = $response->json()['data'];
         return $championData;
     }
@@ -189,13 +192,14 @@ class SummonerController extends Controller
             // Throws error response if we get a "response" returned, then proceeds
             return $summoner;
         }
+
         $puuid = $summoner->puuid;
         //dd($puuid);
         // Fetch ranked data from Riot API and store/update
         $this->rankedJson($puuid,$riotService);
 
         // Fetch mastery data from Riot API and store/update
-        $this->masteryJson($puuid,$riotService);
+        $this->jakobFeatureMastery($puuid,$riotService);
 
         // Fetch match history and store/update
         $this->matchHistoryJson($puuid,$riotService);
@@ -294,7 +298,7 @@ class SummonerController extends Controller
         foreach ($championData as $champion) {
             $championMap[(int)$champion['key']] = [
                 'name' => $champion['id'],
-                'image' => "https://ddragon.leagueoflegends.com/cdn/15.9.1/img/champion/{$champion['id']}.png"
+                'image' => "https://ddragon.leagueoflegends.com/cdn/15.10.1/img/champion/{$champion['id']}.png"
             ];
         }
 

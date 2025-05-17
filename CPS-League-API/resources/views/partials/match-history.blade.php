@@ -33,14 +33,14 @@
                 <div class="items-row">
                     @foreach ([$match->item0, $match->item1, $match->item2, $match->item6] as $item)
                     @if ($item)
-                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.9.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
+                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.10.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
                     @endif
                     @endforeach
                 </div>
                 <div class="items-row">
                     @foreach ([$match->item3, $match->item4, $match->item5] as $item)
                     @if ($item)
-                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.9.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
+                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.10.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
                     @endif
                     @endforeach
                 </div>

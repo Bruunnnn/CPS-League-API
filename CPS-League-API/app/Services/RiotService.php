@@ -82,6 +82,16 @@ class RiotService
 
         return $response->json();
     }
+    public function getChampionRotation()
+    {
+        $url = "https://euw1.api.riotgames.com/lol/platform/v3/champion-rotations";
+
+        $response = Http::withHeaders([
+            'X-Riot-Token' => $this->riotApi,
+        ])->withoutVerifying()->get($url);
+
+        return $response->json();
+    }
 
 
     // Storing in the database
