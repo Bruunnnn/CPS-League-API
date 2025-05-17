@@ -48,7 +48,7 @@
 
 <!-- Debug output -->
 <h3> debug groupedHistory</h3>
-<pre> {{print_r($groupedRankedHistory, true)}} </pre>
+<!-- <pre> {{print_r($groupedRankedHistory, true)}} </pre> -->
 
 
 <script>

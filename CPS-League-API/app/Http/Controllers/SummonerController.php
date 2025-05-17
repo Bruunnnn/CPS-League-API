@@ -241,6 +241,18 @@ class SummonerController extends Controller
                 continue;
             }
 
+            $rankedHistory = RankedHistory::where('puuid', $puuid)
+                ->orderByDesc('created_at')
+                ->take(10)
+                ->get();
+
+            $groupedRankedHistory = $rankedHistory->groupBy('queue_type')->map(function ($entries, $queueType){
+                return[
+                    'queue_type' => $queueType,
+                    'win_rates' => $entries->pluck('win_rate'),
+                ];
+            })->values();
+
             // Fetch what rank type it is, and then place that into the "rank" in the ranked_history model:
             $queueRanks = [];
 
@@ -373,7 +385,10 @@ class SummonerController extends Controller
             'masteryCards' => $masteryCards,
             'championMap' => $championMap,
             'matches' => $groupedMatches,
-            'recentlyPlayedWith'=> $recentlyPlayedWith
+            'recentlyPlayedWith'=> $recentlyPlayedWith,
+            'groupedRankedHistory' => $groupedRankedHistory
+
+
         ]);
     }
 }
