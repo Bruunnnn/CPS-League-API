@@ -55,8 +55,6 @@
 
     let groupedRankedHistory = {!! json_encode($groupedRankedHistory ?? []) !!};
 
-
-
     const labels = Array.from({ length: 10}, (_, i) => `Match ${i + 1}`);
 
     // Build datasets dynamically

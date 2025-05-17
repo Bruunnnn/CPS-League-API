@@ -118,8 +118,9 @@ class GraphController extends Controller
         // fetches 10 data points in the order from oldest to newest
         // Check back later and try change order from newest to oldest (change desc to assc?)
         $puuid = auth()->user()->summoner->puuid;
+
         $data = RankedHistory::where($puuid, $puuid)
-            ->where('queue_type', 'RANKED_SOLO_5x5')
+                ->where('queue_type', 'RANKED_SOLO_5x5')
             ->orderByDesc('created_at')
             ->take(5)
             ->get()
@@ -207,6 +208,18 @@ class GraphController extends Controller
         $championData = $response->json()['data'];
         return $championData;
     }
+/*
+    public function graph()
+    {
+        $puuid = auth()->user()->summoner->puuid;
+        $rankedHistory = RankedHistory::where('puuid', $puuid) {
+            ->orderByDesc('created_at')
+            ->take(20)
+            ->get();
+        }
+    }
+*/
+
 
     public function show($riotId,RiotService $riotService)
     {
@@ -267,7 +280,7 @@ class GraphController extends Controller
 
 
             $rankedHistory = RankedHistory::where('puuid', $puuid)
-                ->orderByAssc('created_at')
+                ->orderByDesc('created_at')
                 ->take(10)
                 ->get();
 
@@ -369,7 +382,7 @@ class GraphController extends Controller
             'masteryCards' => $masteryCards,
             'championMap' => $championMap,
             'matches' => $groupedMatches,
-            'groupedRankedHistory' => $groupedRankedHistory
+
         ]);
     }
 }

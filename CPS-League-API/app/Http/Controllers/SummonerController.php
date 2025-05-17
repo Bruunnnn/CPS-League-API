@@ -185,6 +185,30 @@ class SummonerController extends Controller
         return $championData;
     }
 
+
+    // Trying to display both the queue_types and the win_rates
+    public function graph() {
+        $puuid = auth()->user()->summoner->puuid;
+
+        $rankedHistory = RankedHistory::where('puuid', $puuid)
+            ->orderByDesc('created_at')
+            ->take(20)
+            ->get();
+
+        $groupedRankedHistory = $rankedHistory
+            ->groupBy('queue_type')
+            ->map(function ($entries, $queueType) {
+                return [
+                    'queue_type' => $queueType,
+                    'win_rates' => $entries->sortBy('created_at')->pluck('win_rate')->values(),
+                ];
+            })->values();
+
+        return view('partials.graph', compact('groupedRankedHistory'));
+
+    }
+
+
     public function show($riotId, RiotService $riotService)
     {
        $summoner = $this->summonerJson($riotId,$riotService);
@@ -368,6 +392,7 @@ class SummonerController extends Controller
 
 
 
+
         return view('frontpage', [
             'summoner' => $summoner,
             'rankedMap' => $rankedMap,
@@ -387,8 +412,6 @@ class SummonerController extends Controller
             'matches' => $groupedMatches,
             'recentlyPlayedWith'=> $recentlyPlayedWith,
             'groupedRankedHistory' => $groupedRankedHistory
-
-
         ]);
     }
 }
