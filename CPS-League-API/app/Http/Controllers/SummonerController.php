@@ -200,7 +200,7 @@ class SummonerController extends Controller
             ->map(function ($entries, $queueType) {
                 return [
                     'queue_type' => $queueType,
-                    'win_rates' => $entries->sortBy('created_at')->pluck('win_rate')->values(),
+                    'win_rates' => $entries->sortByDesc('created_at')->pluck('win_rate')->reverse()->values(),
                 ];
             })->values();
 
