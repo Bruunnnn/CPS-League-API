@@ -117,6 +117,9 @@ class SummonerController extends Controller
         // Returns Json matchhistory
         $matches = $riotService->getMatchHistory($puuid, 15);
         foreach ($matches as $match) {
+            if (!isset($match['info']['participants'])) {
+                continue;
+            }
             foreach ($match['info']['participants'] as $participant) {
                 $participantPuuid = $participant['puuid'];
 //                // Try to get the summoner from DB first (cached)
