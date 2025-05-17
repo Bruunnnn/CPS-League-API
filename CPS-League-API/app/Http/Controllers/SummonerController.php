@@ -277,7 +277,10 @@ class SummonerController extends Controller
             $groupedRankedHistory = $rankedHistory->groupBy('queue_type')->map(function ($entries, $queueType){
                 return[
                     'queue_type' => $queueType,
-                    'win_rates' => $entries->pluck('win_rate'),
+                    'win_rates' => $entries
+                        ->sortBy('created_at')
+                    ->pluck('win_rate')
+                    ->values(),
                 ];
             })->values();
 
@@ -389,12 +392,6 @@ class SummonerController extends Controller
             ->sortByDesc(fn($player)=>$player['count'])
             // How many players the list gets:
             ->take(10);
-
-
-
-
-
-
 
 
         return view('frontpage', [
