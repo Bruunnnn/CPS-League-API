@@ -6,15 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChampionRotation extends Model
 {
-    protected $table = 'champion_rotation';
+    protected $table = 'champion_rotations';
+
     protected $fillable = [
-        'puuid',
-        'freeChampionsIdsForNewPlayers',
+        'freeChampionIds',
+        'freeChampionIdsForNewPlayers',
         'maxNewPlayerLevel',
     ];
 
     protected $casts = [
-        'freeChampionsIdsForNewPlayers' => 'array',
+        'freeChampionIds' => 'array',
+        'freeChampionIdsForNewPlayers' => 'array',
     ];
 
 }

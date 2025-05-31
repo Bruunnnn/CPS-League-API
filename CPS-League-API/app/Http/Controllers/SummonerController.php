@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ranked;
+use App\Services\ChampionService;
 use App\Services\MasteryService;
 use App\Services\MatchHistoryService;
 use App\Models\Mastery;
@@ -11,6 +12,8 @@ use App\Models\RankedHistory;
 use App\Services\SummonerService;
 use Illuminate\Support\Facades\Http;
 use App\Services\RankedService;
+use App\Services\ChampRotationService;
+
 
 class SummonerController extends Controller
 {
@@ -56,7 +59,12 @@ class SummonerController extends Controller
         $RankedService = new RankedService();
         $MasteryService = new MasteryService();
         $MatchHistoryService = new MatchHistoryService();
+        $ChampRotationService = new ChampRotationService();
+        $ChampRotationService -> storeChampsForNewPlayers();
+
         $summoner = $SummonerService->storeSummoner($riotId);
+        $championService = new ChampionService();
+        $championService->storeAllChampions();
 
         if ($summoner instanceof \Illuminate\Http\Response) {
             // Throws error response if we get a "response" returned, then proceeds
@@ -72,8 +80,14 @@ class SummonerController extends Controller
         // Fetch match history and store/update
         $matchHistorySummoner = $MatchHistoryService->storeMatchHistory($puuid);
 
+
+        $ChampRotationService->storeChampsForNewPlayers();
+        $freeChampions = $ChampRotationService->getCurrentFreeChampions();
+
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
+
+
 
         // Create ranked maps and stats
         $rankedMap = [];
@@ -258,7 +272,8 @@ class SummonerController extends Controller
             'championMap' => $championMap,
             'matches' => $groupedMatches,
             'recentlyPlayedWith'=> $recentlyPlayedWith,
-            'groupedRankedHistory' => $groupedRankedHistory
+            'groupedRankedHistory' => $groupedRankedHistory,
+            'freeChampions' => $freeChampions
         ]);
     }
 }

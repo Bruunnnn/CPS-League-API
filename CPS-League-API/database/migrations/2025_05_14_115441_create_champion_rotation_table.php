@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('champion_rotation', function (Blueprint $table) {
+        Schema::create('champion_rotations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('key');
-            $table->string('title');
-            $table->string('blurb');
             $table->json('freeChampionIds')->nullable();
             $table->json('freeChampionIdsForNewPlayers')->nullable();
+            $table->integer('maxNewPlayerLevel')->nullable();
             $table->timestamps();
-
         });
     }
 
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('champion_rotation');
+        Schema::dropIfExists('champion_rotations');
     }
 };
