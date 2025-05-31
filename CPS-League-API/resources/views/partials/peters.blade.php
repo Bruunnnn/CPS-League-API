@@ -11,9 +11,11 @@
 <div class="free-champions">
 
     @foreach ($freeChampions as $champion)
-    <div class="champion">
-        <img src="{{ $champion->image_url}}" alt="{{$champion->name}}" width="64">
-        <p>{{ $champion->name }}</p>
+
+    <div class="champion-box">
+        <img src={{ $champion->image_url}} alt={{$champion->name}} width="64">
+        <p class="paragraph-Name">{{ $champion->name }}</p>
+        <p class="paragraph-Blurb">{{$champion->blurb}}</p>
     </div>
     @endforeach
 
