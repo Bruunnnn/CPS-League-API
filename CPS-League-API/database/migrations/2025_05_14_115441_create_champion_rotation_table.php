@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('champion_rotation', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('key');
+            $table->string('title');
+            $table->string('blurb');
             $table->json('freeChampionIds')->nullable();
             $table->json('freeChampionIdsForNewPlayers')->nullable();
             $table->timestamps();
-
-
 
         });
     }

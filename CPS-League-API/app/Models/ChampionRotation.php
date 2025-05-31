@@ -8,7 +8,13 @@ class ChampionRotation extends Model
 {
     protected $table = 'champion_rotation';
     protected $fillable = [
-        'freeChampionsIds',
+        'puuid',
         'freeChampionsIdsForNewPlayers',
+        'maxNewPlayerLevel',
     ];
+
+    protected $casts = [
+        'freeChampionsIdsForNewPlayers' => 'array',
+    ];
+
 }
