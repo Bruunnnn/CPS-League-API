@@ -9,17 +9,22 @@
 <h2>Free Rotation Champions</h2>
 
 <div class="free-champions">
+    <div class="middle-layer">
+
+
+
 
     @foreach ($freeChampions as $champion)
 
     <div class="champion-box">
-        <img src={{ $champion->image_url}} alt={{$champion->name}} width="64">
+        <img class="image-Champion" src={{ $champion->image_url}} alt={{$champion->name}} width="64">
         <p class="paragraph-Name">{{ $champion->name }}</p>
         <p class="paragraph-Title">{{ $champion->title }}</p>
         <p class="paragraph-Blurb">{{$champion->blurb}}</p>
     </div>
     @endforeach
 
+    </div>
 
 </div>
 

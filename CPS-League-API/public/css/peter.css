@@ -2,7 +2,6 @@
     display: flex;
     border-radius: 10px;
     gap: 15px;
-    flex-direction: column;
 }
 
 .free-champions{
@@ -11,19 +10,32 @@
     flex-wrap: wrap;
     justify-content: center;
     grid-template-columns: 165px 95px 95px 135px 135px 135px 165px;
-    background-color: #1e1e33;
     width: 100%;
     color: white;
     padding: 10px;
     font-weight: bold;
     margin-bottom: 10px;
     border-radius: 10px;
+    gap: 15px;
 }
 
 .champion-box{
+    display: flex;
+    background-color: #1e1e33;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border: 1px solid wheat;
     border-radius: 10px;
     padding: 15px;
-    text-align: center;
+    margin-bottom: 20px;
 }
+
+.image-Champion{
+    margin-bottom: 10px;
+    scale: 1.3;
+
+
+}
+
 
