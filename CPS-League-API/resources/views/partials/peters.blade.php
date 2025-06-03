@@ -15,6 +15,7 @@
     <div class="champion-box">
         <img src={{ $champion->image_url}} alt={{$champion->name}} width="64">
         <p class="paragraph-Name">{{ $champion->name }}</p>
+        <p class="paragraph-Title">{{ $champion->title }}</p>
         <p class="paragraph-Blurb">{{$champion->blurb}}</p>
     </div>
     @endforeach

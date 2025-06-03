@@ -49,11 +49,12 @@ class ChampRotationService
         $championMap = collect($championList)->mapWithKeys(function ($champ){
             return[(int)$champ['key'] => [
                 'name' => $champ['name'],
-                'image'=> "https://ddragon.leagueoflegends.com/cdn/15.10.1/data/en_US/{$champ['id']}.png"
+                'image'=> "https://ddragon.leagueoflegends.com/cdn/15.10.1/data/en_US/{$champ['id']}.png",
+                'title' => $champ['title']
             ]];
         });
         $freeChampions = collect($freeIds)->map(function ($id) use ($championMap) {
-            return $championMap[$id] ?? ['name' => 'Unknown', 'image' => ''];
+            return $championMap[$id] ?? ['name' => 'Unknown', 'image' => '', 'title' => 'Unknown'];
         });
 
         return $freeChampions;
