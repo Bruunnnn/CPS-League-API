@@ -1,7 +1,21 @@
 .peter{
     display: flex;
-    border-radius: 10px;
+
     gap: 15px;
+    scale: 0.75;
+}
+.header-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #1e1e33;
+    width: 100%;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 10px;
 }
 
 .free-champions{
@@ -17,6 +31,7 @@
     margin-bottom: 10px;
     border-radius: 10px;
     gap: 15px;
+
 }
 
 .champion-box{
@@ -28,14 +43,12 @@
     border: 1px solid wheat;
     border-radius: 10px;
     padding: 15px;
+
     margin-bottom: 20px;
 }
 
 .image-Champion{
     margin-bottom: 10px;
-    scale: 1.3;
-
-
 }
 
 

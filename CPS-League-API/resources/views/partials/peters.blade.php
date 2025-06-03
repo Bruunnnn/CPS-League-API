@@ -6,12 +6,10 @@
     <link rel="stylesheet" href="{{asset('/css/peter.css')}}">
 </head>
 <body>
-<h2>Free Rotation Champions</h2>
-
+<div class="header-title">
+<h2 class="title">Free Rotation Champions</h2>
+</div>
 <div class="free-champions">
-    <div class="middle-layer">
-
-
 
 
     @foreach ($freeChampions as $champion)
