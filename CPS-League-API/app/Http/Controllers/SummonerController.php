@@ -51,9 +51,6 @@ class SummonerController extends Controller
     }
 
 
-    // Trying to display both the queue_types and the win_rates
-
-
     public function show($riotId)
     {
         $summoner = $this->summonerService->storeSummoner($riotId);
@@ -252,9 +249,11 @@ class SummonerController extends Controller
             // If a player is found more than once
             ->filter(fn($player)=>$player['count']>1)
             ->sortByDesc(fn($player)=>$player['count'])
-            // How many players the list gets:
             ->take(10);
 
+        // We know that hardcoding this is not the right way, but Riot themselves havde made us need to do it like this:.
+        // This is beacause in riots jSon the summonerspell comes out as an integer, but we need the string name from them
+        // to get the images.
         $summonerSpellMap = [
             1 => 'SummonerBoost',
             3 => 'SummonerExhaust',
@@ -275,7 +274,6 @@ class SummonerController extends Controller
             2201 => 'SummonerCherryHold',
             2202 => 'SummonerCherryFlash',
         ];
-
 
 
         return view('frontpage', [
