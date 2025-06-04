@@ -90,28 +90,6 @@ class GraphController extends Controller
         return $rankedSummoner;
     }
 
-    public function jakobFeatureMastery(string $puuid, RiotService $riotService)
-    {
-        // Returns Json mastery
-        $masteryInfo = $riotService->getChampionMastery($puuid);
-        $topMastery = array_slice($masteryInfo, 0, 30);
-        foreach ($topMastery as $entry) {
-            Mastery::updateOrCreate(
-                [
-                    'puuid' => $puuid,
-                    'championId' => $entry['championId'],
-                ],
-                [
-                    'championLevel' => $entry['championLevel'],
-                    'championPoints' => $entry['championPoints'],
-                    'lastPlayTime' => $entry['lastPlayTime'],
-                    'championPointsSinceLastLevel' => $entry['championPointsSinceLastLevel'],
-                    'championPointsUntilNextLevel' => $entry['championPointsUntilNextLevel'],
-                ]
-            );
-        }
-        return $topMastery;
-    }
 
     public function index()
     {
@@ -201,24 +179,6 @@ class GraphController extends Controller
         ]);
     }
 
-    public function fetchDdragon()
-    {
-        // Returns ddragon response
-        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.10.1/data/en_US/champion.json');
-        $championData = $response->json()['data'];
-        return $championData;
-    }
-/*
-    public function graph()
-    {
-        $puuid = auth()->user()->summoner->puuid;
-        $rankedHistory = RankedHistory::where('puuid', $puuid) {
-            ->orderByDesc('created_at')
-            ->take(20)
-            ->get();
-        }
-    }
-*/
 
 
     public function show($riotId,RiotService $riotService)
