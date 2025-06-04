@@ -3,38 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ranked;
-use App\Services\ChampionService;
-use App\Services\MasteryService;
 use App\Services\MatchHistoryService;
-use App\Models\Mastery;
 use App\Models\MatchHistory;
 use App\Models\RankedHistory;
 use App\Services\SummonerService;
 use Illuminate\Support\Facades\Http;
 use App\Services\RankedService;
-use App\Services\ChampRotationService;
 
 
 class SummonerController extends Controller
 {
-    protected ChampRotationService $champRotationService;
-    protected ChampionService $championService;
-    protected MasteryService $masteryService;
     protected MatchHistoryService $matchHistoryService;
     protected RankedService $rankedService;
     protected SummonerService $summonerService;
 
     public function __construct(
-        ChampRotationService $champRotationService,
-        ChampionService $championService,
-        MasteryService $masteryService,
         MatchHistoryService $matchHistoryService,
         RankedService $rankedService,
         SummonerService $summonerService
     ) {
-        $this->champRotationService = $champRotationService;
-        $this->championService = $championService;
-        $this->masteryService = $masteryService;
         $this->matchHistoryService = $matchHistoryService;
         $this->rankedService = $rankedService;
         $this->summonerService = $summonerService;
@@ -57,12 +44,9 @@ class SummonerController extends Controller
         $puuid = $summoner->puuid;
 
 
-        $this->champRotationService->storeChampsForNewPlayers();
 
-        $this->championService->storeAllChampions();
         $this->rankedService->getRankedBySummonerId($summoner->summoner_id);
         $this->rankedService->storeRankedData($puuid);
-        $this->masteryService->storeTopChampionMastery($puuid);
         $this->matchHistoryService->storeMatchHistory($puuid);
 
 
@@ -70,23 +54,11 @@ class SummonerController extends Controller
             // Throws error response if we get a "response" returned, then proceeds
             return $summoner;
         }
-        $freeChampions = $this->champRotationService->getCurrentFreeChampions();
-        // Fetch ranked data from Riot API and store/update
-        //$rankedSummoner = $RankedService->getRankedBySummonerId($summoner->summoner_id);
-        //$storedRanked = $RankedService->storeRankedData($puuid,$rankedSummoner);
-        // Fetch mastery data from Riot API and store/update
-        //$masterySummoner = $MasteryService->storeTopChampionMastery($puuid);
-
-        // Fetch match history and store/update
-        //$matchHistorySummoner = $MatchHistoryService->storeMatchHistory($puuid);
-
-
-        //$ChampRotationService->storeChampsForNewPlayers();
+        // $freeChampions = $this->champRotationService->getCurrentFreeChampions();
 
 
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
-
 
 
         // Create ranked maps and stats
@@ -182,9 +154,6 @@ class SummonerController extends Controller
             ];
         });
 
-        $masteries = Mastery::where('puuid', $puuid)
-            ->orderByDesc('championPoints')
-            ->get();
 
         // Fetch champion list from DDragon
         $championData = $this->fetchDdragon();
@@ -196,19 +165,7 @@ class SummonerController extends Controller
             ];
         }
 
-        // Map mastery data with champion info
-        $masteryCards = $masteries->map(function ($mastery) use ($championMap) {
-            $champion = $championMap[$mastery->championId]?? ['name' => 'Unknown', 'image' => ''];
-            return [
-                'championName' => $champion['name'],
-                'championImage' => $champion['image'],
-                'championLevel' => $mastery->championLevel,
-                'championPoints' => $mastery->championPoints,
-                'championPointsSinceLastLevel' => $mastery->championPointsSinceLastLevel,
-                'championPointsUntilNextLevel' => $mastery->championPointsUntilNextLevel,
-                'lastPlayTime' => $mastery->lastPlayTime,
-            ];
-        });
+
 
         // Add recently played with table:
         $recentlyPlayedWith = collect();
@@ -292,12 +249,10 @@ class SummonerController extends Controller
             'totalFlexGames' => $totalFlexGames,
             'flexWinratePercent' => $flexWinratePercent,
             'queueMap' => $queueMap,
-            'masteryCards' => $masteryCards,
             'championMap' => $championMap,
             'matches' => $groupedMatches,
             'recentlyPlayedWith'=> $recentlyPlayedWith,
             'groupedRankedHistory' => $groupedRankedHistory,
-            'freeChampions' => $freeChampions,
             'summonerSpellMap' => $summonerSpellMap
 
         ]);
