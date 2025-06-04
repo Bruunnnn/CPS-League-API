@@ -29,6 +29,7 @@
                 <div class="cs">{{ $match->totalMinionsKilled + $match->totalEnemyJungleMinionsKilled }} CS</div>
             </div>
 
+
             <div class="items-grid">
                 <div class="items-row">
                     @foreach ([$match->item0, $match->item1, $match->item2, $match->item6] as $item)
@@ -45,6 +46,24 @@
                     @endforeach
                 </div>
             </div>
+
+            <div class="champion-spells">
+                <div class="spells-side">
+                    @if (isset($summonerSpellMap[$match->summoner1Id]))
+                    <img class="summoner-icon"
+                         src="https://ddragon.leagueoflegends.com/cdn/15.10.1/img/spell/{{ $summonerSpellMap[$match->summoner1Id] }}.png"
+                         alt="Spell 1">
+                    @endif
+
+                    @if (isset($summonerSpellMap[$match->summoner2Id]))
+                    <img class="summoner-icon"
+                         src="https://ddragon.leagueoflegends.com/cdn/15.10.1/img/spell/{{ $summonerSpellMap[$match->summoner2Id] }}.png"
+                         alt="Spell 2">
+                    @endif
+                </div>
+            </div>
+
+
 
             <div class="players-columns">
                 <div class="team-column-left">

@@ -33,12 +33,12 @@ class RankedService
         $summoner = Summoner::where('puuid', $puuid)->first();
 
         if (!$summoner) {
-            throw new \Exception("Summoner not found");
+            return [];
         }
         $rankedData = $this->getRankedBySummonerId($summoner->summoner_id);
 
         if (!$rankedData) {
-            throw new \Exception("Ranked data not found");
+            return [];
         }
 
         foreach ($rankedData as $entry) {

@@ -253,6 +253,28 @@ class SummonerController extends Controller
             // How many players the list gets:
             ->take(10);
 
+        $summonerSpellMap = [
+            1 => 'SummonerBoost',
+            3 => 'SummonerExhaust',
+            4 => 'SummonerFlash',
+            6 => 'SummonerHaste',
+            7 => 'SummonerHeal',
+            11 => 'SummonerSmite',
+            12 => 'SummonerTeleport',
+            13 => 'SummonerMana',
+            14 => 'SummonerDot',
+            21 => 'SummonerBarrier',
+            30 => 'SummonerPoroRecall',
+            31 => 'SummonerPoroThrow',
+            32 => 'SummonerSnowball',
+            39 => 'SummonerSnowURFSnowball_Mark',
+            54 => 'Summoner_UltBookPlaceholder',
+            55 => 'Summoner_UltBookSmitePlaceholder',
+            2201 => 'SummonerCherryHold',
+            2202 => 'SummonerCherryFlash',
+        ];
+
+
 
         return view('frontpage', [
             'summoner' => $summoner,
@@ -273,7 +295,9 @@ class SummonerController extends Controller
             'matches' => $groupedMatches,
             'recentlyPlayedWith'=> $recentlyPlayedWith,
             'groupedRankedHistory' => $groupedRankedHistory,
-            'freeChampions' => $freeChampions
+            'freeChampions' => $freeChampions,
+            'summonerSpellMap' => $summonerSpellMap
+
         ]);
     }
 }
