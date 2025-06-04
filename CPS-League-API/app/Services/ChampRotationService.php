@@ -22,7 +22,6 @@ class ChampRotationService extends GeneralService
         return $response->json() ? $response->json() : null;
 
     }
-
     public function storeChampsForNewPlayers(): ?ChampionRotation
     {
         $rotationData = $this->connectChampRotationNewPlayers();
