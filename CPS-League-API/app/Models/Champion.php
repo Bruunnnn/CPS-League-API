@@ -13,5 +13,4 @@ class Champion extends Model
         'blurb',
         'image_url',
     ];
-    //
 }

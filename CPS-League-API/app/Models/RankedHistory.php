@@ -22,15 +22,4 @@ class RankedHistory extends Model
     {
         return $this->belongsTo(summoner::class, 'puuid', 'puuid');
     }
-
-    /*
-    public function winRateGraph($puuid) {
-        $history = RankedHistory::where('puuid', $puuid)
-            ->orderBy('created_at', 'asc')
-            ->get(['created_at', 'win_rate']);
-
-        return view('ranked.winrategraph',)
-    }
-    */
-
 }
