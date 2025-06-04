@@ -6,10 +6,6 @@
     <link rel="stylesheet" href="{{asset('/css/peter.css')}}">
 </head>
 <body>
-
-
-
-
 <div class="free-champions">
 
     <div class="header-title">
@@ -26,10 +22,5 @@
     </div>
     @endforeach
     </div>
-
-
-
-
-
 </body>
 </html>
