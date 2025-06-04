@@ -8,10 +8,9 @@
 
 <body>
 
-<h2>Win-loss rate over time</h2>
-
 
 <div id="chart-container">
+    <h2>Win-loss rate over time</h2>
     <!-- Chart container -->
     <canvas id="winRateChart"></canvas>
 </div>
@@ -55,21 +54,36 @@
                 }
             },
             scales: {
-                y:{
+                y: {
                     beginAtZero: true,
                     max: 100,
                     title: {
                         display: true,
-                        text: 'Win rate (%)'
+                        text: 'Win rate (%)',
+                        color: 'white'
+                    },
+                    ticks: {
+                        color: 'white'
+                    },
+                    grid: {
+                        color: 'darkslategrey'
                     }
                 },
-                x:{
+                x: {
                     title: {
                         display: true,
-                        text: 'Match Order (Oldest -> Newest)'
+                        text: 'Match Order (Oldest -> Newest)',
+                        color: 'white'
+                    },
+                    ticks: {
+                        color: 'white'
+                    },
+                    grid: {
+                        color: 'darkslategrey'
                     }
                 }
             }
+
         }
     });
 
