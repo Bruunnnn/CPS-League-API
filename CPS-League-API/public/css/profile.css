@@ -2,12 +2,13 @@
 .player-card {
     display: flex;
     margin-right: 30px;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 /* Profile icon and level badge */
 .profile-wrapper {
     display: flex;
+    margin-top: 20px;
     position: relative;
 }
 .player-element {
