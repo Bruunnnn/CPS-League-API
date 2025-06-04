@@ -24,7 +24,6 @@ class SummonerController extends Controller
     protected RankedService $rankedService;
     protected SummonerService $summonerService;
 
-
     public function __construct(
         ChampRotationService $champRotationService,
         ChampionService $championService,
@@ -62,14 +61,11 @@ class SummonerController extends Controller
 
         $this->champRotationService->storeChampsForNewPlayers();
         $this->championService->storeAllChampions();
-        $rankedSummoner = $this->rankedService->getRankedBySummonerId($summoner->summoner_id);
-
-        $this->rankedService->storeRankedData($puuid, $rankedSummoner);
+        $this->rankedService->getRankedBySummonerId($summoner->summoner_id);
+        $this->rankedService->storeRankedData($puuid);
         $this->masteryService->storeTopChampionMastery($puuid);
         $this->matchHistoryService->storeMatchHistory($puuid);
-
-
-
+        
 
         if ($summoner instanceof \Illuminate\Http\Response) {
             // Throws error response if we get a "response" returned, then proceeds
