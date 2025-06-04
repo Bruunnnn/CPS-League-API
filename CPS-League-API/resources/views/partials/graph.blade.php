@@ -27,7 +27,6 @@
 
     const labels = Array.from({ length: 10}, (_, i) => `Match ${i + 1}`);
 
-    // Build datasets dynamically
     const datasets = groupedRankedHistory.map(group => ({
         label: group.queue_type.replace('RANKED_','').replace('_SR',''),
         data: group.win_rates,
@@ -47,7 +46,10 @@
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'bottom'
+                    position: 'bottom',
+                    labels: {
+                        color: 'white'
+                    }
                 },
                 tooltip: {
                     enabled: true
@@ -88,7 +90,6 @@
     });
 
 </script>
-
 </body>
 </html>
 
