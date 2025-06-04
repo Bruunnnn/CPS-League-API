@@ -1,4 +1,4 @@
-# CPS-League-API
+# CPS-League-API - Main branch
 
 ## Guide for running the project:
 ### first make sure you are running docker on your system.
