@@ -56,7 +56,9 @@ class SummonerController extends Controller
         $summoner = $this->summonerService->storeSummoner($riotId);
         $puuid = $summoner->puuid;
 
+
         $this->champRotationService->storeChampsForNewPlayers();
+
         $this->championService->storeAllChampions();
         $this->rankedService->getRankedBySummonerId($summoner->summoner_id);
         $this->rankedService->storeRankedData($puuid);
@@ -68,7 +70,7 @@ class SummonerController extends Controller
             // Throws error response if we get a "response" returned, then proceeds
             return $summoner;
         }
-
+        $freeChampions = $this->champRotationService->getCurrentFreeChampions();
         // Fetch ranked data from Riot API and store/update
         //$rankedSummoner = $RankedService->getRankedBySummonerId($summoner->summoner_id);
         //$storedRanked = $RankedService->storeRankedData($puuid,$rankedSummoner);
@@ -80,7 +82,7 @@ class SummonerController extends Controller
 
 
         //$ChampRotationService->storeChampsForNewPlayers();
-        $freeChampions = $this->champRotationService->getCurrentFreeChampions();
+
 
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
