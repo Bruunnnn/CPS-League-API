@@ -7,12 +7,14 @@
 </head>
 <body>
 
-<div class="header-title">
-    <h2 class="title">Free Rotation Champions</h2>
-</div>
+
 
 
 <div class="free-champions">
+
+    <div class="header-title">
+        <h2 class="title">Free Rotation Champions</h2>
+    </div>
 
     @foreach ($freeChampions as $champion)
 

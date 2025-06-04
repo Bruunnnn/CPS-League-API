@@ -23,6 +23,8 @@ class SummonerController extends Controller
         // Returns ddragon response
         $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.10.1/data/en_US/champion.json');
         $championData = $response->json()['data'];
+
+
         return $championData;
     }
 

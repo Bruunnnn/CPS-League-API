@@ -20,7 +20,6 @@
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
-    grid-template-columns: 165px 95px 95px 135px 135px 135px 165px;
     width: 100%;
     color: white;
     padding: 10px;
