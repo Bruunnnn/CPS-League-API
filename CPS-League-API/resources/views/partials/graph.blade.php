@@ -1,17 +1,12 @@
-<html>
-
 <head>
     <title>Win_Rate_Graph</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href={{asset('/css/graph.css')}}>
 </head>
-
 <body>
-
 
 <div id="chart-container">
     <h2>Win-loss rate over time</h2>
-    <!-- Chart container -->
     <canvas id="winRateChart"></canvas>
 </div>
 
@@ -88,8 +83,5 @@
 
         }
     });
-
 </script>
 </body>
-</html>
-
