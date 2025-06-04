@@ -255,7 +255,7 @@ class SummonerController extends Controller
 
         // We know that hardcoding this is not the right way, but Riot themselves havde made us need to do it like this:.
         // This is beacause in riots jSon the summonerspell comes out as an integer, but we need the string name from them
-        // to get the images.
+        // to get the images, so we have converted them here:
         $summonerSpellMap = [
             1 => 'SummonerBoost',
             3 => 'SummonerExhaust',

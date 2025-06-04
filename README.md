@@ -28,3 +28,4 @@
 
 # Things that don't work:
 ## The Update button on the webiste does not pull down new data when pressed
+## Some places in our HTTP request, we use "withoutVerifying" we need to do this because we don't have SSL certificates.
