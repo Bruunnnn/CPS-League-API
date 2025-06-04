@@ -17,6 +17,29 @@ use App\Services\ChampRotationService;
 
 class SummonerController extends Controller
 {
+    protected ChampRotationService $champRotationService;
+    protected ChampionService $championService;
+    protected MasteryService $masteryService;
+    protected MatchHistoryService $matchHistoryService;
+    protected RankedService $rankedService;
+    protected SummonerService $summonerService;
+
+
+    public function __construct(
+        ChampRotationService $champRotationService,
+        ChampionService $championService,
+        MasteryService $masteryService,
+        MatchHistoryService $matchHistoryService,
+        RankedService $rankedService,
+        SummonerService $summonerService
+    ) {
+        $this->champRotationService = $champRotationService;
+        $this->championService = $championService;
+        $this->masteryService = $masteryService;
+        $this->matchHistoryService = $matchHistoryService;
+        $this->rankedService = $rankedService;
+        $this->summonerService = $summonerService;
+    }
 
     public function fetchDdragon()
     {
@@ -30,61 +53,41 @@ class SummonerController extends Controller
 
 
     // Trying to display both the queue_types and the win_rates
-    public function graph() {
-
-        $puuid = auth()->user()->summoner->puuid;
-
-        $rankedHistory = RankedHistory::where('puuid', $puuid)
-            ->orderByDesc('created_at')
-            ->take(20)
-            ->get();
-
-        $groupedRankedHistory = $rankedHistory
-            ->groupBy('queue_type')
-            ->map(function ($entries, $queueType) {
-                return [
-                    'queue_type' => $queueType,
-                    'win_rates' => $entries->
-                    sortByDesc('created_at')
-                        ->pluck('win_rate')
-                        ->values(),
-                ];
-            })->values();
-
-        return view('partials.graph', compact('groupedRankedHistory'));
-    }
 
 
     public function show($riotId)
     {
-        $SummonerService = new SummonerService();
-        $RankedService = new RankedService();
-        $MasteryService = new MasteryService();
-        $MatchHistoryService = new MatchHistoryService();
-        $ChampRotationService = new ChampRotationService();
-        $ChampRotationService -> storeChampsForNewPlayers();
+        $summoner = $this->summonerService->storeSummoner($riotId);
+        $puuid = $summoner->puuid;
 
-        $summoner = $SummonerService->storeSummoner($riotId);
-        $championService = new ChampionService();
-        $championService->storeAllChampions();
+        $this->champRotationService->storeChampsForNewPlayers();
+        $this->championService->storeAllChampions();
+        $rankedSummoner = $this->rankedService->getRankedBySummonerId($summoner->summoner_id);
+
+        $this->rankedService->storeRankedData($puuid, $rankedSummoner);
+        $this->masteryService->storeTopChampionMastery($puuid);
+        $this->matchHistoryService->storeMatchHistory($puuid);
+
+
+
 
         if ($summoner instanceof \Illuminate\Http\Response) {
             // Throws error response if we get a "response" returned, then proceeds
             return $summoner;
         }
-        $puuid = $summoner->puuid;
+
         // Fetch ranked data from Riot API and store/update
-        $rankedSummoner = $RankedService->getRankedBySummonerId($summoner->summoner_id);
-        $storedRanked = $RankedService->storeRankedData($puuid,$rankedSummoner);
+        //$rankedSummoner = $RankedService->getRankedBySummonerId($summoner->summoner_id);
+        //$storedRanked = $RankedService->storeRankedData($puuid,$rankedSummoner);
         // Fetch mastery data from Riot API and store/update
-        $masterySummoner = $MasteryService->storeTopChampionMastery($puuid);
+        //$masterySummoner = $MasteryService->storeTopChampionMastery($puuid);
 
         // Fetch match history and store/update
-        $matchHistorySummoner = $MatchHistoryService->storeMatchHistory($puuid);
+        //$matchHistorySummoner = $MatchHistoryService->storeMatchHistory($puuid);
 
 
-        $ChampRotationService->storeChampsForNewPlayers();
-        $freeChampions = $ChampRotationService->getCurrentFreeChampions();
+        //$ChampRotationService->storeChampsForNewPlayers();
+        $freeChampions = $this->champRotationService->getCurrentFreeChampions();
 
         // Fetch saved ranked data from DB
         $rankedData = Ranked::where('puuid', $puuid)->get();
@@ -170,7 +173,8 @@ class SummonerController extends Controller
                 ]);
             }
         }
-        $queueMap = $SummonerService->getQueueMappings();
+
+        $queueMap = $this->summonerService->getQueueMappings();
 
         // Fetch stored match history & mastery
         $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(20)->get();
