@@ -4,24 +4,9 @@ namespace App\Services;
 use App\Models\Summoner;
 use Illuminate\Support\Facades\Http;
 
-class SummonerService
+class SummonerService extends GeneralService
 {
-    protected string $riotApi;
-    protected string $region = 'euw1';
     protected string $europeRegion = 'europe';
-
-    // Response recipe
-    public function returnResponse($url) {
-        return Http::withHeaders([
-            'X-Riot-Token' => $this->riotApi,
-        ])->withoutVerifying()->get($url);
-    }
-
-    // Double "_" cause it is a magic method
-    public function __construct()
-    {
-        $this->riotApi = config('services.riot.key');
-    }
 
     // Fetch summoner from name
     public function getSummonerByName(string $gameName, string $tagLine): ?array

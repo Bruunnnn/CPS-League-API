@@ -4,22 +4,8 @@ namespace App\Services;
 use App\Models\Mastery;
 use Illuminate\Support\Facades\Http;
 
-class MasteryService
+class MasteryService extends GeneralService
 {
-    protected string $riotApi;
-    protected string $region = 'euw1';
-
-    // Response recipe
-    public function returnResponse($url) {
-        return Http::withHeaders([
-            'X-Riot-Token' => $this->riotApi,
-        ])->withoutVerifying()->get($url);
-    }
-
-    public function __construct()
-    {
-        $this->riotApi = config('services.riot.key');
-    }
 
     public function getChampionMastery(string $puuid): ?array
     {

@@ -5,21 +5,9 @@ use App\Models\Summoner;
 use App\Models\Ranked;
 use Illuminate\Support\Facades\Http;
 
-class RankedService
+class RankedService extends GeneralService
 {
-    protected string $riotApi;
-    protected string $region = 'euw1';
 
-    // Response recipe
-    public function returnResponse($url) {
-        return Http::withHeaders([
-            'X-Riot-Token' => $this->riotApi,
-        ])->withoutVerifying()->get($url);
-    }
-
-    public function __construct(){
-        $this->riotApi = config('services.riot.key');
-    }
     public function getRankedBySummonerId(string $summonerId): ?array
     {
         $url = "https://{$this->region}.api.riotgames.com/lol/league/v4/entries/by-summoner/{$summonerId}";

@@ -4,17 +4,9 @@ namespace App\Services;
 
 use App\Models\MatchHistory;
 use Illuminate\Support\Facades\Http;
-class MatchHistoryService
+class MatchHistoryService extends GeneralService
 {
-    protected string $riotApi;
-    protected string $region = 'euw1';
-    protected string $europeRegion = 'europe';
-
-    public function __construct()
-    {
-        $this->riotApi = config('services.riot.key');
-    }
-
+    
     // Fetches the complete amount of meta-data from Leagues API
     // Count can be increased / decreased depending on the number of games we want to display
     public function getMatchHistory(string $puuid, int $count = 20): array
