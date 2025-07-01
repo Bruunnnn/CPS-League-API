@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ranked', function (Blueprint $table) {
             $table->id();
-            $table->string('puuid');
+            $table->string('puuid')->nullable();
             $table->string('queueType')->nullable();
             $table->string('tier')->nullable();
             $table->string('rank')->nullable();

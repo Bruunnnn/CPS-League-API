@@ -13,12 +13,12 @@ return new  class extends Migration
     {
         Schema::create('ranked_history', function (Blueprint $table) {
             $table->id();
-            $table->string('puuid');
-            $table->string('rank');
-            $table->string('wins');
-            $table->string('losses');
-            $table->float('win_rate');
-            $table->string('queue_type'); // 'RANKED_SOLO_5x5' or 'RANKED_FLEX_SR'
+            $table->string('puuid')->nullable();
+            $table->string('rank')->nullable();
+            $table->string('wins')->nullable();
+            $table->string('losses')->nullable();
+            $table->float('win_rate')->nullable();
+            $table->string('queue_type')->nullable();
             $table->timestamps();
 
             $table->foreign('puuid')->references('puuid')->on('summoners')->onDelete('cascade');
