@@ -96,11 +96,11 @@ class SummonerController extends Controller
         foreach ($rankedData as $ranked) {
             if ($ranked->queueType === 'RANKED_SOLO_5x5') {
                 $rankedMap['solo'] = "{$ranked->tier} {$ranked->rank}";
-                $soloWins += $ranked->win ?? 0;
+                $soloWins += $ranked->wins ?? 0;
                 $soloLosses += $ranked->losses ?? 0;
             } elseif ($ranked->queueType === 'RANKED_FLEX_SR') {
                 $rankedMap['flex'] = "{$ranked->tier} {$ranked->rank}";
-                $flexWins += $ranked->win ?? 0;
+                $flexWins += $ranked->wins ?? 0;
                 $flexLosses += $ranked->losses ?? 0;
             }
         }
@@ -175,7 +175,7 @@ class SummonerController extends Controller
             return [
                 'match' => $match,
                 'players' => $players,
-                'win'=>$match->win,
+                'wins'=>$match->win,
             ];
         });
 
@@ -212,7 +212,7 @@ class SummonerController extends Controller
         // iterate through grouped matches to find players:
         foreach ($groupedMatches as $game) {
             $players = $game['players'];
-            $gameWon = $game['win'] == true;
+            $gameWon = $game['wins'] == true;
             foreach ($players as $player) {
                 // If the player is not the currently searched summoner (Your name), list them
                 if ($player->puuid !==$puuid){
@@ -274,7 +274,8 @@ class SummonerController extends Controller
             2202 => 'SummonerCherryFlash',
         ];
 
-
+        // return response()->json(
+        // return view('frontpage',
         return view('frontpage', [
             'summoner' => $summoner,
             'rankedMap' => $rankedMap,

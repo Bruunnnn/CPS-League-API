@@ -38,7 +38,8 @@ class RankedService extends GeneralService
                 [
                     'tier' => $entry['tier'] ?? 'UNRANKED',
                     'rank' => $entry['rank'] ?? '-',
-                    'win' => $entry['wins'] ?? 0,
+                    'wins' => $entry['wins'] ?? 0,
+                    'leaguePoints' => $entry['leaguePoints'] ?? 0,
                     'losses' => $entry['losses'] ?? 0,
                 ]
             );

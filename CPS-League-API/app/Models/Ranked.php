@@ -12,7 +12,8 @@ class Ranked extends Model
         'queueType',
         'tier',
         'rank',
-        'win',
+        'leaguePoints',
+        'wins',
         'losses',
     ];
 }

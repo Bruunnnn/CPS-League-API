@@ -1,40 +1,46 @@
-/* Ranked section container */
 .ranked-section {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
+    gap: 18px;
+    align-items: flex-start; /* or center */
 }
 
-/* Each ranked mode row */
-.ranked-mode {
+.ranked-mode-block {
+    display: grid;
+    grid-template-columns: 80px 95px 80px;  /* tweak sizes to your preference */
     background: #1C1A2E;
-    height: 75px;
-    gap: 125px;
+    min-height: 75px;
     width: 285px;
-    font-size: 20px;
     padding: 8px 14px;
-    border: none;
     border-radius: 10px;
-    display: flex;
     align-items: center;
-    justify-content: center;
-
 }
 
-/* Labels */
+.ranked-col.label {
+    text-align: left;
+}
+.ranked-col.value {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.ranked-col.points {
+    text-align: right;
+}
+
 .ranked-label {
     font-weight: bold;
     font-size: 14px;
     color: white;
-
 }
-
-/* Rank value */
 .ranked-value {
     font-size: 14px;
     color: white;
-
+}
+.ranked-points {
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
 }

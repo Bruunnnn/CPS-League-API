@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('queueType')->nullable();
             $table->string('tier')->nullable();
             $table->string('rank')->nullable();
-            $table->integer('win')->nullable();
+            $table->integer('leaguePoints')->nullable();
+            $table->integer('wins')->nullable();
             $table->integer('losses')->nullable();
             $table->timestamps();
         });
