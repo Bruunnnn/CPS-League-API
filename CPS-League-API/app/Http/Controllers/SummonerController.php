@@ -43,7 +43,7 @@ class SummonerController extends Controller
     public function fetchDdragon()
     {
         // Returns ddragon response
-        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.10.1/data/en_US/champion.json');
+        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.13.1/data/en_US/champion.json');
         $championData = $response->json()['data'];
 
 
@@ -127,12 +127,9 @@ class SummonerController extends Controller
                 ->get();
 
             $groupedRankedHistory = $rankedHistory->groupBy('queue_type')->map(function ($entries, $queueType){
-                return[
+                return [
                     'queue_type' => $queueType,
-                    'win_rates' => $entries
-                        ->sortBy('created_at')
-                    ->pluck('win_rate')
-                    ->values(),
+                    'win_rates' => $entries->sortBy('created_at')->pluck('win_rate')->values(),
                 ];
             })->values();
 
@@ -192,7 +189,7 @@ class SummonerController extends Controller
         foreach ($championData as $champion) {
             $championMap[(int)$champion['key']] = [
                 'name' => $champion['id'],
-                'image' => "https://ddragon.leagueoflegends.com/cdn/15.10.1/img/champion/{$champion['id']}.png"
+                'image' => "https://ddragon.leagueoflegends.com/cdn/15.13.1/img/champion/{$champion['id']}.png"
             ];
         }
 

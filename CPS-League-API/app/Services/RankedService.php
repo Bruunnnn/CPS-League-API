@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Http;
 class RankedService extends GeneralService
 {
 
-    public function getRankedBySummonerId(string $summonerId): ?array
+    public function getRankedBySummonerId(string $puuid): ?array
     {
-        $url = "https://{$this->region}.api.riotgames.com/lol/league/v4/entries/by-summoner/{$summonerId}";
+        $url = "https://{$this->region}.api.riotgames.com/lol/league/v4/entries/by-puuid/{$puuid}";
 
         $response = $this->returnResponse($url);
 
@@ -23,7 +23,7 @@ class RankedService extends GeneralService
         if (!$summoner) {
             return [];
         }
-        $rankedData = $this->getRankedBySummonerId($summoner->summoner_id);
+        $rankedData = $this->getRankedBySummonerId($summoner->puuid);
 
         if (!$rankedData) {
             return [];

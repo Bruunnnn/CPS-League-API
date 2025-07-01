@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Summoner;
 use Illuminate\Support\Facades\Http;
+use function Webmozart\Assert\Tests\StaticAnalysis\null;
 
 class SummonerService extends GeneralService
 {
@@ -49,7 +50,7 @@ class SummonerService extends GeneralService
                 'game_name' => $gameName,
                 'tag_line' => $tagLine,
                 'summoner_id' => $summonerInfo['id'],
-                'account_id' => $summonerInfo['accountId'],
+                'account_id' => $summonerInfo['accountId']?? null,
                 'profile_icon_id' => $summonerInfo['profileIconId'],
                 'summoner_level' => $summonerInfo['summonerLevel'],
             ]
