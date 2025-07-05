@@ -173,10 +173,12 @@ class SummonerController extends Controller
         $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(20)->get();
         $groupedMatches = $matchHistory->map(function ($match){
             $players = MatchHistory::where('gameId',$match->gameId)->get();
+            $isRemake = isset($match->gameDuration) && $match->gameDuration < 210;
             return [
                 'match' => $match,
                 'players' => $players,
                 'wins'=>$match->win,
+                'remake' => $isRemake,
             ];
         });
 
@@ -247,11 +249,11 @@ class SummonerController extends Controller
         // Count players appearances
         $recentlyPlayedWith = collect($recentlyPlayedWith)
             // If a player is found more than once
-            ->filter(fn($player)=>$player['count']>1)
+            ->filter(fn($player)=>$player['count']>2)
             ->sortByDesc(fn($player)=>$player['count'])
-            ->take(10);
+            ->take(20);
 
-        // We know that hardcoding this is not the right way, but Riot themselves havde made us need to do it like this:.
+        // We know that hardcoding this is not the right way, but Riot themselves have made us need to do it like this:.
         // This is beacause in riots jSon the summonerspell comes out as an integer, but we need the string name from them
         // to get the images, so we have converted them here:
         $summonerSpellMap = [
@@ -280,7 +282,6 @@ class SummonerController extends Controller
         return view('frontpage', [
             'summoner' => $summoner,
             'rankedMap' => $rankedMap,
-            'matchHistory' => $matchHistory,
             'rankedData' => $rankedData,
             'soloWins' => $soloWins,
             'soloLosses' => $soloLosses,
@@ -297,7 +298,8 @@ class SummonerController extends Controller
             'recentlyPlayedWith'=> $recentlyPlayedWith,
             'groupedRankedHistory' => $groupedRankedHistory,
             'freeChampions' => $freeChampions,
-            'summonerSpellMap' => $summonerSpellMap
+            'summonerSpellMap' => $summonerSpellMap,
+            'matchHistory' => $matchHistory
 
         ]);
     }

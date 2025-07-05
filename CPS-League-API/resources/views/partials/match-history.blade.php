@@ -7,14 +7,20 @@
     $players = $game['players'];
     @endphp
 
-    <div class="match-card {{ $match->win ? 'match-win' : 'match-loss' }}">
+    <div class="match-card {{ $game['remake'] ? 'match-remake' : ($match->win ? 'match-win' : 'match-loss') }}">
         <div class="match-main">
             <div class="match-info-left">
                 <div class="game-type"> {{ $queueMap[$match->queueId] ?? 'Unknown' }}</div>
                 <div class="game-age">{{ \Carbon\Carbon::createFromTimestampMs($match->endGameTimestamp)->diffForHumans() }}</div>
 
                 <div class="result-timer">
-                    <div class="game-result">{{ $match->win ? 'WIN' : 'LOSS' }}</div>
+                    <div class="game-result">
+                        @if ($game['remake'])
+                        REMAKE
+                        @else
+                        {{ $match->win ? 'WIN' : 'LOSS' }}
+                        @endif
+                    </div>
                     <div class="game-duration">{{ gmdate('i:s', $match->gameDuration) }}</div>
                 </div>
             </div>

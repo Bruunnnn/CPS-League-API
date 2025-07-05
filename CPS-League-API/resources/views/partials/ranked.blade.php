@@ -13,7 +13,7 @@
             <span class="ranked-value">{{ $rankedMap['solo'] ?? 'Unranked' }}</span>
         </div>
         <div class="ranked-col points">
-            <span class="ranked-points">{{ $soloRank ? 'LP: ' . $soloRank->leaguePoints : 'LP: N/A' }}</span>
+            <span class="ranked-points">{{ $soloRank ? 'LP: ' . $soloRank->leaguePoints : 'LP: ??' }}</span>
         </div>
     </div>
     <div class="ranked-mode-block">
@@ -24,7 +24,7 @@
             <span class="ranked-value">{{ $rankedMap['flex'] ?? 'Unranked' }}</span>
         </div>
         <div class="ranked-col points">
-            <span class="ranked-points">{{ $flexRank ? 'LP: ' . $flexRank->leaguePoints : 'LP: N/A' }}</span>
+            <span class="ranked-points">{{ $flexRank ? 'LP: ' . $flexRank->leaguePoints : 'LP: ??' }}</span>
         </div>
     </div>
 </div>

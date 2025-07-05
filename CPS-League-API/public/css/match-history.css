@@ -1,12 +1,27 @@
 .match-card {
     display: flex;
     width: 975px;
-    background-color: #1C1A2E;
     padding: 15px;
     border-radius: 10px;
     color: white;
     margin-bottom: 15px;
 }
+    .match-win {
+        background-color: #0056e8;
+    }
+    .match-loss {
+        background-color: #45192b;
+    }
+    .match-win .game-result{
+    color: blue;
+    }
+    .match-loss .game-result{
+    color: #ff4e50;
+    }
+    .match-remake {
+        background-color:#222238;
+}
+
 
 /* Right/main content */
 .match-main {
@@ -28,6 +43,15 @@
     display: flex;
     gap: 8px;
     justify-content: center;
+}
+
+.game-result{
+    .match-win {
+        color: #3273fa;
+    }
+    .match-loss {
+        color: #ff4e50;
+    }
 }
 
 /* Champion icon */
