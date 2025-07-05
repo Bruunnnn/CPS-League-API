@@ -170,7 +170,7 @@ class SummonerController extends Controller
         $queueMap = $this->summonerService->getQueueMappings();
 
         // Fetch stored match history & mastery
-        $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(20)->get();
+        $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(50)->get();
         $groupedMatches = $matchHistory->map(function ($match){
             $players = MatchHistory::where('gameId',$match->gameId)->get();
             $isRemake = isset($match->gameDuration) && $match->gameDuration < 210;
