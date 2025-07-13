@@ -47,12 +47,11 @@ class SummonerService extends GeneralService
         return Summoner::updateOrCreate(
             ['puuid' => $summonerInfo['puuid']],
             [
-                'game_name' => $gameName,
-                'tag_line' => $tagLine,
-                'summoner_id' => $summonerInfo['id'],
-                'account_id' => $summonerInfo['accountId']?? null,
-                'profile_icon_id' => $summonerInfo['profileIconId'],
-                'summoner_level' => $summonerInfo['summonerLevel'],
+                'gameName' => $gameName,
+                'tagLine' => $tagLine,
+                'profileIconId' => $summonerInfo['profileIconId'],
+                'summonerLevel' => $summonerInfo['summonerLevel'],
+                'revisionDate' => $summonerInfo['revisionDate'],
             ]
         );
     }

@@ -60,7 +60,7 @@ class SummonerController extends Controller
         $this->champRotationService->storeChampsForNewPlayers();
 
         $this->championService->storeAllChampions();
-        $this->rankedService->getRankedBySummonerId($summoner->summoner_id);
+        $this->rankedService->getRankedBySummonerId($summoner);
         $this->rankedService->storeRankedData($puuid);
         $this->masteryService->storeTopChampionMastery($puuid);
         $this->matchHistoryService->storeMatchHistory($puuid);
@@ -170,7 +170,7 @@ class SummonerController extends Controller
         $queueMap = $this->summonerService->getQueueMappings();
 
         // Fetch stored match history & mastery
-        $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(50)->get();
+        $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(30)->get();
         $groupedMatches = $matchHistory->map(function ($match){
             $players = MatchHistory::where('gameId',$match->gameId)->get();
             $isRemake = isset($match->gameDuration) && $match->gameDuration < 210;

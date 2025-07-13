@@ -6,13 +6,13 @@
     margin-bottom: 15px;
 }
     .match-win {
-        background-color: #0056e8;
+        background-color: #1e1e33;
     }
     .match-loss {
         background-color: #45192b;
     }
     .match-win .game-result{
-    color: blue;
+    color: #1ea1f2;
     }
     .match-loss .game-result{
     color: #ff4e50;

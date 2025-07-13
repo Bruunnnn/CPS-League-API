@@ -6,10 +6,10 @@ use App\Models\MatchHistory;
 use Illuminate\Support\Facades\Http;
 class MatchHistoryService extends GeneralService
 {
-    
+
     // Fetches the complete amount of meta-data from Leagues API
     // Count can be increased / decreased depending on the number of games we want to display
-    public function getMatchHistory(string $puuid, int $count = 20): array
+    public function getMatchHistory(string $puuid, int $count = 30): array
     {
         $matchIds = Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
