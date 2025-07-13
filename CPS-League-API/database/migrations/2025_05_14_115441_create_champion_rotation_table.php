@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('champion_rotations', function (Blueprint $table) {
+        Schema::create('champion_rotation', function (Blueprint $table) {
             $table->id();
             $table->json('freeChampionIds')->nullable();
             $table->json('freeChampionIdsForNewPlayers')->nullable();
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('champion_rotations');
+        Schema::dropIfExists('champion_rotation');
     }
 };
