@@ -40,14 +40,14 @@
                 <div class="items-row">
                     @foreach ([$match->item0, $match->item1, $match->item2, $match->item6] as $item)
                     @if ($item)
-                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.13.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
+                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.14.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
                     @endif
                     @endforeach
                 </div>
                 <div class="items-row">
                     @foreach ([$match->item3, $match->item4, $match->item5] as $item)
                     @if ($item)
-                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.13.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
+                    <img class="item-icon" src="https://ddragon.leagueoflegends.com/cdn/15.14.1/img/item/{{ $item }}.png" alt="Item {{ $item }}">
                     @endif
                     @endforeach
                 </div>
@@ -57,13 +57,13 @@
                 <div class="spells-side">
                     @if (isset($summonerSpellMap[$match->summoner1Id]))
                     <img class="summoner-icon"
-                         src="https://ddragon.leagueoflegends.com/cdn/15.13.1/img/spell/{{ $summonerSpellMap[$match->summoner1Id] }}.png"
+                         src="https://ddragon.leagueoflegends.com/cdn/15.14.1/img/spell/{{ $summonerSpellMap[$match->summoner1Id] }}.png"
                          alt="Spell 1">
                     @endif
 
                     @if (isset($summonerSpellMap[$match->summoner2Id]))
                     <img class="summoner-icon"
-                         src="https://ddragon.leagueoflegends.com/cdn/15.13.1/img/spell/{{ $summonerSpellMap[$match->summoner2Id] }}.png"
+                         src="https://ddragon.leagueoflegends.com/cdn/15.14.1/img/spell/{{ $summonerSpellMap[$match->summoner2Id] }}.png"
                          alt="Spell 2">
                     @endif
                 </div>
