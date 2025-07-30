@@ -167,8 +167,6 @@ class SummonerController extends Controller
             })->values()
             : collect();
 
-        $queueMap = $this->summonerService->getQueueMappings();
-
         // Fetch stored match history & mastery
         $matchHistory = MatchHistory::where('puuid', $puuid)->orderByDesc('endGameTimestamp')->take(30)->get();
         $groupedMatches = $matchHistory->map(function ($match){
@@ -276,6 +274,22 @@ class SummonerController extends Controller
             2201 => 'SummonerCherryHold',
             2202 => 'SummonerCherryFlash',
         ];
+        $queueId = [
+            400 => 'Normal Draft Pick',
+            420 => 'Ranked Solo/Duo',
+            430 => 'Normal Blind Pick',
+            440 => 'Ranked Flex',
+            450 => 'ARAM',
+            700 => 'Clash',
+            830 => 'Co-op vs AI (Intro)',
+            840 => 'Co-op vs AI (Beginner)',
+            850 => 'Co-op vs AI (Intermediate)',
+            901 => 'ARAM Clash',
+            1020 => 'One for All',
+            1700 => 'Arena',
+
+
+        ];
 
         // return response()->json(
         // return view('frontpage',
@@ -291,15 +305,14 @@ class SummonerController extends Controller
             'flexLosses' => $flexLosses,
             'totalFlexGames' => $totalFlexGames,
             'flexWinratePercent' => $flexWinratePercent,
-            'queueMap' => $queueMap,
             'masteryCards' => $masteryCards,
             'championMap' => $championMap,
-            'matches' => $groupedMatches,
             'recentlyPlayedWith'=> $recentlyPlayedWith,
             'groupedRankedHistory' => $groupedRankedHistory,
             'freeChampions' => $freeChampions,
+            'queueId' => $queueId,
             'summonerSpellMap' => $summonerSpellMap,
-            'matchHistory' => $matchHistory
+            'matches' => $groupedMatches,
 
         ]);
     }

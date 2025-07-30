@@ -10,7 +10,7 @@
     <div class="match-card {{ $game['remake'] ? 'match-remake' : ($match->win ? 'match-win' : 'match-loss') }}">
         <div class="match-main">
             <div class="match-info-left">
-                <div class="game-type"> {{ $queueMap[$match->queueId] ?? 'Unknown' }}</div>
+                <div class="game-type"> {{ $queueId[$match->queueId] ?? 'Unknown' }}</div>
                 <div class="game-age">{{ \Carbon\Carbon::createFromTimestampMs($match->endGameTimestamp)->diffForHumans() }}</div>
 
                 <div class="result-timer">

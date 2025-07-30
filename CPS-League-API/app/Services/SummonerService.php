@@ -55,24 +55,5 @@ class SummonerService extends GeneralService
             ]
         );
     }
-
-    public function getQueueMappings()
-    {
-        $response = Http::withoutVerifying()->get('https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/queues.json');
-
-        if ($response->successful()) {
-            $queues = $response->json();
-
-            // Map queueId to description
-            $queueMap = [];
-            foreach ($queues as $queue) {
-                $queueMap[$queue['id']] = $queue['shortName'] ?? 'Unknown';
-            }
-
-            return $queueMap;
-        }
-
-        return [];
-    }
 }
 
