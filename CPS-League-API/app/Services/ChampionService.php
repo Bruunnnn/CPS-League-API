@@ -8,7 +8,7 @@ class ChampionService
 {
     public function storeAllChampions()
     {
-        $response = Http::withoutVerifying()->get("https://ddragon.leagueoflegends.com/cdn/15.14.1/data/en_US/champion.json");
+        $response = Http::withoutVerifying()->get("https://ddragon.leagueoflegends.com/cdn/15.16.1/data/en_US/champion.json");
         $championData = $response->json()['data'] ?? [];
 
         foreach ($championData as $champion){
@@ -18,7 +18,7 @@ class ChampionService
                     'name' => $champion['name'],
                     'title' => $champion['title'],
                     'blurb' => $champion['blurb'],
-                    'image_url' => "https://ddragon.leagueoflegends.com/cdn/15.14.1/img/champion/{$champion['id']}.png",
+                    'image_url' => "https://ddragon.leagueoflegends.com/cdn/15.16.1/img/champion/{$champion['id']}.png",
                 ]
             );
         }

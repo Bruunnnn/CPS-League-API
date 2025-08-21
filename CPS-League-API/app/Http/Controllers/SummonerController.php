@@ -31,6 +31,7 @@ class SummonerController extends Controller
         MatchHistoryService $matchHistoryService,
         RankedService $rankedService,
         SummonerService $summonerService
+
     ) {
         $this->champRotationService = $champRotationService;
         $this->championService = $championService;
@@ -43,7 +44,7 @@ class SummonerController extends Controller
     public function fetchDdragon()
     {
         // Returns ddragon response
-        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.14.1/data/en_US/champion.json');
+        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.16.1/data/en_US/champion.json');
         $championData = $response->json()['data'];
 
 
@@ -190,7 +191,7 @@ class SummonerController extends Controller
         foreach ($championData as $champion) {
             $championMap[(int)$champion['key']] = [
                 'name' => $champion['id'],
-                'image' => "https://ddragon.leagueoflegends.com/cdn/15.14.1/img/champion/{$champion['id']}.png"
+                'image' => "https://ddragon.leagueoflegends.com/cdn/15.16.1/img/champion/{$champion['id']}.png"
             ];
         }
 
@@ -251,6 +252,7 @@ class SummonerController extends Controller
             ->sortByDesc(fn($player)=>$player['count'])
             ->take(20);
 
+
         // We know that hardcoding this is not the right way, but Riot themselves have made us need to do it like this:.
         // This is beacause in riots jSon the summonerspell comes out as an integer, but we need the string name from them
         // to get the images, so we have converted them here:
@@ -281,9 +283,9 @@ class SummonerController extends Controller
             440 => 'Ranked Flex',
             450 => 'ARAM',
             700 => 'Clash',
-            830 => 'Co-op vs AI (Intro)',
-            840 => 'Co-op vs AI (Beginner)',
-            850 => 'Co-op vs AI (Intermediate)',
+            870 => 'Co-op vs AI (Intro)',
+            880 => 'Co-op vs AI (Beginner)',
+            890 => 'Co-op vs AI (Intermediate)',
             901 => 'ARAM Clash',
             1020 => 'One for All',
             1700 => 'Arena',
