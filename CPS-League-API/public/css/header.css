@@ -26,6 +26,11 @@
     background-color: white;
 }
 
+.current-patch {
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
 
 /* Search bar styling */
 .search-bar {

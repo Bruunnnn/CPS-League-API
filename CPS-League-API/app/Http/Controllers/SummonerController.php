@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use AllowDynamicProperties;
 use App\Models\Ranked;
 use App\Services\ChampionService;
+use App\Services\GeneralService;
 use App\Services\MasteryService;
 use App\Services\MatchHistoryService;
 use App\Models\Mastery;
@@ -15,7 +17,7 @@ use App\Services\RankedService;
 use App\Services\ChampRotationService;
 
 
-class SummonerController extends Controller
+#[AllowDynamicProperties] class SummonerController extends Controller
 {
     protected ChampRotationService $champRotationService;
     protected ChampionService $championService;
@@ -30,7 +32,8 @@ class SummonerController extends Controller
         MasteryService $masteryService,
         MatchHistoryService $matchHistoryService,
         RankedService $rankedService,
-        SummonerService $summonerService
+        SummonerService $summonerService,
+        GeneralService $generalService
 
     ) {
         $this->champRotationService = $champRotationService;
@@ -39,17 +42,29 @@ class SummonerController extends Controller
         $this->matchHistoryService = $matchHistoryService;
         $this->rankedService = $rankedService;
         $this->summonerService = $summonerService;
+        $this->generalService = $generalService;
     }
+
+
 
     public function fetchDdragon()
     {
-        // Returns ddragon response
-        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/cdn/15.16.1/data/en_US/champion.json');
-        $championData = $response->json()['data'];
+        // Fetch latest patch dynamically
+        $latestPatch = $this->generalService->getLatestPatch();
 
+        if (!$latestPatch) {
+            throw new \Exception('Failed to fetch latest patch from Riot Data Dragon');
+        }
 
+        // Use double quotes so $latestPatch is interpolated
+        $response = Http::withoutVerifying()->get(
+            "https://ddragon.leagueoflegends.com/cdn/{$latestPatch}/data/en_US/champion.json"
+        );
+
+        return $response->json()['data'];
         return $championData;
     }
+
 
 
     public function show($riotId)
@@ -187,11 +202,12 @@ class SummonerController extends Controller
 
         // Fetch champion list from DDragon
         $championData = $this->fetchDdragon();
+        $latestPatch = $this->generalService->getLatestPatch();
         $championMap = [];
         foreach ($championData as $champion) {
             $championMap[(int)$champion['key']] = [
                 'name' => $champion['id'],
-                'image' => "https://ddragon.leagueoflegends.com/cdn/15.16.1/img/champion/{$champion['id']}.png"
+                'image' => "https://ddragon.leagueoflegends.com/cdn/{$latestPatch}/img/champion/{$champion['id']}.png"
             ];
         }
 
@@ -277,25 +293,26 @@ class SummonerController extends Controller
             2202 => 'SummonerCherryFlash',
         ];
         $queueId = [
-            400 => 'Normal Draft Pick',
-            420 => 'Ranked Solo/Duo',
-            430 => 'Normal Blind Pick',
-            440 => 'Ranked Flex',
-            450 => 'ARAM',
-            700 => 'Clash',
-            870 => 'Co-op vs AI (Intro)',
-            880 => 'Co-op vs AI (Beginner)',
-            890 => 'Co-op vs AI (Intermediate)',
-            901 => 'ARAM Clash',
+            0   =>  'Custom Game',
+            400 =>  'Normal Draft Pick',
+            420 =>  'Ranked Solo/Duo',
+            430 =>  'Normal Blind Pick',
+            440 =>  'Ranked Flex',
+            450 =>  'ARAM',
+            700 =>  'Clash',
+            870 =>  'Co-op vs AI (Intro)',
+            880 =>  'Co-op vs AI (Beginner)',
+            890 =>  'Co-op vs AI (Intermediate)',
+            901 =>  'ARAM Clash',
             1020 => 'One for All',
             1700 => 'Arena',
 
 
         ];
-
         // return response()->json(
         // return view('frontpage',
         return view('frontpage', [
+            'latestPatch' => $latestPatch,
             'summoner' => $summoner,
             'rankedMap' => $rankedMap,
             'rankedData' => $rankedData,
@@ -315,7 +332,6 @@ class SummonerController extends Controller
             'queueId' => $queueId,
             'summonerSpellMap' => $summonerSpellMap,
             'matches' => $groupedMatches,
-
         ]);
     }
 }

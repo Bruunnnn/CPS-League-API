@@ -17,7 +17,7 @@
         <div id="nikolais" class="nikolai">
             @foreach($recentlyPlayedWith as $key => $stats)
             <div class = "recently-played-list">
-                <img class="player-icon" src="https://ddragon.leagueoflegends.com/cdn/15.16.1/img/profileicon/{{ $stats['profileIcon'] }}.png" alt="Icon">
+                <img class="player-icon" src="https://ddragon.leagueoflegends.com/cdn/{{ $latestPatch }}/img/profileicon/{{ $stats['profileIcon'] }}.png" alt="Icon">
                 <div class="player-name">{{ $stats['name'] }}
                     <div class="player-tagline">#{{ $stats['tagline'] }}</div>
                 </div>

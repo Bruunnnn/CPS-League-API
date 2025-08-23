@@ -1,7 +1,10 @@
 <link rel="stylesheet" href={{asset('/css/header.css')}}>
 
 <header class="header">
-    <a href="/" class="site-name">League of Dudes</a>
+    <div class="site-left">
+        <a href="/" class="site-name">League of Dudes</a>
+        <span class="current-patch">Patch {{ $latestPatch }}</span>
+    </div>
     <form id="summonerSearchForm">
         <div class="search-bar">
            <input

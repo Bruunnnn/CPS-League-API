@@ -9,15 +9,26 @@ class GeneralService
     public string $riotApi;
     public string $region = 'euw1';
 
-    public function returnResponse($url)
+    public function __construct()
+    {
+        $this->riotApi = config('services.riot.key');
+    }
+
+    public function returnResponse(string $url)
     {
         return Http::withHeaders([
             'X-Riot-Token' => $this->riotApi,
         ])->withoutVerifying()->get($url);
     }
 
-    public function __construct()
+    public function getLatestPatch(): ?string
     {
-        $this->riotApi = config('services.riot.key');
+        $response = Http::withoutVerifying()->get('https://ddragon.leagueoflegends.com/api/versions.json');
+
+        if ($response->successful() && isset($response[0])) {
+            return $response[0];
+        }
+
+        return null;
     }
 }
