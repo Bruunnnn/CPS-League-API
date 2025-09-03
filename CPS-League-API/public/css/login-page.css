@@ -1,0 +1,8 @@
+body{
+    font-family: Arial, sans-serif;
+    background-image: url("../img/Freljord.webp");
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-attachment: fixed;
+}

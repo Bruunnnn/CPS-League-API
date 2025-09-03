@@ -17,6 +17,7 @@
         @include('partials.profile')
         <div class="feature-buttons">
             <a class="feature-button" data-target="match-history-feature">Match-History</a>
+            <a class="feature-button" data-target="item-sets-feature">Item sets</a>
             <a class="feature-button" data-target="nikolais-feature">Nikolai Feature</a>
             <a class="feature-button" data-target="jakobs-feature">Jakob Feature</a>
             <a class="feature-button" data-target="peters-feature">Peter Feature</a>
@@ -44,6 +45,9 @@
             </div>
             <div id="jakobs-feature" class="feature-section">
                 @include('partials.jakobs')
+            </div>
+            <div id="item-sets-feature" class="feature-section"
+                 @include('partials.item-sets')
             </div>
         </div>
     </div>

@@ -3,19 +3,20 @@
 <header class="header">
     <div class="site-left">
         <a href="/" class="site-name">League of Dudes</a>
-        <span class="current-patch">Patch {{ $latestPatch }}</span>
     </div>
-    <form id="summonerSearchForm">
-        <div class="search-bar">
-           <input
-               id="summonerInput"
-               class="search-bar"
-               type="text"
-               placeholder="Search Summoner">
-           <button id="searchButton" type="submit"><span>&#128269;</span></button>
-        </div>
-    </form>
-
+    <div class="right-side">
+        <form id="summonerSearchForm">
+            <div class="search-bar">
+                <input
+                    id="summonerInput"
+                    class="search-bar"
+                    type="text"
+                    placeholder="Search Summoner">
+                <button id="searchButton" type="submit"><span>&#128269;</span></button>
+            </div>
+        </form>
+        <a href="{{ route('login-page') }}" class="login-redirect">Login</a>
+    </div>
 </header>
 <script src="{{ asset('js/search.js') }}"></script>
 

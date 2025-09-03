@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.feature-button');
     const sections = document.querySelectorAll('.feature-section');
 
-    // 👇 On page load: show match-history, hide others
+    //  On page load: show match-history, hide others
     sections.forEach(section => {
         if (section.id === 'match-history-feature') {
             section.style.display = 'block';
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 👇 Handle button clicks
+    //  Handle button clicks
     buttons.forEach(button => {
         button.addEventListener('click', () => {
             const targetId = button.getAttribute('data-target');
