@@ -1,4 +1,7 @@
 <link rel="stylesheet" href={{asset('/css/search.css')}}>
+<header>
+    @include('partials.header')
+</header>
 <form id="summonerSearchForm">
     <div class="search-bar-2">
         <input
