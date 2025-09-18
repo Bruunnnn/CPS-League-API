@@ -70,6 +70,8 @@ class MatchHistoryService extends GeneralService
                         'summoner1Id' => $participant['summoner1Id'] ?? 0,
                         'summoner2Id' => $participant['summoner2Id'] ?? 0,
                         'profileIcon'=> $participant['profileIcon'] ?? 0,
+                        'goldEarned' =>$participant['goldEarned'] ?? 0,
+
                     ]
                 );
             }

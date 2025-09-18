@@ -33,6 +33,13 @@
                 <div class="score">{{ $match->kills }} / {{ $match->deaths }} / {{ $match->assists }}</div>
                 <div class="kda">{{ number_format(($match->kills + $match->assists) / max(1, $match->deaths), 2) }} KDA</div>
                 <div class="cs">{{ $match->totalMinionsKilled + $match->totalEnemyJungleMinionsKilled }} CS</div>
+                <div class="gold-section">
+                    <div class="gold-total">
+                        <img class="gold-icon" src="{{ asset('img/40px-Gold_colored_icon.png') }}" alt="Gold Icon">
+                        <span class="totalGold">{{ $match->goldEarned }}</span>
+                    </div>
+                    <div class="goldPerMinute">{{ round($match->goldEarned / ($match->gameDuration / 60)) }} g/min</div>
+                </div>
             </div>
 
 

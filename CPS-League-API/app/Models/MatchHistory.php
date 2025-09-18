@@ -32,6 +32,7 @@ class MatchHistory extends Model
         'item6',
         'summoner1Id',
         'summoner2Id',
-        'profileIcon'
+        'profileIcon',
+        'goldEarned'
     ];
 }

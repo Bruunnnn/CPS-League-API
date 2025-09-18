@@ -38,6 +38,7 @@ return new class extends Migration
             $table->integer('summoner1Id');
             $table->integer('summoner2Id');
             $table->integer('profileIcon')->nullable();
+            $table->integer('goldEarned')->nullable();
             $table->timestamps();
         });
     }

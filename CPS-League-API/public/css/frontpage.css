@@ -28,6 +28,8 @@ body{
 }
 
 .right-column {
+    position: relative;
+    min-height: 600px; /* Ikke sikkert det her er rigtigt */
     display: flex;
     width: 975px;
     flex-direction: column;
@@ -62,7 +64,7 @@ body{
 
 .feature-button:hover {
     background-color: #1ea1f2;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease;
     cursor: pointer;
 }
 
@@ -71,3 +73,16 @@ body{
     display: flex;
 }
 
+.feature-section {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+    position: absolute;
+    width: 100%;
+}
+
+.feature-section.active {
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+}

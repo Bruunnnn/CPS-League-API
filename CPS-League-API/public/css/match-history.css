@@ -70,6 +70,12 @@
     gap: 6px;
 }
 
+.gold-icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
 /* Items */
 .items-grid {
     display: flex;

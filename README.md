@@ -20,7 +20,7 @@
 * php artisan serve
 
 ### if it does not work try running:
-* php artisan migrage:fresh
+* php artisan migrate:fresh
 ### and run the other 4 commands again
 ### after that the wep application should run and have access to everything.
 ### to test if you can see a profile try to write a profile into the search field

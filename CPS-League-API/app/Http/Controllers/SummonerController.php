@@ -49,7 +49,7 @@ use App\Services\ChampRotationService;
 
     public function fetchDdragon()
     {
-        // Fetch latest patch dynamically
+        // Fetch dynamically
         $latestPatch = $this->generalService->getLatestPatch();
 
         if (!$latestPatch) {
@@ -71,8 +71,6 @@ use App\Services\ChampRotationService;
     {
         $summoner = $this->summonerService->storeSummoner($riotId);
         $puuid = $summoner->puuid;
-
-
         $this->champRotationService->storeChampsForNewPlayers();
 
         $this->championService->storeAllChampions();
@@ -80,6 +78,7 @@ use App\Services\ChampRotationService;
         $this->rankedService->storeRankedData($puuid);
         $this->masteryService->storeTopChampionMastery($puuid);
         $this->matchHistoryService->storeMatchHistory($puuid);
+        // return response() ->json($this->matchHistoryService->storeMatchHistory($puuid));
 
 
         if ($summoner instanceof \Illuminate\Http\Response) {
@@ -309,7 +308,7 @@ use App\Services\ChampRotationService;
 
 
         ];
-        // return response()->json(
+        //return response()->json(
         // return view('frontpage',
         return view('frontpage', [
             'latestPatch' => $latestPatch,

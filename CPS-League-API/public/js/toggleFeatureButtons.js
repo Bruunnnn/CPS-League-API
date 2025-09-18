@@ -4,10 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //  On page load: show match-history, hide others
     sections.forEach(section => {
+        section.classList.remove('active');
         if (section.id === 'match-history-feature') {
-            section.style.display = 'block';
-        } else {
-            section.style.display = 'none';
+            section.classList.add('active');
         }
     });
 
@@ -18,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             sections.forEach(section => {
                 if (section.id === targetId) {
-                    section.style.display = 'block';
+                    section.classList.add('active');
                 } else {
-                    section.style.display = 'none';
+                    section.classList.remove('active');
                 }
             });
         });
