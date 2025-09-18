@@ -1,7 +1,16 @@
+body{
+    font-family: Arial, sans-serif;
+    background-image: url("../img/Freljord.webp");
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 .search-bar-2 {
     position: absolute;
     left: 50%;
-    top: 30%;
+    top: 40%;
     transform: translate(-50%, -50%);
     display: flex;
     text-align: center;

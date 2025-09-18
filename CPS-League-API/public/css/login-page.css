@@ -6,3 +6,81 @@ body{
     background-size: cover;
     background-attachment: fixed;
 }
+
+.login-box{
+    margin-top: 2.5%;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 80%;
+    width: 25%;
+    margin-left: 700px;
+}
+
+.center-box {
+    align-content: center;
+    padding: 30px;
+    border-radius: 12px;
+    background-color: whitesmoke;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+
+}
+.input-fields{
+    margin-top: 50px;
+}
+
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.2s;
+    background-color: #f9f9f9;
+
+}
+
+input:focus, select:focus {
+    border-color: #0056ff;
+    outline: none;
+    background-color: #fff;
+}
+
+.summoner-box {
+    display: flex;
+    gap: 10px;
+}
+
+
+.create-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #0056ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+}
+
+.create-button:hover {
+    background-color: #0040cc;
+}
+

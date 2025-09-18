@@ -62,7 +62,6 @@ use App\Services\ChampRotationService;
         );
 
         return $response->json()['data'];
-        return $championData;
     }
 
 
@@ -305,12 +304,16 @@ use App\Services\ChampRotationService;
             901 =>  'ARAM Clash',
             1020 => 'One for All',
             1700 => 'Arena',
+            3140 => 'Practice Tool',
+            4210 => 'DOOM BOTS',
+            4220 => 'DOOM BOTS',
+            4230 => 'DOOM BOTS',
 
 
         ];
         //return response()->json(
         // return view('frontpage',
-        return view('frontpage', [
+        return view('frontpage',[
             'latestPatch' => $latestPatch,
             'summoner' => $summoner,
             'rankedMap' => $rankedMap,
