@@ -8,21 +8,21 @@ body{
 }
 
 .login-box{
-    margin-top: 2.5%;
-
+    margin-top: 6%;
     display: flex;
     justify-content: center;
     align-content: center;
-    height: 80%;
-    width: 25%;
-    margin-left: 700px;
+    height: 60%;
+    width: 100%;
 }
 
 .center-box {
+    color: lightgray;
     align-content: center;
     padding: 30px;
     border-radius: 12px;
-    background-color: whitesmoke;
+    background-color: #1e1e33;
+    width: 500px;
 }
 
 .login-container {
@@ -31,7 +31,12 @@ body{
 
 }
 .input-fields{
-    margin-top: 50px;
+    margin-top: 30px;
+}
+.input-text{
+    color: lightgray;
+    display: block;
+    margin-top: 20px;
 }
 
 
@@ -40,6 +45,9 @@ label {
     font-weight: 600;
     margin-bottom: 5px;
     color: #333;
+}
+.switch-text{
+    margin-top: 20px;
 }
 
 
@@ -76,7 +84,7 @@ input:focus, select:focus {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 50px;
     transition: background-color 0.3s;
 }
 

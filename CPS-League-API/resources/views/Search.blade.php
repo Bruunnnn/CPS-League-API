@@ -8,8 +8,7 @@
             id="summonerInput"
             class="search-bar-2-input"
             type="text"
-            placeholder="Search Summoner-EUW"
-        >
+            placeholder="Search Summoner">
         <button id="searchButton" type="submit"><span>&#128269;</span></button>
     </div>
 </form>

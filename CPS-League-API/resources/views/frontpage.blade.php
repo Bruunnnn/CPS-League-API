@@ -1,7 +1,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> SuperMegaOvernice-Softtek-Project </title>
+    <title> League of Dudes</title>
     <script src="../js/search" ></script>
     <script src="{{ asset('js/toggleFeatureButtons.js') }}"></script>
     <link rel="stylesheet" href="{{asset('/css/frontpage.css')}}">
