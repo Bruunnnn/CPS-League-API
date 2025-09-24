@@ -46,20 +46,32 @@
     background: #ece6f1;
     padding: 10px 10px;
     border-radius: 25px;
+    font-size: 14px;
 }
 
 .login-redirect {
-    background: #1ea1f2;
+    background: #0056ff;
     color: white;
     padding: 6px 14px;
     border-radius: 8px;
     cursor: pointer;
     user-select: none;
     text-align: center;
+    font-size: 16px;
+}
+.logout-button {
+    background: #0056ff;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+    font-size: 16px;
 }
 
 .login-redirect:hover {
-    background: #1276a8;
+    background: #0040cc;
 }
 
 

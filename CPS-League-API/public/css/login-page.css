@@ -15,6 +15,14 @@ body{
     height: 60%;
     width: 100%;
 }
+.login-boxbox{
+    margin-top: 6%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 60%;
+    width: 100%;
+}
 
 .center-box {
     color: lightgray;
@@ -91,4 +99,11 @@ input:focus, select:focus {
 .create-button:hover {
     background-color: #0040cc;
 }
+
+.login-error {
+    color: red;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
 

@@ -9,13 +9,20 @@
     <div class="center-box">
 
         <!-- Login -->
+        <!-- Login -->
         <div class="login-container" id="login-form">
             <h1 class="title">Login</h1>
+
+            @if ($errors->has('login'))
+            <div class="login-error">
+                {{ $errors->first('login') }}
+            </div>
+            @endif
 
             <form class="input-fields" action="/login" method="POST">
                 @csrf
                 <label class="input-text" for="email">Email</label>
-                <input type="email" name="email" placeholder="Email" required>
+                <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" required>
 
                 <label class="input-text" for="password">Password</label>
                 <input type="password" name="password" placeholder="Password" required>
@@ -28,6 +35,7 @@
                 <a href="#" onclick="switchForm('register')">Create one</a>
             </p>
         </div>
+
 
         <!-- Register -->
         <div class="login-container" id="register-form" style="display:none;">

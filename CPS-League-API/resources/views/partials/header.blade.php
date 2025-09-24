@@ -1,4 +1,4 @@
-<link rel="stylesheet" href={{asset('/css/header.css')}}>
+<link rel="stylesheet" href="{{ asset('/css/header.css') }}">
 
 <header class="header">
     <div class="site-left">
@@ -15,8 +15,20 @@
                 <button id="searchButton" type="submit"><span>&#128269;</span></button>
             </div>
         </form>
+
+        @guest
+        {{-- Not logged in: show Login --}}
         <a href="{{ route('login-page') }}" class="login-redirect">Login</a>
+        @endguest
+
+        @auth
+        {{-- Logged in: show Logout button --}}
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+        @endauth
     </div>
 </header>
-<script src="{{ asset('js/search.js') }}"></script>
 
+<script src="{{ asset('js/search.js') }}"></script>
