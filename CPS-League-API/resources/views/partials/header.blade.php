@@ -3,7 +3,9 @@
 <header class="header">
     <div class="site-left">
         <a href="/" class="site-name">League of Dudes</a>
-        <a href="/leaderboard" class="leaderboard-route">Leaderboard</a>
+        @auth
+        <a href="/leaderboard" class="leaderboard-route">LeaderBoard</a>
+        @endauth
     </div>
 
     <div class="right-side">

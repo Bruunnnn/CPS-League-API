@@ -26,8 +26,17 @@
     border-radius: 10px;
     font-weight: bold;
     background-color: white;
-
 }
+
+.leaderboard-route{
+    color: whitesmoke;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
 .right-side {
     display: flex;
     align-items: center;
