@@ -9,7 +9,6 @@
     <div class="center-box">
 
         <!-- Login -->
-        <!-- Login -->
         <div class="login-container" id="login-form">
             <h1 class="title">Login</h1>
 
@@ -32,7 +31,7 @@
 
             <p class="switch-text">
                 Don't have an account?
-                <a href="#" onclick="switchForm('register')">Create one</a>
+                <a href="#" onclick="switchForm('register')">Register Here</a>
             </p>
         </div>
 

@@ -3,7 +3,9 @@
 <header class="header">
     <div class="site-left">
         <a href="/" class="site-name">League of Dudes</a>
+        <a href="/leaderboard" class="leaderboard-route">Leaderboard</a>
     </div>
+
     <div class="right-side">
         <form id="summonerSearchForm">
             <div class="search-bar">
